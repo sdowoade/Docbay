@@ -69,7 +69,7 @@ and creating new documents*/
 router.route('/documents')
 
 .get((req, res) => {
-  documentCtrl.getAllDocuments(50, (err, docs) => {
+  documentCtrl.getAllDocuments(req.query.limit, (err, docs) => {
     err ? res.status(err.status).send(err) : res.status(200).json(docs);
   });
 })
@@ -109,7 +109,7 @@ router.route('/documents/:id')
 
 /* get documents belonging to a user*/
 router.get('/users/:id/documents', (req, res) => {
-  documentCtrl.getAllDocumentsByUser(req.params.id, 50, (err, docs) => {
+  documentCtrl.getAllDocumentsByUser(req.params.id, req.query.limit, (err, docs) => {
     err ? res.status(err.status).send(err) : res.status(200).json(docs);
   });
 });

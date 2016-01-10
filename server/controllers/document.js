@@ -49,6 +49,7 @@ var DocumentCtrl = class {
   }
 
   getAllDocuments(limit, cb) {
+    limit = limit || 50;
     documentModel.find({}, (err, docs) => {
       err ? cb({
         'status': 500,
@@ -67,6 +68,7 @@ var DocumentCtrl = class {
   }
 
   getAllDocumentsByDate(date, limit, cb) {
+    limit = limit || 50;
     documentModel.find({
       dateCreated: {
         '$gte': moment(date).startOf('Day'),
@@ -81,6 +83,7 @@ var DocumentCtrl = class {
   }
 
   getAllDocumentsByRole(role, limit, cb) {
+    limit = limit || 50;
     documentModel.find({
       role: role
     }, (err, docs) => {
@@ -88,10 +91,11 @@ var DocumentCtrl = class {
         'status': 500,
         'actual': err
       }) : cb(null, docs);
-    });
+    }).limit(limit);
   }
 
   getAllDocumentsByUser(id, limit, cb) {
+    limit = limit || 50;
     documentModel.find({
       ownerId: id
     }, (err, docs) => {
@@ -99,7 +103,7 @@ var DocumentCtrl = class {
         'status': 500,
         'actual': err
       }) : cb(null, docs);
-    });
+    }).limit(limit);
   }
 
   deleteDocument(id, user, cb) {
