@@ -3,15 +3,14 @@
 var documentModel = require('../models/document');
 var moment = require('moment');
 
-var documentCtrl = class {
-
+var DocumentCtrl = class {
   createDocument(newDocument, user, cb) {
     documentModel.create({
       ownerId: user._id,
       title: newDocument.title,
       role: newDocument.role,
       content: newDocument.content,
-    }, function(err, doc) {
+    }, (err, doc) => {
       err ? cb({
         'status': 409,
         'actual': err
@@ -20,14 +19,14 @@ var documentCtrl = class {
   }
 
   updateDocument(id, newDocument, user, cb) {
-    documentModel.findById(id).exec(function(err, doc) {
+    documentModel.findById(id).exec((err, doc) => {
       if (!doc) {
         cb({
           'status': 404,
           'actual': err
         });
       } else {
-        if (user._id != doc.ownerId && doc.role.intersect(user.role).length == 0) {
+        if (user._id !== doc.ownerId && doc.role.intersect(user.role).length === 0) {
           cb({
             'status': 401,
             'actual': {
@@ -38,19 +37,19 @@ var documentCtrl = class {
           doc.title = newDocument.title || doc.title;
           doc.role = newDocument.role || doc.role;
           doc.content = newDocument.content || doc.content;
-          doc.save(function(err, doc) {
+          doc.save((err, doc) => {
             err ? cb({
               'status': 409,
               'actual': err
             }) : cb(null, doc);
-          })
+          });
         }
       }
     });
   }
 
   getAllDocuments(limit, cb) {
-    documentModel.find({}, function(err, docs) {
+    documentModel.find({}, (err, docs) => {
       err ? cb({
         'status': 500,
         'actual': err
@@ -59,7 +58,7 @@ var documentCtrl = class {
   }
 
   getDocument(id, cb) {
-    documentModel.findById(id, function(err, doc) {
+    documentModel.findById(id, (err, doc) => {
       !doc ? cb({
         'status': 404,
         'actual': err
@@ -73,7 +72,7 @@ var documentCtrl = class {
         '$gte': moment(date).startOf('Day'),
         '$lte': moment(date).endOf('Day')
       }
-    }, function(err, docs) {
+    }, (err, docs) => {
       err ? cb({
         'status': 500,
         'actual': err
@@ -84,7 +83,7 @@ var documentCtrl = class {
   getAllDocumentsByRole(role, limit, cb) {
     documentModel.find({
       role: role
-    }, function(err, docs) {
+    }, (err, docs) => {
       err ? cb({
         'status': 500,
         'actual': err
@@ -95,7 +94,7 @@ var documentCtrl = class {
   getAllDocumentsByUser(id, limit, cb) {
     documentModel.find({
       ownerId: id
-    }, function(err, docs) {
+    }, (err, docs) => {
       err ? cb({
         'status': 500,
         'actual': err
@@ -103,9 +102,8 @@ var documentCtrl = class {
     });
   }
 
-
   deleteDocument(id, user, cb) {
-    documentModel.findById(id).exec(function(err, doc) {
+    documentModel.findById(id).exec((err, doc) => {
       if (!doc) {
         cb({
           'status': 404,
@@ -124,7 +122,7 @@ var documentCtrl = class {
         } else {
           documentModel.remove({
             _id: id
-          }, function(err, status) {
+          }, (err, status) => {
             err ? cb({
               'status': 500,
               'actual': err
@@ -132,8 +130,8 @@ var documentCtrl = class {
           });
         }
       }
-    })
+    });
   }
 };
 
-module.exports = new documentCtrl();
+module.exports = new DocumentCtrl();

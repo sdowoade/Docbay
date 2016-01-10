@@ -17,7 +17,7 @@ var UserCtrl = class {
       },
       email: newUser.email,
       password: bcrypt.hashSync(newUser.password),
-    }, function(err, user) {
+    }, (err, user) => {
       err ? cb({
         'status': 409,
         'actual': err
@@ -34,7 +34,7 @@ var UserCtrl = class {
         }
       });
     } else {
-      userModel.findById(id).exec(function(err, user) {
+      userModel.findById(id).exec((err, user) => {
         if (err) {
           cb({
             'status': 404,
@@ -47,18 +47,18 @@ var UserCtrl = class {
         user.name = newUser.name || user.name;
         user.email = newUser.email || user.email;
         user.password = bcrypt.hashSync(newUser.password) || user.password;
-        user.save(function(err, user) {
+        user.save((err, user) => {
           err ? cb({
             'status': 409,
             'actual': err
           }) : cb(null, user);
-        })
+        });
       });
     }
   }
 
   assignRole(id, roleId, cb) {
-    userModel.findById(id).exec(function(err, user) {
+    userModel.findById(id).exec((err, user) => {
       if (!user) {
         cb({
           'status': 404,
@@ -68,19 +68,18 @@ var UserCtrl = class {
         });
       } else {
         user.role = helpers.getUserRoles([user.role, roleId]);
-        user.save(function(err, user) {
+        user.save((err, user) => {
           err ? cb({
             'status': 500,
             'actual': err
           }) : cb(null, user);
-        })
+        });
       }
     });
-
   }
 
   getAllUsers(cb) {
-    userModel.find({}).exec(function(err, users) {
+    userModel.find({}).exec((err, users) => {
       err ? cb({
         'status': 500,
         'actual': err
@@ -89,12 +88,12 @@ var UserCtrl = class {
   }
 
   getUser(id, cb) {
-    userModel.findById(id).exec(function(err, user) {
+    userModel.findById(id).exec((err, user) => {
       !user ? cb({
         'status': 404,
         'actual': err
       }) : cb(null, user);
-    })
+    });
   }
 
   deleteUser(id, user, cb) {
@@ -108,7 +107,7 @@ var UserCtrl = class {
     } else {
       userModel.remove({
         _id: id
-      }, function(err, status) {
+      }, (err, status) => {
         err ? cb({
           'status': 500,
           'actual': err

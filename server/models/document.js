@@ -1,8 +1,9 @@
+'use strict';
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   autoIncrement = require('mongoose-auto-increment');
 
-documentSchema = new Schema({
+var documentSchema = new Schema({
   ownerId: {
     type: Number,
     ref: 'User',

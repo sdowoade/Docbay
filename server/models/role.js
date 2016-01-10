@@ -1,10 +1,9 @@
+'use strict';
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  autoIncrement = require('mongoose-auto-increment')
+  autoIncrement = require('mongoose-auto-increment');
 
-
-
-roleSchema = new Schema({
+var roleSchema = new Schema({
   title: {
     type: String,
     unique: true
@@ -19,10 +18,10 @@ roleSchema.plugin(autoIncrement.plugin, {
   model: 'Role'
 });
 
-
 module.exports = mongoose.model('Role', roleSchema);
+
 mongoose.model('Role', roleSchema).create({
   title: '_Public',
-}, function(err, role) {
+}, (err, role) => {
   console.log('public created');
 });

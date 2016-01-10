@@ -1,3 +1,4 @@
+'use strict';
 var mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
   db = 'mongodb://localhost:27017/hht';
