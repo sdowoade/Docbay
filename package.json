@@ -1,0 +1,37 @@
+{
+  "name": "document_management_system",
+  "version": "1.0.0",
+  "description": "Manages documents, users and user roles",
+  "main": "document-manager.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-dowoade/DMS.git"
+  },
+  "keywords": [
+    "DMS"
+  ],
+  "author": "Owoade Dotun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-dowoade/DMS/issues"
+  },
+  "homepage": "https://github.com/andela-dowoade/DMS#readme",
+  "dependencies": {
+    "async": "^1.5.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.5.4",
+    "kerberos": "0.0.17",
+    "mockgoose": "^5.1.0",
+    "moment": "^2.11.0",
+    "mongoose": "^4.3.4",
+    "mongoose-auto-increment": "^5.0.1"
+  },
+  "devDependencies": {
+    "supertest": "^1.1.0"
+  }
+}

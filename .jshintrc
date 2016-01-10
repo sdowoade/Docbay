@@ -1,0 +1,10 @@
+{
+  "browser": true,
+  "esnext": true,
+  "globals": {},
+  "predef":["$","describe","expect","it","jasmine","beforeEach","beforeAll","Index"],
+  "globalstrict": true,
+  "quotmark": true,
+  "undef": false,
+  "unused": false
+}
