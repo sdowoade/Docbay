@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var roleSchema = new Schema({
   title: {
     type: String,
+    required:true,
     unique: true
   },
   createdAt: {
@@ -20,8 +21,12 @@ roleSchema.plugin(autoIncrement.plugin, {
 
 module.exports = mongoose.model('Role', roleSchema);
 
-mongoose.model('Role', roleSchema).create({
-  title: '_Public',
-}, (err, role) => {
-  console.log('public created');
+mongoose.model('Role', roleSchema).count({}, function(err, count) {
+  if (count === 0) {
+    mongoose.model('Role', roleSchema).create({
+      title: '_Public',
+    }, (err, role) => {
+      console.log('public created');
+    });
+  }
 });

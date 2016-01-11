@@ -89,7 +89,7 @@ var UserCtrl = class {
 
   getUser(id, cb) {
     userModel.findById(id).exec((err, user) => {
-      !user ? cb({
+      !(user) ? cb({
         'status': 404,
         'actual': err
       }) : cb(null, user);

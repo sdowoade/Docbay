@@ -116,7 +116,7 @@ var DocumentCtrl = class {
           }
         });
       } else {
-        if (user._id != doc.ownerId) {
+        if (user._id !== doc.ownerId) {
           cb({
             'status': 401,
             'actual': {

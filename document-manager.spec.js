@@ -251,7 +251,7 @@ describe('Document management system', () => {
   describe('Api Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/login')
+      request.post('/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;

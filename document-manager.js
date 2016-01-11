@@ -15,8 +15,14 @@ app.use(parser.json());
 var router = express.Router();
 app.use('/', router);
 
-router.post('/login', (req, res) => {
+router.post('/users/login', (req, res) => {
   authCtrl.authenticate(req, res);
+});
+
+router.post('/users/logout', (req, res) => {
+  res.status(200).json({
+    'message': 'Goodbye'
+  });
 });
 
 router.get('/', (req, res) => {
