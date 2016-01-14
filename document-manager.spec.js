@@ -12,73 +12,83 @@ var mongoose = require('./db_connect'),
 mockgoose(mongoose);
 
 var testUsers = {
-  'dotun': {
+  dotun: {
     username: 'dowoade',
     firstname: 'Dotun',
     lastname: 'Owoade',
     email: 'd@c.com',
     password: 'pass'
   },
-  'apiuser': {
+
+  apiuser: {
     username: 'shelly',
     firstname: 'Sheldon',
     lastname: 'cooper',
     email: 'big@bang.com',
     password: 'pass'
   },
-  'walter': {
+
+  walter: {
     username: 'breakingbad',
     firstname: 'Walter',
     lastname: 'White',
     email: 'ww@bad.com',
     password: 'pass'
   },
-  'noLastname': {
+
+  noLastname: {
     username: 'breakingbad',
     firstname: 'Walter',
     email: 'ww@bad.com',
     password: 'pass'
   },
-  'noFirstname': {
+
+  noFirstname: {
     username: 'breakingbad',
     lastname: 'White',
     email: 'ww@bad.com',
     password: 'pass'
   },
-  'fakeX': {
+
+  fakeX: {
     _id: 0,
   },
-  'fakeY': {
+
+  fakeY: {
     _id: 2,
   }
 };
 
 var testRoles = {
-  'x': {
+  x: {
     title: 'can do x',
   },
-  'y': {
+
+  y: {
     title: 'can do y',
   }
 };
 
 var testDocuments = {
-  'docx': {
+  docx: {
     title: 'Doc x',
     content: 'some content for x',
     role: [0],
   },
-  'docy': {
+
+  docy: {
     title: 'Doc y',
     content: 'some content for x',
     role: [0],
   },
-  'docz': {
+
+  docz: {
     title: 'Doc z',
     content: 'some content for z',
     role: [0],
   },
-  'apidoc': {
+
+  apidoc: {
     title: 'Bazinga',
     content: 'some content for Bazzinga',
     role: [0],
@@ -300,6 +310,7 @@ describe('Document management system', () => {
           expect(res.status).toBe(200);
           done();
         });
+
       request.get('/users/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
@@ -315,6 +326,7 @@ describe('Document management system', () => {
           expect(res.status).toBe(401);
           done();
         });
+
       request.put('/users/2')
         .set('x-access-token', testToken)
         .send(testUsers.walter)
@@ -331,6 +343,7 @@ describe('Document management system', () => {
           expect(res.status).toBe(401);
           done();
         });
+
       request.delete('/users/2')
         .set('x-access-token', testToken)
         .end((err, res) => {
@@ -370,6 +383,7 @@ describe('Document management system', () => {
           expect(res.status).toBe(200);
           done();
         });
+
       request.get('/documents/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
@@ -394,6 +408,7 @@ describe('Document management system', () => {
           expect(res.status).toBe(401);
           done();
         });
+
       request.delete('/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
@@ -411,6 +426,5 @@ describe('Document management system', () => {
           done();
         });
     });
-
   });
 });
