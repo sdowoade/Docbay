@@ -8,12 +8,12 @@ REST API for Document Management System
 DMS manages documents, users and user roles. The system allows users to create documents and define which roles can access it.
 
 
-#How to run
+##How to run
 
-##Test
+###Test
 
 npm test (requires jasmine >=2.1)
 
-##Program
+###Program
 
 npm run-script launch
