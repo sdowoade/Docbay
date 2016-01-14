@@ -7,5 +7,6 @@
   "quotmark": true,
   "undef": false,
   "unused": false,
-  "expr": true
+  "expr": true,
+  "maxlen": 80
 }

@@ -57,9 +57,10 @@ router.route('/users/:id')
 })
 
 .put(authCtrl.authorise, (req, res) => {
-  userCtrl.updateUser(req.params.id, req.body, req.decoded._doc, (err, user) => {
-    err ? res.status(err.status).send(err) : res.status(200).json(user);
-  });
+  userCtrl.updateUser(req.params.id, req.body,
+    req.decoded._doc, (err, user) => {
+      err ? res.status(err.status).send(err) : res.status(200).json(user);
+    });
 })
 
 .delete(authCtrl.authorise, (req, res) => {
@@ -98,11 +99,12 @@ router.route('/documents/:id')
 })
 
 .put(authCtrl.authorise, (req, res) => {
-  documentCtrl.updateDocument(req.params.id, req.body, req.decoded._doc, (err, user) => {
-    err ? res.status(err.status).send(err) : res.status(200).json({
-      message: 'Updated'
+  documentCtrl.updateDocument(req.params.id, req.body,
+    req.decoded._doc, (err, user) => {
+      err ? res.status(err.status).send(err) : res.status(200).json({
+        message: 'Updated'
+      });
     });
-  });
 })
 
 .delete(authCtrl.authorise, (req, res) => {
@@ -115,9 +117,10 @@ router.route('/documents/:id')
 
 /* get documents belonging to a user*/
 router.get('/users/:id/documents', (req, res) => {
-  documentCtrl.getAllDocumentsByUser(req.params.id, req.query.limit, (err, docs) => {
-    err ? res.status(err.status).send(err) : res.status(200).json(docs);
-  });
+  documentCtrl.getAllDocumentsByUser(req.params.id,
+    req.query.limit, (err, docs) => {
+      err ? res.status(err.status).send(err) : res.status(200).json(docs);
+    });
 });
 
 app.listen(3000);

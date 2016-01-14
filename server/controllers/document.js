@@ -26,7 +26,8 @@ var DocumentCtrl = class {
           'actual': err
         });
       } else {
-        if (user._id !== doc.ownerId || doc.role.intersect(user.role).length === 0) {
+        if (user._id !== doc.ownerId ||
+          doc.role.intersect(user.role).length === 0) {
           cb({
             'status': 401,
             'actual': {

@@ -183,9 +183,10 @@ describe('Document management system', () => {
       var documents = [testDocuments.docy, testDocuments.docz];
       var users = [testUsers.fakeX, testUsers.fakeY];
       async.times(2, (iter, next) => {
-        documentCtrl.createDocument(documents[iter], users[iter], (err, doc) => {
-          next(err, doc);
-        });
+        documentCtrl.createDocument(documents[iter],
+          users[iter], (err, doc) => {
+            next(err, doc);
+          });
       }, (err, docs) => {
         done();
       });
@@ -193,9 +194,10 @@ describe('Document management system', () => {
 
     it('should ensure new document is unique', (done) => {
       async.times(2, (iter, next) => {
-        documentCtrl.createDocument(testDocuments.docx, testUsers.fakeX, (err, doc) => {
-          next(err, doc);
-        });
+        documentCtrl.createDocument(testDocuments.docx,
+          testUsers.fakeX, (err, doc) => {
+            next(err, doc);
+          });
       }, (err, docs) => {
         expect(err.actual.code).toEqual(11000);
         done();
@@ -228,7 +230,8 @@ describe('Document management system', () => {
   describe('Search', () => {
     it('should search document by date', (done) => {
       documentCtrl.getAllDocumentsByDate(moment().format(), 1, (err, docs) => {
-        expect(moment(docs[0].dateCreated).startOf('Day').format()).toBe(moment().startOf('Day').format());
+        expect(moment(docs[0].dateCreated).startOf('Day').format())
+          .toBe(moment().startOf('Day').format());
         done();
       });
     });
@@ -408,6 +411,6 @@ describe('Document management system', () => {
           done();
         });
     });
-    
+
   });
 });
