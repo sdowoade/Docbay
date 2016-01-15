@@ -13,7 +13,7 @@ Open up your Terminal and clone this repo or download it to your machine:
 $ git clone https://github.com/andela-dowoade/dms.git
 ```
 ####Requirements
-The application requires [http://node.org](node.js) and [http://mongodb.org](mongodb)
+The application requires [**node.js**](http://node.org) and [**mongodb**](http://mongodb.org)
 
 #### Dependencies
 Install the application dependencies by running the command below in the applications root directory:
@@ -34,7 +34,7 @@ $ jasmine init
 ## Usage
 
 From the command line run the commands below,
-and open the browser/postman at [http://localhost:3000](http://localhost:3000):
+and point your browser/postman at [http://localhost:3000](http://localhost:3000):
 
 ```
 $ mongodb
