@@ -4,8 +4,10 @@
   "description": "Manages documents, users and user roles",
   "main": "document-manager.js",
   "scripts": {
-    "test": "jasmine document-manager.spec.js",
-    "launch": "node document-manager.js"
+    "pretest": "node seeders/role.js",
+    "test": "jasmine tests/*[sS]pec.js",
+    "preinstall": "node seeders/role.js",
+    "launch": "node index.js"
   },
   "repository": {
     "type": "git",

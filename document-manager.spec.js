@@ -1,11 +1,11 @@
 'use strict';
-var mongoose = require('./db_connect'),
+var mongoose = require('./server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),
   userCtrl = require('./server/controllers/user'),
   roleCtrl = require('./server/controllers/role'),
   documentCtrl = require('./server/controllers/document'),
-  app = require('./document-manager'),
+  app = require('./index'),
   request = require('supertest')(app),
   async = require('async');
 
@@ -19,7 +19,7 @@ var testUsers = {
     email: 'd@c.com',
     password: 'pass'
   },
-
+  
   apiuser: {
     username: 'shelly',
     firstname: 'Sheldon',
@@ -61,11 +61,11 @@ var testUsers = {
 
 var testRoles = {
   x: {
-    title: 'can do x',
+    title: 'Sample role x',
   },
 
   y: {
-    title: 'can do y',
+    title: 'Sample role y',
   }
 };
 
@@ -73,7 +73,7 @@ var testDocuments = {
   docx: {
     title: 'Doc x',
     content: 'some content for x',
-    role: [0],
+    role: [1],
   },
 
   docy: {
@@ -111,7 +111,7 @@ describe('Document management system', () => {
   describe('User', () => {
     it('should ensure new user is unique', (done) => {
       async.times(2, (iter, next) => {
-        userCtrl.createUser(testUsers.dotun, (err, user) => {
+        userCtrl.create(testUsers.dotun, (err, user) => {
           next(err, user);
         });
       }, (err, users) => {
@@ -123,7 +123,7 @@ describe('Document management system', () => {
     });
 
     it('should ensure new user has a role', (done) => {
-      userCtrl.createUser(testUsers.walter, (err, user) => {
+      userCtrl.create(testUsers.walter, (err, user) => {
         expect(err).toBeNull();
         expect(user).not.toBeNull();
         expect(user.role).toBeTruthy();
@@ -134,10 +134,10 @@ describe('Document management system', () => {
     });
 
     it('should ensure new user has first name', (done) => {
-      userCtrl.createUser(testUsers.noFirstname, (err, user) => {
+      userCtrl.create(testUsers.noFirstname, (err, user) => {
         expect(err).not.toBeNull();
         expect(user).not.toBeDefined();
-        expect(err.actual.message).toEqual('User validation failed');
+        expect(err.actual.message).toEqual('Users validation failed');
         expect(err.actual.errors).toEqual(jasmine.objectContaining({
           'name.first': jasmine.anything()
         }));
@@ -146,10 +146,10 @@ describe('Document management system', () => {
     });
 
     it('should ensure new user has last name', (done) => {
-      userCtrl.createUser(testUsers.noLastname, (err, user) => {
+      userCtrl.create(testUsers.noLastname, (err, user) => {
         expect(err).not.toBeNull();
         expect(user).not.toBeDefined();
-        expect(err.actual.message).toEqual('User validation failed');
+        expect(err.actual.message).toEqual('Users validation failed');
         expect(err.actual.errors).toEqual(jasmine.objectContaining({
           'name.last': jasmine.anything()
         }));
@@ -158,7 +158,7 @@ describe('Document management system', () => {
     });
 
     it('should get all users', (done) => {
-      userCtrl.getAllUsers((err, users) => {
+      userCtrl.getAll((err, users) => {
         expect(users).toBeDefined();
         expect(users.length).toBe(2);
         done();
@@ -193,7 +193,7 @@ describe('Document management system', () => {
       var documents = [testDocuments.docy, testDocuments.docz];
       var users = [testUsers.fakeX, testUsers.fakeY];
       async.times(2, (iter, next) => {
-        documentCtrl.createDocument(documents[iter],
+        documentCtrl.create(documents[iter],
           users[iter], (err, doc) => {
             next(err, doc);
           });
@@ -204,7 +204,7 @@ describe('Document management system', () => {
 
     it('should ensure new document is unique', (done) => {
       async.times(2, (iter, next) => {
-        documentCtrl.createDocument(testDocuments.docx,
+        documentCtrl.create(testDocuments.docx,
           testUsers.fakeX, (err, doc) => {
             next(err, doc);
           });
@@ -216,7 +216,7 @@ describe('Document management system', () => {
 
     it('should get all document specified by limit', (done) => {
       async.times(2, (iter, next) => {
-        documentCtrl.getAllDocuments(iter + 1, (err, doc) => {
+        documentCtrl.getAll(iter + 1, (err, doc) => {
           next(err, doc);
         });
       }, (err, docs) => {
@@ -227,7 +227,7 @@ describe('Document management system', () => {
     });
 
     it('should get all documents in order of date of creation', (done) => {
-      documentCtrl.getAllDocuments(2, (err, docs) => {
+      documentCtrl.getAll(2, (err, docs) => {
         expect(docs[1].dateCreated)
           .not.toBeLessThan(
             docs[0].dateCreated
@@ -239,7 +239,7 @@ describe('Document management system', () => {
 
   describe('Search', () => {
     it('should search document by date', (done) => {
-      documentCtrl.getAllDocumentsByDate(moment().format(), 1, (err, docs) => {
+      documentCtrl.getAllByDate(moment().format(), 1, (err, docs) => {
         expect(moment(docs[0].dateCreated).startOf('Day').format())
           .toBe(moment().startOf('Day').format());
         done();
@@ -247,15 +247,15 @@ describe('Document management system', () => {
     });
 
     it('should search document by user', (done) => {
-      documentCtrl.getAllDocumentsByUser(0, 1, (err, docs) => {
-        docs.forEach((x) => expect(docs[0].ownerId).toBe(0));
+      documentCtrl.getAllByUser(0, 1, (err, docs) => {
+        docs.forEach((x) => expect(x.ownerId).toBe(0));
         done();
       });
     });
 
     it('should search document by role', (done) => {
-      documentCtrl.getAllDocumentsByRole(0, 1, (err, docs) => {
-        docs.forEach((x) => expect(docs[0].role.indexOf(0)).not.toBe(-1));
+      documentCtrl.getAllByRole(0, 1, (err, docs) => {
+        docs.forEach((x) => expect(x.role).toContain(0));
         done();
       });
     });
@@ -310,7 +310,9 @@ describe('Document management system', () => {
           expect(res.status).toBe(200);
           done();
         });
+    });
 
+    it('should not GET /users/id', (done) => {
       request.get('/users/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
@@ -319,14 +321,6 @@ describe('Document management system', () => {
     });
 
     it('should PUT /users/id', (done) => {
-      request.put('/users/3')
-        .set('x-access-token', testToken)
-        .send(testUsers.apiuser)
-        .end((err, res) => {
-          expect(res.status).toBe(401);
-          done();
-        });
-
       request.put('/users/2')
         .set('x-access-token', testToken)
         .send(testUsers.walter)
@@ -336,7 +330,17 @@ describe('Document management system', () => {
         });
     });
 
-    it('should DELETE /users/', (done) => {
+    it('should not PUT /users/id', (done) => {
+      request.put('/users/3')
+        .set('x-access-token', testToken)
+        .send(testUsers.apiuser)
+        .end((err, res) => {
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
+
+    it('should DELETE /users/id', (done) => {
       request.delete('/users/3')
         .set('x-access-token', testToken)
         .end((err, res) => {
@@ -383,7 +387,9 @@ describe('Document management system', () => {
           expect(res.status).toBe(200);
           done();
         });
+    });
 
+    it('should not GET /documents/id', (done) => {
       request.get('/documents/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
@@ -401,14 +407,26 @@ describe('Document management system', () => {
         });
     });
 
-    it('should DELETE /documents/', (done) => {
+    it('should not PUT /documents/id', (done) => {
+      request.put('/documents/2')
+        .set('x-access-token', testToken)
+        .send(testDocuments.docz)
+        .end((err, res) => {
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
+
+    it('should not DELETE /documents/', (done) => {
       request.delete('/documents/0')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(401);
           done();
         });
+    });
 
+    it('should DELETE /documents/', (done) => {
       request.delete('/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {

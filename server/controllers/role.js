@@ -3,7 +3,8 @@ var roleModel = require('../models/role');
 var userCtrl = require('./user');
 
 var RoleCtrl = class {
-  createRole(newRole, user, cb) {
+  /*Creates role and assigns the role to a user*/
+  create(newRole, user, cb) {
     roleModel.create({
       title: newRole.title,
     }, (err, role) => {
@@ -20,7 +21,8 @@ var RoleCtrl = class {
     });
   }
 
-  getAllRoles(cb) {
+  /*Query role model to get all roles*/
+  getAll(cb) {
     roleModel.find({}, (err, roles) => {
       err ? cb({
         'status': 500,

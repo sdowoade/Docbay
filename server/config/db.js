@@ -1,3 +1,6 @@
+/*Connect to mongodb datatbase using mongoose.
+Mongoose-auto-increment cahnges default _id behaviour.
+*/
 'use strict';
 var mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),

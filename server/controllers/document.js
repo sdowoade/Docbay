@@ -4,7 +4,8 @@ var documentModel = require('../models/document');
 var moment = require('moment');
 
 var DocumentCtrl = class {
-  createDocument(newDocument, user, cb) {
+  /*Creates a new document*/
+  create(newDocument, user, cb) {
     documentModel.create({
       ownerId: user._id,
       title: newDocument.title,
@@ -18,7 +19,8 @@ var DocumentCtrl = class {
     });
   }
 
-  updateDocument(id, newDocument, user, cb) {
+  /*Updates a document*/
+  update(id, newDocument, user, cb) {
     documentModel.findById(id).exec((err, doc) => {
       if (!doc) {
         cb({
@@ -49,7 +51,8 @@ var DocumentCtrl = class {
     });
   }
 
-  getAllDocuments(limit, cb) {
+  /*Query document model to fetch all documents.*/
+  getAll(limit, cb) {
     limit = limit || 50;
     documentModel.find({}, (err, docs) => {
       err ? cb({
@@ -59,7 +62,8 @@ var DocumentCtrl = class {
     }).limit(limit);
   }
 
-  getDocument(id, cb) {
+  /*Query document model to fetch a single document.*/
+  get(id, cb) {
     documentModel.findById(id, (err, doc) => {
       !doc ? cb({
         'status': 404,
@@ -68,7 +72,8 @@ var DocumentCtrl = class {
     });
   }
 
-  getAllDocumentsByDate(date, limit, cb) {
+  /*Query document model to fetch all documents by date.*/
+  getAllByDate(date, limit, cb) {
     limit = limit || 50;
     documentModel.find({
       dateCreated: {
@@ -83,7 +88,8 @@ var DocumentCtrl = class {
     }).limit(limit);
   }
 
-  getAllDocumentsByRole(role, limit, cb) {
+  /*Query document model to fetch all documents by role.*/
+  getAllByRole(role, limit, cb) {
     limit = limit || 50;
     documentModel.find({
       role: role
@@ -95,7 +101,8 @@ var DocumentCtrl = class {
     }).limit(limit);
   }
 
-  getAllDocumentsByUser(id, limit, cb) {
+  /*Query document model to fetch all documents by user.*/
+  getAllByUser(id, limit, cb) {
     limit = limit || 50;
     documentModel.find({
       ownerId: id
@@ -107,7 +114,10 @@ var DocumentCtrl = class {
     }).limit(limit);
   }
 
-  deleteDocument(id, user, cb) {
+  /*Deletes a document.
+    Conditional check to check if user has correct
+    access rights*/
+  delete(id, user, cb) {
     documentModel.findById(id).exec((err, doc) => {
       if (!doc) {
         cb({

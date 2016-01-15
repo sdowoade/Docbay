@@ -1,3 +1,4 @@
+/*Helper functions*/
 'use strict';
 Array.prototype.unique = function() {
   var newArray = [];

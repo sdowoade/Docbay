@@ -5,9 +5,8 @@ var userModel = require('../models/user'),
 
 
 var UserCtrl = class {
-  /*Creates user with default public role
-  and new user roles*/
-  createUser(newUser, cb) {
+  /*Creates user with default public role.*/
+  create(newUser, cb) {
     userModel.create({
       username: newUser.username,
       role: [0],
@@ -25,7 +24,8 @@ var UserCtrl = class {
     });
   }
 
-  updateUser(id, newUser, user, cb) {
+  /*Updates user with default public role.*/
+  update(id, newUser, user, cb) {
     if (user._id != id) {
       cb({
         'status': 401,
@@ -57,6 +57,7 @@ var UserCtrl = class {
     }
   }
 
+  /*Assign a specific role to a user.*/
   assignRole(id, roleId, cb) {
     userModel.findById(id).exec((err, user) => {
       if (!user) {
@@ -78,7 +79,8 @@ var UserCtrl = class {
     });
   }
 
-  getAllUsers(cb) {
+  /*Query users model to get all users.*/
+  getAll(cb) {
     userModel.find({}).exec((err, users) => {
       err ? cb({
         'status': 500,
@@ -87,16 +89,20 @@ var UserCtrl = class {
     });
   }
 
-  getUser(id, cb) {
+  /*Query users model to get a single user by id.*/
+  get(id, cb) {
     userModel.findById(id).exec((err, user) => {
       !(user) ? cb({
         'status': 404,
         'actual': err
-      }) : cb(null, user);
+      }): cb(null, user);
     });
   }
 
-  deleteUser(id, user, cb) {
+  /*Deletes a user.
+    Conditional check to check if user has correct
+    access rights.*/
+  delete(id, user, cb) {
     if (user._id != id) {
       cb({
         'status': 401,
