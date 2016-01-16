@@ -15,13 +15,14 @@ mockgoose(mongoose);
 
 describe('User', () => {
   beforeAll((done) => {
+    console.log('Running user test suite');
     mockgoose.reset(() => {
       done();
     });
   });
 
   afterAll((done) => {
-    mongoose.reset(() => {
+    mockgoose.reset(() => {
       done();
     });
   });
@@ -123,7 +124,7 @@ describe('User', () => {
     });
 
     it('should GET /users/id', (done) => {
-      request.get('/users/0')
+      request.get('/users/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'username': 'dowoade'
@@ -142,7 +143,7 @@ describe('User', () => {
     });
 
     it('should PUT /users/id', (done) => {
-      request.put('/users/2')
+      request.put('/users/3')
         .set('x-access-token', testToken)
         .send(testUsers.walter)
         .end((err, res) => {
@@ -152,7 +153,7 @@ describe('User', () => {
     });
 
     it('should not PUT /users/id', (done) => {
-      request.put('/users/3')
+      request.put('/users/4')
         .set('x-access-token', testToken)
         .send(testUsers.apiuser)
         .end((err, res) => {
@@ -162,7 +163,7 @@ describe('User', () => {
     });
 
     it('should not DELETE /users/id', (done) => {
-      request.delete('/users/3')
+      request.delete('/users/4')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(401);
@@ -171,7 +172,7 @@ describe('User', () => {
     });
 
     it('should DELETE /users/id', (done) => {
-      request.delete('/users/2')
+      request.delete('/users/3')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);

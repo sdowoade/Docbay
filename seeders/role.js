@@ -6,7 +6,6 @@ roleModel.count({}, function(err, count) {
     roleModel.create({
       title: '_Public',
     }, (err, role) => {
-      console.log('public created');
       process.exit(0);
     });
   } else {

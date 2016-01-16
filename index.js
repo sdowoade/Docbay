@@ -25,5 +25,5 @@ documentRoute(router);
 roleRoute(router);
 
 app.listen(3000);
-console.log('Magic happens at http://localhost:' + 3000);
+console.log('Listening at http://localhost:' + 3000);
 module.exports = app;

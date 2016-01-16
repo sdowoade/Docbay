@@ -16,6 +16,7 @@ mockgoose(mongoose);
 
 describe('Document', () => {
   beforeAll((done) => {
+    console.log('Running document test suite');
     var documents = [testDocuments.docy, testDocuments.docz];
     var users = [testUsers.dotun, testUsers.walter];
     var usersForDocs = [testUsers.fakeUser_1, testUsers.fakeUser_2];
@@ -148,7 +149,7 @@ describe('Document', () => {
     });
 
     it('should GET /documents/id', (done) => {
-      request.get('/documents/0')
+      request.get('/documents/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'title': 'Doc y'
@@ -167,7 +168,7 @@ describe('Document', () => {
     });
 
     it('should PUT /documents/id', (done) => {
-      request.put('/documents/1')
+      request.put('/documents/2')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -177,7 +178,7 @@ describe('Document', () => {
     });
 
     it('should not PUT /documents/id', (done) => {
-      request.put('/documents/2')
+      request.put('/documents/3')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -187,7 +188,7 @@ describe('Document', () => {
     });
 
     it('should not DELETE /documents/', (done) => {
-      request.delete('/documents/0')
+      request.delete('/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(401);
@@ -196,7 +197,7 @@ describe('Document', () => {
     });
 
     it('should DELETE /documents/', (done) => {
-      request.delete('/documents/1')
+      request.delete('/documents/2')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
@@ -205,7 +206,7 @@ describe('Document', () => {
     });
 
     it('should GET /users/id/documents', (done) => {
-      request.get('/users/0/documents')
+      request.get('/users/1/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);

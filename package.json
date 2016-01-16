@@ -5,7 +5,7 @@
   "main": "document-manager.js",
   "scripts": {
     "pretest": "node seeders/role.js",
-    "test": "jasmine tests/*[sS]pec.js",
+    "test": "jasmine tests/role.spec.js && jasmine tests/document.spec.js && jasmine tests/user.spec.js",
     "preinstall": "node seeders/role.js",
     "launch": "node index.js"
   },

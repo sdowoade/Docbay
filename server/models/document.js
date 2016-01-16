@@ -31,7 +31,7 @@ var documentSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  
+
   lastModified: {
     type: Date,
     default: Date.now
@@ -39,7 +39,8 @@ var documentSchema = new Schema({
 });
 
 documentSchema.plugin(autoIncrement.plugin, {
-  model: 'Document'
+  model: 'Document',
+  startAt: 1,
 });
 
 module.exports = mongoose.model('Documents', documentSchema);

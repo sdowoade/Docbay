@@ -41,7 +41,8 @@ var userSchema = new Schema({
 });
 
 userSchema.plugin(autoIncrement.plugin, {
-  model: 'User'
+  model: 'User',
+  startAt: 1
 });
 
 module.exports = mongoose.model('Users', userSchema);

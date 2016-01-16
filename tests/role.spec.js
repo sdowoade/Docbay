@@ -15,15 +15,14 @@ mockgoose(mongoose);
 
 describe('Role', () => {
   beforeAll((done) => {
+    console.log('Running role test suite');
     var users = [testUsers.dotun, testUsers.walter];
-    mockgoose.reset(() => {
-      async.times(2, (iter, next) => {
-        userCtrl.create(users[iter], (err, user) => {
-          next(err, user);
-        });
-      }, (err, users) => {
-        done();
+    async.times(2, (iter, next) => {
+      userCtrl.create(users[iter], (err, user) => {
+        next(err, user);
       });
+    }, (err, users) => {
+      done();
     });
   });
 
