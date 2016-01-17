@@ -99,9 +99,11 @@ var UserCtrl = class {
     });
   }
 
-  /*Deletes a user.
-    Conditional check to check if user has correct
-    access rights.*/
+  /**
+   *Deletes a user.
+   *Conditional check to check if user has correct
+   *access rights.
+   */
   delete(id, user, cb) {
     if (user._id != id) {
       cb({

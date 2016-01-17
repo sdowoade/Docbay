@@ -4,8 +4,10 @@ var documentCtrl = require('../controllers/document');
 var authCtrl = require('../authentication/auth');
 
 module.exports = (router) => {
-  /*document route handle finding matching instance documents
-   and creating new documents*/
+  /**
+   *document route handle finding matching instance documents
+   *and creating new documents
+   */
   router.route('/documents')
 
   .get((req, res) => {
@@ -20,8 +22,10 @@ module.exports = (router) => {
     });
   });
 
-  /*document route -finds an existing document,
-  update document attributes and delete document*/
+  /**
+   *document route -finds an existing document,
+   *update document attributes and delete document
+   */
   router.route('/documents/:id')
 
   .get((req, res) => {

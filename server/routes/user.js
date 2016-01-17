@@ -14,8 +14,10 @@ module.exports = (router) => {
     });
   });
 
-  /*Users route handle finding matching instance of users
-  and creating new users*/
+  /**
+   *Users route handle finding matching instance of users
+   *and creating new users
+   */
   router.route('/users')
 
   .get((req, res) => {
@@ -30,8 +32,10 @@ module.exports = (router) => {
     });
   });
 
-  /*Users route -finds an existing user,
-  update user attributes and delete user*/
+  /**
+   *Users route -finds an existing user,
+   *update user attributes and delete user
+   */
   router.route('/users/:id')
 
   .get((req, res) => {
@@ -55,7 +59,7 @@ module.exports = (router) => {
     });
   });
 
-  /* get documents belonging to a user*/
+  /*get documents belonging to a user*/
   router.get('/users/:id/documents', (req, res) => {
     documentCtrl.getAllByUser(req.params.id,
       req.query.limit, (err, docs) => {

@@ -4,8 +4,10 @@ var roleCtrl = require('../controllers/role');
 var authCtrl = require('../authentication/auth');
 
 module.exports = (router) => {
-  /*role route handles finding matching instance of roles
-  and creating new roles*/
+  /**
+   *role route handles finding matching instance of roles
+   *and creating new roles
+   */
   router.route('/roles')
 
   .get((req, res) => {

@@ -114,9 +114,11 @@ var DocumentCtrl = class {
     }).limit(limit);
   }
 
-  /*Deletes a document.
-    Conditional check to check if user has correct
-    access rights*/
+  /**
+   *Deletes a document.
+   *Conditional check to check if user has correct
+   *access rights
+   */
   delete(id, user, cb) {
     documentModel.findById(id).exec((err, doc) => {
       if (!doc) {
