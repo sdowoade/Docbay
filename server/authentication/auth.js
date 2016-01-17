@@ -2,6 +2,7 @@
 var userModel = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
+var config=require('../config/app');
 
 var AuthCtrl = class {
   /* login user and create token*/
@@ -24,7 +25,7 @@ var AuthCtrl = class {
               message: 'Authentication failed'
             });
           } else {
-            var token = jwt.sign(user, 'notSoSecret', {
+            var token = jwt.sign(user, config.secret, {
               expiresIn: 86400
             });
             res.json({
@@ -43,7 +44,7 @@ var AuthCtrl = class {
     var token = req.body.token || req.params.token ||
       req.headers['x-access-token'];
     if (token) {
-      jwt.verify(token, 'notSoSecret', (err, decoded) => {
+      jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
           return res.status(403).json({
             success: false,

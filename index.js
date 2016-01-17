@@ -7,7 +7,7 @@ var documentRoute = require('./server/routes/document');
 var roleRoute = require('./server/routes/role');
 
 app.use(parser.urlencoded({
-  extended: false
+  extended: true
 }));
 app.use(parser.json());
 
