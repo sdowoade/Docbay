@@ -89,7 +89,7 @@ describe('Role', () => {
       request.post('/roles')
         .send(testRoles.sample_role_2)
         .end((err, res) => {
-          expect(res.status).toBe(403);
+          expect(res.status).toBe(401);
           done();
         });
     });

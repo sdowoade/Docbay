@@ -31,7 +31,7 @@ var DocumentCtrl = class {
         if (user._id !== doc.ownerId ||
           doc.role.intersect(user.role).length === 0) {
           cb({
-            'status': 401,
+            'status': 403,
             'actual': {
               'message': 'Access Denied'
             }
@@ -131,7 +131,7 @@ var DocumentCtrl = class {
       } else {
         if (user._id !== doc.ownerId) {
           cb({
-            'status': 401,
+            'status': 403,
             'actual': {
               'message': 'Access Denied'
             }

@@ -143,7 +143,7 @@ describe('Document', () => {
       request.post('/documents')
         .send(testDocuments.apidoc)
         .end((err, res) => {
-          expect(res.status).toBe(403);
+          expect(res.status).toBe(401);
           done();
         });
     });
@@ -182,7 +182,7 @@ describe('Document', () => {
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
-          expect(res.status).toBe(401);
+          expect(res.status).toBe(403);
           done();
         });
     });
@@ -191,7 +191,7 @@ describe('Document', () => {
       request.delete('/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
-          expect(res.status).toBe(401);
+          expect(res.status).toBe(403);
           done();
         });
     });

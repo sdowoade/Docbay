@@ -28,7 +28,7 @@ var UserCtrl = class {
   update(id, newUser, user, cb) {
     if (user._id != id) {
       cb({
-        'status': 401,
+        'status': 403,
         'actual': {
           'message': 'Access Denied'
         }
@@ -107,7 +107,7 @@ var UserCtrl = class {
   delete(id, user, cb) {
     if (user._id != id) {
       cb({
-        'status': 401,
+        'status': 403,
         'actual': {
           'message': 'Access Denied'
         }

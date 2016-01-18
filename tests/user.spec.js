@@ -157,7 +157,7 @@ describe('User', () => {
         .set('x-access-token', testToken)
         .send(testUsers.apiuser)
         .end((err, res) => {
-          expect(res.status).toBe(401);
+          expect(res.status).toBe(403);
           done();
         });
     });
@@ -166,7 +166,7 @@ describe('User', () => {
       request.delete('/users/4')
         .set('x-access-token', testToken)
         .end((err, res) => {
-          expect(res.status).toBe(401);
+          expect(res.status).toBe(403);
           done();
         });
     });

@@ -14,13 +14,13 @@ var AuthCtrl = class {
         res.status(500).send(err);
       } else {
         if (!user) {
-          res.status(403).json({
+          res.status(401).json({
             success: false,
             message: 'Authentication failed'
           });
         } else if (user) {
           if (!bcrypt.compareSync(req.body.password, user.password)) {
-            res.status(403).json({
+            res.status(401).json({
               success: false,
               message: 'Authentication failed'
             });
@@ -46,7 +46,7 @@ var AuthCtrl = class {
     if (token) {
       jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
-          return res.status(403).json({
+          return res.status(401).json({
             success: false,
             message: 'Failed to authenticate token.'
           });
@@ -56,7 +56,7 @@ var AuthCtrl = class {
         }
       });
     } else {
-      return res.status(403).send({
+      return res.status(401).send({
         success: false,
         message: 'No token provided.'
       });
