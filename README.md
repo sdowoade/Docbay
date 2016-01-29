@@ -1,16 +1,16 @@
-# DMS
+# Docbay
 
-REST API for Document Management System
+Docbay Document Management System
 
 
 ## Description
 
-DMS manages documents, users and user roles. The system allows users to create documents and define which roles can access it.
+Docbay manages documents, users and user roles. The system allows users to create documents and define which roles can access it.
 
 ## Installation
 Open up your Terminal and clone this repo or download it to your machine:
 ```bash
-$ git clone https://github.com/andela-dowoade/dms.git
+$ git clone https://github.com/andela-dowoade/docbay.git
 ```
 ####Requirements
 The application requires [**node.js**](http://node.org) and [**mongodb**](http://mongodb.org)

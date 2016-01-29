@@ -1,0 +1,25 @@
+div(flex)
+  div.container
+    md-toolbar.toolbar
+      div.md-toolbar-tools(layout-align="center center")
+        h1 Docbay
+        span(flex)
+        md-button(style="color:black") Insert Name
+    div.md-padding(layout="row")
+      div(layout-align="start center")
+        md-list
+          md-list-item Files
+          md-list-item Roles
+          md-list-item Invites
+      div.margin-left(flex)
+        md-grid-list(md-cols-xs="2" md-cols-gt-xs="4" md-row-height-gt-xs="1:1" md-row-height-sm="1:1" md-gutter-xs="8px" md-gutter-gt-xs="24px")
+          md-grid-tile(md-ink-ripple)
+            img.add-image(src="../images/addnewdoc.png")
+          md-grid-tile(layout="column" md-ink-ripple)
+            md-card.tile
+              div.md-padding(flex)
+                h4.title-display Title
+                p.content-display Content
+            md-grid-tile-footer.md-padding
+              i.fa.fa-trash
+                md-tooltip Delete

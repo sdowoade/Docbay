@@ -2,7 +2,7 @@
   "browser": true,
   "esnext": true,
   "globals": {},
-  "predef": ["$", "describe", "expect", "it", "jasmine", "beforeEach", "beforeAll", "Index", "module", "require", "console", "afterAll", "exports","process"],
+  "predef": ["$", "describe", "expect", "it", "jasmine", "beforeEach", "beforeAll", "Index", "module", "require", "console", "afterAll", "exports","process","karma","__dirname"],
   "globalstrict": true,
   "quotmark": true,
   "undef": false,

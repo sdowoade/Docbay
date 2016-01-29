@@ -1,14 +1,14 @@
 /*Document Spec: contains tests for document controllers and routes.*/
 'use strict';
-var mongoose = require('../server/config/db'),
+var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),
-  userCtrl = require('../server/controllers/user'),
-  roleCtrl = require('../server/controllers/role'),
-  documentCtrl = require('../server/controllers/document'),
+  userCtrl = require('../../server/controllers/user'),
+  roleCtrl = require('../../server/controllers/role'),
+  documentCtrl = require('../../server/controllers/document'),
   testUsers = require('./data/users'),
   testDocuments = require('./data/documents'),
-  app = require('../index'),
+  app = require('../../index'),
   request = require('supertest')(app),
   async = require('async');
 
@@ -109,7 +109,7 @@ describe('Document', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/users/login')
+      request.post('/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -118,7 +118,7 @@ describe('Document', () => {
     });
 
     it('should GET /documents/', (done) => {
-      request.get('/documents')
+      request.get('/api/documents')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(3);
@@ -130,7 +130,7 @@ describe('Document', () => {
     });
 
     it('should POST /documents/', (done) => {
-      request.post('/documents')
+      request.post('/api/documents')
         .set('x-access-token', testToken)
         .send(testDocuments.apidoc)
         .end((err, res) => {
@@ -140,7 +140,7 @@ describe('Document', () => {
     });
 
     it('should not POST /documents/', (done) => {
-      request.post('/documents')
+      request.post('/api/documents')
         .send(testDocuments.apidoc)
         .end((err, res) => {
           expect(res.status).toBe(401);
@@ -149,7 +149,7 @@ describe('Document', () => {
     });
 
     it('should GET /documents/id', (done) => {
-      request.get('/documents/1')
+      request.get('/api/documents/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'title': 'Doc y'
@@ -160,7 +160,7 @@ describe('Document', () => {
     });
 
     it('should not GET /documents/id', (done) => {
-      request.get('/documents/20')
+      request.get('/api/documents/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
           done();
@@ -168,7 +168,7 @@ describe('Document', () => {
     });
 
     it('should PUT /documents/id', (done) => {
-      request.put('/documents/2')
+      request.put('/api/documents/2')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -178,7 +178,7 @@ describe('Document', () => {
     });
 
     it('should not PUT /documents/id', (done) => {
-      request.put('/documents/3')
+      request.put('/api/documents/3')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -188,7 +188,7 @@ describe('Document', () => {
     });
 
     it('should not DELETE /documents/', (done) => {
-      request.delete('/documents/1')
+      request.delete('/api/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(403);
@@ -197,7 +197,7 @@ describe('Document', () => {
     });
 
     it('should DELETE /documents/', (done) => {
-      request.delete('/documents/2')
+      request.delete('/api/documents/2')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
@@ -206,7 +206,7 @@ describe('Document', () => {
     });
 
     it('should GET /users/id/documents', (done) => {
-      request.get('/users/1/documents')
+      request.get('/api/users/1/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);

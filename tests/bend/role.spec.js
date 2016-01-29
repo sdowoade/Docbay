@@ -1,13 +1,13 @@
 /*Role Spec: contains tests for role controllers and routes.*/
 'use strict';
-var mongoose = require('../server/config/db'),
+var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),
-  userCtrl = require('../server/controllers/user'),
-  roleCtrl = require('../server/controllers/role'),
+  userCtrl = require('../../server/controllers/user'),
+  roleCtrl = require('../../server/controllers/role'),
   testUsers = require('./data/users'),
   testRoles = require('./data/roles'),
-  app = require('../index'),
+  app = require('../../index'),
   request = require('supertest')(app),
   async = require('async');
 
@@ -55,7 +55,7 @@ describe('Role', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/users/login')
+      request.post('/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -64,7 +64,7 @@ describe('Role', () => {
     });
 
     it('should GET /roles/', (done) => {
-      request.get('/roles')
+      request.get('/api/roles')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(2);
@@ -76,7 +76,7 @@ describe('Role', () => {
     });
 
     it('should POST /roles/', (done) => {
-      request.post('/roles')
+      request.post('/api/roles')
         .set('x-access-token', testToken)
         .send(testRoles.sample_role_2)
         .end((err, res) => {
@@ -86,7 +86,7 @@ describe('Role', () => {
     });
 
     it('should not POST /roles/', (done) => {
-      request.post('/roles')
+      request.post('/api/roles')
         .send(testRoles.sample_role_2)
         .end((err, res) => {
           expect(res.status).toBe(401);

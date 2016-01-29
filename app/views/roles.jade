@@ -1,0 +1,28 @@
+div(flex)
+  div.container
+    md-toolbar.toolbar
+      div.md-toolbar-tools(layout-align="center center")
+        h1 Docbay
+        span(flex)
+        md-button(style="color:black") Insert Name
+    div.md-padding(layout="row")
+      div(layout-align="start center")
+        md-list
+          md-list-item Files
+          md-list-item Roles
+          md-list-item Invites
+      div.margin-left(flex)
+        md-list
+          md-list-item
+            div(layout="row" flex)
+              span(flex) name
+              span(flex) Created at
+            md-divider
+          md-list-item    
+            div(layout="row" flex)
+              i.fa.fa-users
+              span(flex) Insert name
+              span(flex) Insert date
+            md-divider(ng-if="!$last")
+
+            

@@ -1,0 +1,33 @@
+md-toolbar.toolbar
+  div.md-toolbar-tools(layout-align="center center")
+    h1 Docbay
+    span(flex)
+    md-button(style="color:black") Sign up 
+    md-button(style="color:black") Login 
+  div(layout-align="center start" layout="column")
+    div(layout-align="center center")
+      img(flex src="images/home2.png")
+    div.home-info(layout-gt-xs="row" layout-xs="column" layout-align="start center")
+      div.md-padding(flex=50 layout="column")  
+        span.md-display-2 Writing and sharing made easy.
+        span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
+      div.md-padding(flex=50 layout="column" layout-align="center end")
+        form
+          div(layout-gt-xs="row" layout-xs="column")
+            md-input-container.md-block
+              label First name
+              input
+            md-input-container.md-block
+              label Last name
+              input
+          div(layout-gt-xs="row" layout-xs="column")
+            md-input-container.md-block
+              label Email
+              input
+            md-input-container.md-block
+              label Password
+              input(type="password")
+          div(layout="column")       
+            md-button.home-button.md-raised(ui-sref="signup") Sign up
+            md-button.home-button(ui-sref="login") or Login 
+    

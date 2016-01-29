@@ -1,13 +1,13 @@
 /*User Spec: contains tests for user controllers and routes.*/
 'use strict';
-var mongoose = require('../server/config/db'),
+var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),
-  userCtrl = require('../server/controllers/user'),
-  roleCtrl = require('../server/controllers/role'),
-  documentCtrl = require('../server/controllers/document'),
+  userCtrl = require('../../server/controllers/user'),
+  roleCtrl = require('../../server/controllers/role'),
+  documentCtrl = require('../../server/controllers/document'),
   testUsers = require('./data/users'),
-  app = require('../index'),
+  app = require('../../index'),
   request = require('supertest')(app),
   async = require('async');
 
@@ -86,7 +86,7 @@ describe('User', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/users/login')
+      request.post('/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -95,7 +95,7 @@ describe('User', () => {
     });
 
     it('should /', (done) => {
-      request.get('/')
+      request.get('/api/')
         .end((err, res) => {
           expect(res.status).toBe(200);
           done();
@@ -103,7 +103,7 @@ describe('User', () => {
     });
 
     it('should GET /users/', (done) => {
-      request.get('/users')
+      request.get('/api/users')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(2);
@@ -115,7 +115,7 @@ describe('User', () => {
     });
 
     it('should POST /users/', (done) => {
-      request.post('/users')
+      request.post('/api/users')
         .send(testUsers.apiuser)
         .end((err, res) => {
           expect(res.status).toBe(201);
@@ -124,7 +124,7 @@ describe('User', () => {
     });
 
     it('should GET /users/id', (done) => {
-      request.get('/users/1')
+      request.get('/api/users/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'username': 'dowoade'
@@ -135,7 +135,7 @@ describe('User', () => {
     });
 
     it('should not GET /users/id', (done) => {
-      request.get('/users/20')
+      request.get('/api/users/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
           done();
@@ -143,7 +143,7 @@ describe('User', () => {
     });
 
     it('should PUT /users/id', (done) => {
-      request.put('/users/3')
+      request.put('/api/users/3')
         .set('x-access-token', testToken)
         .send(testUsers.walter)
         .end((err, res) => {
@@ -153,7 +153,7 @@ describe('User', () => {
     });
 
     it('should not PUT /users/id', (done) => {
-      request.put('/users/4')
+      request.put('/api/users/4')
         .set('x-access-token', testToken)
         .send(testUsers.apiuser)
         .end((err, res) => {
@@ -163,7 +163,7 @@ describe('User', () => {
     });
 
     it('should not DELETE /users/id', (done) => {
-      request.delete('/users/4')
+      request.delete('/api/users/4')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(403);
@@ -172,7 +172,7 @@ describe('User', () => {
     });
 
     it('should DELETE /users/id', (done) => {
-      request.delete('/users/3')
+      request.delete('/api/users/3')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
