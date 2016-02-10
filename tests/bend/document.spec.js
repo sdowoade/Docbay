@@ -46,7 +46,7 @@ describe('Document', () => {
 
   afterAll((done) => {
     mockgoose.reset(() => {
-        done();
+      done();
     });
   });
 
@@ -93,14 +93,14 @@ describe('Document', () => {
   });
 
   it('should search document by user', (done) => {
-    documentCtrl.getAllByUser(0, 1, (err, docs) => {
-      docs.forEach((x) => expect(x.ownerId).toBe(0));
+    documentCtrl.getAllByUser(1, testUsers.fakeUser_1, 1, (err, docs) => {
+      docs.forEach((x) => expect(x.ownerId).toBe(1));
       done();
     });
   });
 
   it('should search document by role', (done) => {
-    documentCtrl.getAllByRole(0, 1, (err, docs) => {
+    documentCtrl.getAllByRole(0, testUsers.fakeUser_1, 1, (err, docs) => {
       docs.forEach((x) => expect(x.role).toContain(0));
       done();
     });
@@ -109,6 +109,8 @@ describe('Document', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
+        console.log(testUsers.walter)
+
       request.post('/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
@@ -205,12 +207,21 @@ describe('Document', () => {
         });
     });
 
+    it('should not GET /users/id/documents', (done) => {
+      request.get('/api/users/3/documents')
+        .set('x-access-token', testToken)
+        .end((err, res) => {
+          expect(res.status).toBe(403);
+          done();
+        });
+    });
+
     it('should GET /users/id/documents', (done) => {
-      request.get('/api/users/1/documents')
+      request.get('/api/users/2/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.length).toBe(2);
+          expect(res.body.length).toBe(1);
           done();
         });
     });

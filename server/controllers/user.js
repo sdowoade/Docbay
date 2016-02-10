@@ -89,9 +89,19 @@ var UserCtrl = class {
     });
   }
 
+  /*Query users model to get all users in a role.*/
+  getAllInRole(id,cb) {
+    userModel.find({role:id}).exec((err, users) => {
+      err ? cb({
+        'status': 500,
+        'actual': err
+      }) : cb(null, users);
+    });
+  }
+
   /*Query users model to get a single user by id.*/
   get(id, cb) {
-    userModel.findById(id).exec((err, user) => {
+    userModel.findById(id).populate('role').exec((err, user) => {
       !(user) ? cb({
         'status': 404,
         'actual': err

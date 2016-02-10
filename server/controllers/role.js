@@ -21,6 +21,16 @@ var RoleCtrl = class {
     });
   }
 
+  /*Query roles model to get a single role by id.*/
+  get(id, cb) {
+    roleModel.findById(id).exec((err, role) => {
+      !(role) ? cb({
+        'status': 404,
+        'actual': err
+      }): cb(null, role);
+    });
+  }
+
   /*Query role model to get all roles*/
   getAll(cb) {
     roleModel.find({}, (err, roles) => {

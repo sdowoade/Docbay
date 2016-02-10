@@ -1,28 +1,34 @@
-div(flex)
-  div.container
-    md-toolbar.toolbar
-      div.md-toolbar-tools(layout-align="center center")
-        h1 Docbay
-        span(flex)
-        md-button(style="color:black") Insert Name
-    div.md-padding(layout="row")
-      div(layout-align="start center")
-        md-list
-          md-list-item Files
-          md-list-item Roles
-          md-list-item Invites
-      div.margin-left(flex)
-        md-list
-          md-list-item
-            div(layout="row" flex)
-              span(flex) name
-              span(flex) Created at
-            md-divider
-          md-list-item    
-            div(layout="row" flex)
-              i.fa.fa-users
-              span(flex) Insert name
-              span(flex) Insert date
+include ../shared/toolbar
+div.role-container.md-padding(ng-init="init()")
+  div(flex layout="column")
+    div(layout-align="center center" layout="column")
+      h1.md-display-4 Sharing a document?
+      span.small View roles you are currently sharing documents with or create a new role to securely share your documents.
+      form(ng-submit="save()" layout="column")
+        md-input-container.pop
+          label 
+          input(ng-model="role.title" required)
+        md-button.md-padding.md-raised.primary-button(type="submit") Create new role
+      md-content.roles-display  
+        md-list.md-padding(layout-margin)
+          md-list-item(ng-repeat="role in roles")    
+            div(layout="row" layout-xs="column" layout-align="center center")
+              i.fa.fa-users.fa-style.color-greenish
+              span.role-display(flex ui-sref="roleDocuments({id:role._id,role:role.title})") {{role.title}}
+              div
+                md-menu(md-offset="0 -7")
+                  md-button(aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)")
+                    i.fa.fa-ellipsis-v.fa-style.color-greenish
+                  md-menu-content(width="2")
+                    md-menu-item
+                      md-button(ng-click="close()") 
+                        span(md-menu-align-target="") _________
+                    md-menu-item
+                      md-button(ng-click="invite(role)")
+                        span(md-menu-align-target="") Invite users
+                    md-menu-item
+                      md-button(ng-click="members(role)")
+                        span(md-menu-align-target="") See Members
             md-divider(ng-if="!$last")
 
-            
+              

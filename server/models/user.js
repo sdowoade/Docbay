@@ -14,7 +14,7 @@ var userSchema = new Schema({
   role: {
     type: [{
       type: Number,
-      ref: 'Role'
+      ref: 'Roles'
     }],
     required: true,
   },

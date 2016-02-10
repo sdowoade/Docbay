@@ -60,10 +60,17 @@ module.exports = (router) => {
   });
 
   /*get documents belonging to a user*/
-  router.get('/users/:id/documents', (req, res) => {
-    documentCtrl.getAllByUser(req.params.id,
+  router.get('/users/:id/documents', authCtrl.authorise, (req, res) => {
+    documentCtrl.getAllByUser(req.params.id, req.decoded._doc,
       req.query.limit, (err, docs) => {
         err ? res.status(err.status).send(err) : res.status(200).json(docs);
       });
+  });
+
+  /*assign a role user*/
+  router.post('/users/:id/roles', authCtrl.authorise, (req, res) => {
+    userCtrl.assignRole(req.params.id, req.body.role, (err, docs) => {
+      err ? res.status(err.status).send(err) : res.status(200).json(docs);
+    });
   });
 };

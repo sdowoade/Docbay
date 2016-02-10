@@ -20,7 +20,7 @@ var documentSchema = new Schema({
   role: {
     type: [{
       type: Number,
-      ref: 'Role'
+      ref: 'Roles'
     }],
     required: true,
   },

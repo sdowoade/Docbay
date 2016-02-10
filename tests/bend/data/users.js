@@ -40,6 +40,7 @@ module.exports = {
 
   fakeUser_1: {
     _id: 1,
+    role: [0]
   },
 
   fakeUser_2: {

@@ -24,7 +24,7 @@ Array.prototype.numbers = function(array) {
 
 exports.getUserRoles = function(data) {
   var roles = [];
-  roles.push(data);
+  roles.push(data.flatten());
   roles = roles.flatten().numbers().unique();
   return roles;
 };

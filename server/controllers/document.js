@@ -1,6 +1,8 @@
 'use strict';
 
 var documentModel = require('../models/document');
+var userModel = require('../models/user');
+
 var moment = require('moment');
 
 var DocumentCtrl = class {
@@ -89,29 +91,49 @@ var DocumentCtrl = class {
   }
 
   /*Query document model to fetch all documents by role.*/
-  getAllByRole(role, limit, cb) {
+  getAllByRole(role, user, limit, cb) {
     limit = limit || 50;
-    documentModel.find({
-      role: role
-    }, (err, docs) => {
-      err ? cb({
-        'status': 500,
-        'actual': err
-      }) : cb(null, docs);
-    }).limit(limit);
+    userModel.findById(user._id).exec((err, user) => {
+      if (user.role.indexOf(role) === -1) {
+        cb({
+          'status': 403,
+          'actual': {
+            'message': 'Access Denied'
+          }
+        });
+      } else {
+        documentModel.find({
+          role: role
+        }, (err, docs) => {
+          err ? cb({
+            'status': 500,
+            'actual': err
+          }) : cb(null, docs);
+        }).limit(limit);
+      }
+    });
   }
 
   /*Query document model to fetch all documents by user.*/
-  getAllByUser(id, limit, cb) {
+  getAllByUser(id, user, limit, cb) {
     limit = limit || 50;
-    documentModel.find({
-      ownerId: id
-    }, (err, docs) => {
-      err ? cb({
-        'status': 500,
-        'actual': err
-      }) : cb(null, docs);
-    }).limit(limit);
+    if (user._id != id) {
+      cb({
+        'status': 403,
+        'actual': {
+          'message': 'Access Denied'
+        }
+      });
+    } else {
+      documentModel.find({
+        ownerId: id
+      }, (err, docs) => {
+        err ? cb({
+          'status': 500,
+          'actual': err
+        }) : cb(null, docs);
+      }).limit(limit);
+    }
   }
 
   /**

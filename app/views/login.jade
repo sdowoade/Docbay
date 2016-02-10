@@ -1,0 +1,16 @@
+div.login-container
+	div.md-padding(layout="column" layout-align="center center" flex)
+		form.md-padding.black-border.box
+			div.md-toolbar-tools(layout="row" layout-align="center center" flex)
+				h2.md-display-3 Login
+			div(layout="column" layout-align="center center")
+				md-input-container.md-block.pop
+					label Username
+					input(ng-model="user.username") 
+				md-input-container.md-block.pop
+					label Password
+					input(type="password" ng-model="user.password") 
+				md-button.md-raised.home-button.primary-button(ng-click="login()") Login
+				div(layout="row" layout-align="center center")
+					p(style="color:red") {{status}}	
+			

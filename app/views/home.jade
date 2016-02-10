@@ -1,0 +1,30 @@
+div.landing-content(layout-align="center start" layout="column")
+  div.md-padding(flex layout="column")  
+    span.md-display-3 Writing and sharing made easy.
+    span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
+  div.full-width(layout="column" layout-align="center center")
+    img(flex src="images/home2.png")
+  div.md-padding(flex=100 layout="column" layout-align="center end")
+    form(ng-submit="signup()")
+      div(layout-gt-xs="row" layout-xs="column")
+        md-input-container.md-raised
+          label First name
+          input(ng-model="user.firstname" required)
+        md-input-container.md-block
+          label Last name
+          input(ng-model="user.lastname" required)
+      div(layout-gt-xs="row" layout-xs="column")
+        md-input-container.md-block
+          label Email
+          input(ng-model="user.email" type="email" required)
+        md-input-container.md-block
+          label Password
+          input(ng-model="user.password" type="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.{8,})/" required)
+      md-input-container.md-block
+        label Username
+        input(ng-model="user.username" ng-minlength="4" ng-maxlength="11")      
+      div(layout="column")       
+        md-button.home-button.md-raised(type="submit") Sign up
+        md-button.home-button.white-border(ng-click="login()") or Login    
+ 
+    

@@ -112,7 +112,7 @@ gulp.task('nodemon', () => {
 
 gulp.task('tests:fend', (done) => {
   new karmaServer({
-    configFile: __dirname + 'karma.conf.js',
+    configFile: __dirname + '/karma.conf.js',
     singleRun: true,
   }, done).start();
 });
