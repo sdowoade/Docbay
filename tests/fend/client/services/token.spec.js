@@ -5,7 +5,7 @@ describe('Auth Service Test', () => {
   });
 
   var Auth
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     Auth = $injector.get('Auth');
   }));
 
@@ -25,6 +25,8 @@ describe('Auth Service Test', () => {
     it('remove should be a function and be defined', () => {
       expect(Auth.logout).toBeDefined();
       expect(typeof Auth.logout).toBe('function');
+      Auth.logout();
+      expect(Auth.getUser()).toBe(null);
     });
   });
 })

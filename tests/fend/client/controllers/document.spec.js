@@ -47,7 +47,7 @@ describe('docCtrl tests', () => {
     module('docbay');
   });
 
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');
@@ -67,7 +67,7 @@ describe('docCtrl tests', () => {
   }));
 
   it('should init the controller and get role documents', () => {
-    inject(($injector) => {
+    inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
       stateParams = {
@@ -99,7 +99,7 @@ describe('docCtrl tests', () => {
   });
 
   it('should init the controller and get user documents', function() {
-    inject(($injector) => {
+    inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
       controller = $controller('docCtrl', {
@@ -130,9 +130,12 @@ describe('docCtrl tests', () => {
     scope.edit();
     expect(mdDialog.show).toHaveBeenCalled();
   });
-  it('scope.delete should show dialog', () => {
+
+  it('scope.delete should call Documents.delete', () => {
     spyOn(Documents, 'delete').and.callThrough();
+    spyOn(state, 'reload');
     scope.delete();
     expect(Documents.delete).toHaveBeenCalled();
+    expect(state.reload).toHaveBeenCalled();
   });
 });

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('docbay.services')
-  .factory('Users', ['$resource', '$http', ($resource, $http) => {
+  .factory('Users', ['$resource', '$http', function($resource, $http) {
     var resource = $resource('/api/users/:id', {
       id: '@id'
     }, {
@@ -19,8 +19,8 @@ angular.module('docbay.services')
       });
     };
 
-    resource.logout = (cb) => {
-      $http.get('/api/users/logout').success((res) => {
+    resource.session = (cb) => {
+      $http.get('/api/users/session').success((res) => {
         cb(null, res);
       }).error((err) => {
         cb(err);

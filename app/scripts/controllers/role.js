@@ -1,7 +1,7 @@
 'use strict';
-angular.module('docbay.controllers').controller('roleCtrl', (
+angular.module('docbay.controllers').controller('roleCtrl', function(
   $rootScope, $scope,
-  $mdDialog, $mdToast, Users, Documents, Roles) => {
+  $mdDialog, $mdToast, Users, Documents, Roles) {
 
   $scope.init = () => {
     $scope.user = Users.get({
