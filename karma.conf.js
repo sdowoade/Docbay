@@ -15,19 +15,25 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'public/lib/angular/angular.min.js',
+      'public/lib/angular-ui-router/release/angular-ui-router.min.js',
+      'public/lib/angular-aria/angular-aria.min.js',
+      'public/lib/angular-route/angular-route.min.js',
+      'public/lib/angular-animate/angular-animate.min.js',
+      'public/lib/angular-mocks/angular-mocks.js',
+      'public/lib/angular-material/angular-material.min.js',
+      'public/lib/angular-resource/angular-resource.min.js',
+      'public/js/application.js',
       'tests/fend/**/*.spec.js'
     ],
 
-
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
+    preprocessors: {},
 
 
     // test results reporter to use
@@ -55,7 +61,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

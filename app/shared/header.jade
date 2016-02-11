@@ -1,1 +1,24 @@
-md-toolbar.navbar.md-whiteframe-z3.header-spacing(ng-controller="HeaderCtrl")
+md-toolbar.toolbar(ng-controller="defaultController" ng-init="init()")
+  div.md-toolbar-tools(layout-align="center center")
+    h1.logo(ui-sref="home") Docbay
+    span(flex)
+    md-button(ui-sref="signup" ng-if="!currentUser") Sign up 
+    md-button(ui-sref="login" ng-if="!currentUser") Login 
+    md-menu(ng-if="currentUser" md-offset="0 -7")
+      md-button(aria-label="Menu" ng-click="$mdOpenMenu($event)")
+        p
+          i.fa.fa-user.fa-style.color-greenish
+          span {{name}}	
+      md-menu-content(width="2")
+        md-menu-item
+          md-button 
+            span(md-menu-align-target="") ________
+        md-menu-item
+          md-button(ui-sref="documents") 
+            span(md-menu-align-target="") Documents
+        md-menu-item
+          md-button(ui-sref="roles") 
+            span(md-menu-align-target="") Roles    
+        md-menu-item
+          md-button(ng-click="logout()")
+            span(md-menu-align-target="") Logout

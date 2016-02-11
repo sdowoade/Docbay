@@ -1,22 +1,109 @@
-angular.module('docbay', ['ngMaterial','ui.router'])
-  .controller('YourController', function($scope) {
-    $scope.data = 'Docbay';
+'use strict';
+angular.module('docbay.services', []);
+angular.module('docbay.controllers', []);
+
+require('./services/user');
+require('./services/role');
+require('./services/document');
+require('./services/auth');
+require('./services/token-injector');
+
+require('./controllers/rolemembers');
+require('./controllers/inviteusers');
+require('./controllers/role');
+require('./controllers/user');
+require('./controllers/login');
+require('./controllers/newdocument');
+require('./controllers/editdocument');
+require('./controllers/document');
+
+angular.module('docbay', ['ngResource', 'ngMaterial',
+    'ui.router',
+    'docbay.controllers', 'docbay.services'
+  ])
+  .controller('defaultController', (
+    $rootScope, $scope, $state, $mdSidenav, Auth) => {
+    $scope.$on('updateHeader', (e) => {
+      $scope.init();
+    });
+
+    $scope.init = () => {
+      if (Auth.isLoggedIn()) {
+        $rootScope.currentUser = Auth.getUser().data;
+        $scope.name = `${$rootScope.currentUser.name.first}
+          ${$rootScope.currentUser.name.last}`;
+      }
+    };
+
+    $scope.logout = () => {
+      delete $rootScope.currentUser;
+      Auth.logout();
+      $rootScope.$broadcast('updateHeader');
+      $state.go('home', null, {
+        reload: true
+      });
+    };
   });
 
-angular.module('docbay').config(function($stateProvider) {
-  $stateProvider.state('home', { 
+angular.module('docbay').config((
+  $stateProvider, $httpProvider, $urlRouterProvider, $mdThemingProvider) => {
+  $httpProvider.interceptors.push('TokenInjector');
+  $urlRouterProvider.otherwise('/404');
+
+  $stateProvider.state('home', {
     url: '/',
     templateUrl: 'views/landing.html',
-    controller: 'YourController'
+    controller: 'userCtrl'
   }).state('documents', {
-    url: '/documents',
+    url: '/documents/',
     templateUrl: 'views/files.html',
-    controller: 'YourController'
+    controller: 'docCtrl',
+    authRequired: true
+  }).state('404', {
+    url: '/404/',
+    templateUrl: 'views/404.html',
+    controller: 'defaultController'
+  }).state('roleDocuments', {
+    url: '/roles/{id}/documents',
+    templateUrl: 'views/files.html',
+    controller: 'docCtrl',
+    params: {
+      role: null
+    },
+    authRequired: true
+  }).state('login', {
+    url: '/login',
+    templateUrl: 'views/login.html',
+    controller: 'loginCtrl'
+  }).state('signup', {
+    url: '/signup',
+    templateUrl: 'views/signup.html',
+    controller: 'userCtrl'
   }).state('roles', {
     url: '/roles',
     templateUrl: 'views/roles.html',
-    controller: 'YourController'
+    controller: 'roleCtrl',
+    authRequired: true
   });
-}).run(function($state) {
-  $state.go('home');
+}).run(($rootScope, $state, Auth) => {
+  $rootScope.$on('$stateChangeSuccess', checkAuth);
+  $rootScope.$on('$routeChangeSuccess', checkAuth);
+
+  var checkAuth = (evt, toState) => {
+    evt.preventDefault();
+    if (Auth.isLoggedIn()) {
+      $state.go(toState);
+    } else if (!toState.authRequired) {
+      $state.go(toState);
+    } else {
+      $state.go('login');
+    }
+  }
+
+  if (Auth.isLoggedIn()) {
+    $rootScope.currentUser = Auth.getUser().data;
+    $state.go('documents');
+  } else {
+    $state.go('home');
+  }
 });

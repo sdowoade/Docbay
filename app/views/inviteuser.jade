@@ -1,0 +1,19 @@
+md-dialog.full(aria-label="Role" ng-init="init()")
+	md-toolbar.toolbar
+		div.md-toolbar-tools
+			md-input-container
+				label Title
+				input
+			span(flex)
+			md-button(ng-click="save()") Save
+			md-button(ng-click="close()") Close
+	md-dialog-content
+		div.md-dialog-content(flex)
+			h2.md-title Invite users to role.
+			md-chips(ng-model="selectedUsers" md-autocomplete-snap md-transform-chip="transformChip($chip)" md-require-match="true")
+				md-autocomplete(md-selected-item="selectedItem" md-search-text="searchText" md-items="item in querySearch(searchText)" md-item-text="item.name" placeholder="Search for users")
+					span(md-highlight-text="searchText") {{item.username}} :: {{item.email}}
+				md-chip-template
+					span
+						strong {{$chip.username}}
+						em ({{$chip.email}})

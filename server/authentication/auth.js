@@ -2,7 +2,7 @@
 var userModel = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
-var config=require('../config/app');
+var config = require('../config/app');
 
 var AuthCtrl = class {
   /* login user and create token*/
@@ -28,15 +28,17 @@ var AuthCtrl = class {
             var token = jwt.sign(user, config.secret, {
               expiresIn: 86400
             });
+            user.password=null;
             res.json({
               success: true,
               message: 'Authenticated',
-              token: token
+              token: token,
+              data: user
             });
           }
         }
       }
-    });
+    }).populate('role');
   }
 
   /*Use token to authorise user*/
