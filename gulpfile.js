@@ -141,5 +141,4 @@ gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']); 
 gulp.task('test', ['build', 'tests:fend', 'codeclimate-reporter']);
-gulp.task('test', ['tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
