@@ -12,7 +12,6 @@ var ENV = process.env.NODE_ENV || 'development';
    db = 'mongodb://localhost:27017/dms';
  } else {
    db = 'mongodb://localhost:27017/testdms';
-   console.log("we are testing");
  }
 
 mongoose.connect(db);
