@@ -44,14 +44,12 @@ if (ENV === 'development') {
 
 gulp.task('clean', () => {
   return gulp.src(paths.public)
-    .pipe(clean({
-      false: true
-    }));
+    .pipe(clean({}));
 });
 
 /* Convert less to minified css */
 gulp.task('less', () => {
-  gulp.src(paths.styles)
+  return gulp.src(paths.styles)
     .pipe(less())
     .pipe(minifyCSS())
     .pipe(gulp.dest('./public/css'));
@@ -59,13 +57,13 @@ gulp.task('less', () => {
 
 /* Convert jade to html */
 gulp.task('jade', () => {
-  gulp.src(paths.jade)
+  return gulp.src(paths.jade)
     .pipe(jade())
     .pipe(gulp.dest('./public/'));
 });
 
 gulp.task('images', () => {
-  gulp.src(paths.images)
+  return gulp.src(paths.images)
     .pipe(imagemin({
       optimizationLevel: 3,
       progressive: true,
@@ -105,20 +103,20 @@ gulp.task('nodemon', () => {
       ignore: ['public/', 'node_modules/', 'seeders/']
     })
     .on('change', ['lint'])
-    .on('restart', function() {
+    .on('restart', () => {
       console.log('>> node restart');
     });
 });
 
-gulp.task('tests:fend', (done) => {
-  new karmaServer({
+gulp.task('tests:fend', ['build'], (done) => {
+  return new karmaServer({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
-  }, done).start();
+  }, done()).start();
 });
 
 /* Send coverage to codeclimate */
-gulp.task('codeclimate-reporter', ['test:fend', 'test:bend'], () => {
+gulp.task('codeclimate-reporter', ['tests:fend'], () => {
   return gulp.src(['coverage/report-lcov/lcov.info'], {
       read: false
     })
@@ -142,5 +140,5 @@ gulp.task('build', ['jade', 'less', 'static-files',
 gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']);
-gulp.task('test', ['test:fend', 'test:bend', 'codeclimate-reporter']);
+gulp.task('test', ['build', 'tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);

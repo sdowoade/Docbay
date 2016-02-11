@@ -8,7 +8,7 @@ describe('Token Injector Service Test', () => {
   var TokenInjector,
     Auth,
     Token;
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     TokenInjector = $injector.get('TokenInjector');
     Auth = $injector.get('Auth');
   }));
@@ -23,6 +23,15 @@ describe('Token Injector Service Test', () => {
         }
       };
       expect(typeof TokenInjector.request(config)).toBe('object');
+    });
+
+    it('responseError should be a function', () => {
+      expect(TokenInjector.responseError).toBeDefined();
+      expect(typeof TokenInjector.responseError).toBe('function');
+      var response = {
+        status: 401
+      };
+      expect(typeof TokenInjector.responseError(response)).toBe('object');
     });
   });
 });

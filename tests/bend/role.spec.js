@@ -1,5 +1,6 @@
 /*Role Spec: contains tests for role controllers and routes.*/
 'use strict';
+process.env.NODE_ENV = 'testing';
 var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),

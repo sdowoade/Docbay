@@ -1,6 +1,6 @@
 'use strict';
 angular.module('docbay.services')
-  .factory('TokenInjector', ['Auth', '$q', (Auth, $q) => {
+  .factory('TokenInjector', ['Auth', '$q', function(Auth, $q) {
     return {
       request: (config) => {
         var user = Auth.getUser();

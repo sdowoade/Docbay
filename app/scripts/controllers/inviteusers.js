@@ -1,7 +1,7 @@
 'use strict';
-angular.module('docbay.controllers').controller('inviteUserCtrl', (
+angular.module('docbay.controllers').controller('inviteUserCtrl', function(
   $rootScope, $scope,
-  $mdDialog, $mdToast, $state, Users, Role, Auth) => {
+  $mdDialog, $mdToast, $state, Users, Role, Auth) {
 
   $scope.selectedItem = null;
   $scope.searchText = null;

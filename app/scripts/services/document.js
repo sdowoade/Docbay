@@ -1,6 +1,6 @@
 'use strict';
 angular.module('docbay.services')
-  .factory('Documents', ['$resource', '$http', ($resource, $http) => {
+  .factory('Documents', ['$resource', '$http', function($resource, $http) {
     var resource = $resource('/api/documents/:id', {
       id: '@id'
     }, {

@@ -1,10 +1,11 @@
 /*Creates default public role*/
 'use strict';
-var roleModel = require('../server/models/role');
+process.env.NODE_ENV = 'testing';
+var roleModel = require('../../server/models/role');
 roleModel.count({}, function(err, count) {
   if (count === 0) {
     roleModel.create({
-      title: 'Public',
+      title: '_Public',
     }, (err, role) => {
       process.exit(0);
     });
