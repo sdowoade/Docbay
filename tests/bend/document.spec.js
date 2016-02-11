@@ -30,7 +30,6 @@ describe('Document', () => {
               roleModel.create({
                 title: '_Public',
               }, (err, role) => {
-                console.log(role)
                 callback(err, role);
               });
             }

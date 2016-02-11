@@ -5,7 +5,7 @@
   "main": "document-manager.js",
   "scripts": {
     "pretest": "node seeders/tests/role.js",
-    "test": "jasmine tests/bend/role.spec.js && jasmine tests/bend/document.spec.js && jasmine tests/bend/user.spec.js",
+    "test": "jasmine tests/bend/role.spec.js && jasmine tests/bend/document.spec.js && jasmine tests/bend/user.spec.js && gulp test",
     "postinstall": "node seeders/role.js",
     "launch": "node index.js"
   },

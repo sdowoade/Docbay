@@ -45,7 +45,6 @@ if (ENV === 'development') {
 gulp.task('clean', () => {
   return gulp.src(paths.public)
     .pipe(clean({
-      false: true
     }));
 });
 
@@ -118,7 +117,7 @@ gulp.task('tests:fend', (done) => {
 });
 
 /* Send coverage to codeclimate */
-gulp.task('codeclimate-reporter', ['test:fend'], () => {
+gulp.task('codeclimate-reporter', ['tests:fend'], () => {
   return gulp.src(['coverage/report-lcov/lcov.info'], {
       read: false
     })
@@ -142,5 +141,5 @@ gulp.task('build', ['jade', 'less', 'static-files',
 gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']);
-gulp.task('test', ['test:fend', 'test:bend', 'codeclimate-reporter']);
+gulp.task('test', ['tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
