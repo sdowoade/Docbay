@@ -98,9 +98,76 @@ describe('Users Service Test', () => {
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
       });
+
+      it('should test login function fail', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+        httpBackend.when('POST', '/api/users/login').respond(401, {
+          err: 'err'
+        });
+        Users.login({
+          username: 'data',
+          password: 'data'
+        }, cb);
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
+      });
     });
 
+    describe('Users.session unit test', () => {
+      it('login should be a function', () => {
+        expect(Users.session).toBeDefined();
+      });
 
+      it('should test session function', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+        httpBackend.when('GET', '/api/users/session').respond(200, {
+          res: 'res'
+        });
+        Users.session(cb);
+        httpBackend.flush();
+        expect(response.res).toBeDefined();
+        expect(response.res).toBe('res');
+      });
+
+      it('should test session function fail', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+        httpBackend.when('GET', '/api/users/session').respond(401, {
+          err: 'err'
+        });
+        Users.session(cb);
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
+      });
+    });
 
     describe('Users.documents unit test', () => {
       it('documents should be a function', () => {

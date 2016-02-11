@@ -14,6 +14,10 @@ module.exports = (router) => {
     });
   });
 
+  router.get('/users/session', (req, res) => {
+    authCtrl.session(req, res);
+  });
+
   /**
    *Users route handle finding matching instance of users
    *and creating new users

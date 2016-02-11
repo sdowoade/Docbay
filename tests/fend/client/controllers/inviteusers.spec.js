@@ -6,6 +6,7 @@ describe('inviteUsersCtrl tests', () => {
     },
     controller,
     mdDialog,
+    mdToast,
     Roles = {
       users: (users, cb) => {
         users ? cb(null, users) : cb(true, null);
@@ -35,6 +36,7 @@ describe('inviteUsersCtrl tests', () => {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');
+    mdToast = $injector.get('$mdToast');
     controller = $controller('inviteUserCtrl', {
       $scope: scope,
       Users: Users,
@@ -95,6 +97,15 @@ describe('inviteUsersCtrl tests', () => {
     var value = scope.loadUsers();
     expect(value).toBeDefined();
     expect(typeof value).toBe('object');
+  });
+
+  it('scope.save should call assignRole', () => {
+    scope.selectedUsers=[1,2,3];
+    spyOn(Users, 'assignRole').and.callThrough();
+    spyOn(mdToast, 'show').and.callThrough();
+    scope.save();
+    expect(Users.assignRole).toHaveBeenCalled();
+    expect(mdToast.show).toHaveBeenCalled();
   });
 
   it('scope.close should close dialog', () => {

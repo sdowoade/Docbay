@@ -30,8 +30,8 @@ angular.module('docbay', ['ngResource', 'ngMaterial',
     $scope.init = () => {
       if (Auth.isLoggedIn()) {
         $rootScope.currentUser = Auth.getUser().data;
-        $scope.name = `${$rootScope.currentUser.name.first}
-          ${$rootScope.currentUser.name.last}`;
+        $scope.name = $rootScope.currentUser.name.first +
+          ' ' + $rootScope.currentUser.name.last;
       }
     };
 
@@ -46,9 +46,9 @@ angular.module('docbay', ['ngResource', 'ngMaterial',
   });
 
 angular.module('docbay').config((
-  $stateProvider, $httpProvider, $urlRouterProvider, $mdThemingProvider) => {
+  $stateProvider, $httpProvider, $urlRouterProvider) => {
   $httpProvider.interceptors.push('TokenInjector');
-  $urlRouterProvider.otherwise('/404');
+  $urlRouterProvider.otherwise('404');
 
   $stateProvider.state('home', {
     url: '/',
@@ -85,9 +85,8 @@ angular.module('docbay').config((
     controller: 'roleCtrl',
     authRequired: true
   });
-}).run(($rootScope, $state, Auth) => {
+}).run(($rootScope, $state, Auth, Users) => {
   $rootScope.$on('$stateChangeSuccess', checkAuth);
-  $rootScope.$on('$routeChangeSuccess', checkAuth);
 
   var checkAuth = (evt, toState) => {
     evt.preventDefault();
@@ -98,11 +97,18 @@ angular.module('docbay').config((
     } else {
       $state.go('login');
     }
-  }
+  };
 
   if (Auth.isLoggedIn()) {
-    $rootScope.currentUser = Auth.getUser().data;
-    $state.go('documents');
+    Users.session((err, user) => {
+      if (user) {
+        $rootScope.currentUser = Auth.getUser().data;
+        $state.go('documents');
+      } else {
+        Auth.logout();
+        $state.go('home');
+      }
+    });
   } else {
     $state.go('home');
   }

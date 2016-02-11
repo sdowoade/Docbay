@@ -1,3 +1,7 @@
+@primary: #0D83DD;
+@secondary: #424249;
+@tetiary: #00cc66;
+@white: #fff;
 body {
   width: 100%;
   text-transform: none;
@@ -9,8 +13,8 @@ body {
 /*Landing page*/
 
 .landing-content {
-  background: #0D83DD;
-  color: #fff;
+  background: @primary;
+  color: @white;
   opacity: 0.9;
 }
 
@@ -19,13 +23,13 @@ body {
 }
 
 md-toolbar.toolbar {
-  background: #0D83DD;
-  color: #fff;
+  background: @primary;
+  color: @white;
 }
 
 .logo {
   font-family: 'Lobster', cursive;
-  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 150px #fff;
+  text-shadow: 0 0 10px @white, 0 0 20px @white, 0 0 150px @white;
 }
 
 .home-info {
@@ -44,11 +48,11 @@ md-toolbar.toolbar {
 }
 
 .white-border {
-  border: 1px solid #fff;
+  border: 1px solid @white;
 }
 
 .black-border {
-  border: 1px solid #424249;
+  border: 1px solid @secondary;
 }
 
 .box {
@@ -64,18 +68,18 @@ md-toolbar.toolbar {
 }
 
 .controls {
-  background: #424249;
-  color: #fff;
+  background: @secondary;
+  color: @white;
 }
 
 .md-button.primary-button {
-  color: #fff;
-  background: #00cc66;
+  color: @white;
+  background: @tetiary;
 }
 
 .md-button:hover.primary-button:hover {
-  color: #fff;
-  background: #00cc66;
+  color: @white;
+  background: @tetiary;
   opacity: 0.7;
 }
 
@@ -88,13 +92,13 @@ md-toolbar.toolbar {
 
 .doc-container {
   padding-bottom: 30%;
-  background: #424249;
+  background: @secondary;
   opacity: 0.9;
 }
 
 .role-container {
   padding-bottom: 30%;
-  color: #0D83DD;
+  color: @primary;
   font-size: 0.9em;
 }
 
@@ -153,30 +157,30 @@ textarea.full {
 }
 
 .color-greenish {
-  color: #00cc66;
+  color: @tetiary;
 }
 
 .color-bluish {
-  color: #0D83DD;
+  color: @primary;
 }
 
 .color-white {
-  color: #fff;
+  color: @white;
 }
 
 .color-blackish {
-  color: #424249;
+  color: @secondary;
 }
 
 .login-container {
   margin-top: 5%;
   padding-bottom: 30%;
-  color: #0D83DD;
+  color: @primary;
   font-size: 1.1em;
 }
 
 md-input-container .md-select {
-  color: #fff;
+  color: @white;
 }
 
 md-input-container.push {
@@ -186,7 +190,7 @@ md-input-container.push {
 
 md-input-container.push label,
 md-input-container.push .md-placeholder {
-  color: #fff !important;
+  color: @white !important;
 }
 
 md-input-container.push .md-input {
@@ -194,7 +198,7 @@ md-input-container.push .md-input {
 }
 
 md-input-container.push:not(.md-input-invalid).md-input-focused .md-input {
-  border-color: #fff;
+  border-color: @white;
   height: 70px;
 }
 
@@ -205,7 +209,7 @@ md-input-container.pop {
 
 md-input-container.pop.md-input-focused label,
 md-input-container.pop.md-input-focused .md-placeholder {
-  color: #00cc66 !important;
+  color: @tetiary !important;
 }
 
 md-input-container.pop .md-input {
@@ -213,7 +217,7 @@ md-input-container.pop .md-input {
 }
 
 md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
-  border-color: #00cc66;
+  border-color: @tetiary;
   height: 70px;
 }
 
@@ -222,7 +226,7 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
 
 .footer {
   margin-bottom: 0;
-  color: #fff;
+  color: @white;
   font-size: 1em;
-  background: #424249;
+  background: @secondary;
 }

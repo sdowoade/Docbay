@@ -1,5 +1,6 @@
 /*User Spec: contains tests for user controllers and routes.*/
 'use strict';
+process.env.NODE_ENV = 'testing';
 var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),

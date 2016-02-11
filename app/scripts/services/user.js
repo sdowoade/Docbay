@@ -19,8 +19,8 @@ angular.module('docbay.services')
       });
     };
 
-    resource.logout = (cb) => {
-      $http.get('/api/users/logout').success((res) => {
+    resource.session = (cb) => {
+      $http.get('/api/users/session').success((res) => {
         cb(null, res);
       }).error((err) => {
         cb(err);

@@ -1,8 +1,10 @@
 /*Document Spec: contains tests for document controllers and routes.*/
 'use strict';
+process.env.NODE_ENV = 'testing';
 var mongoose = require('../../server/config/db'),
   moment = require('moment'),
   mockgoose = require('mockgoose'),
+  roleModel = require('../../server/models/role'),
   userCtrl = require('../../server/controllers/user'),
   roleCtrl = require('../../server/controllers/role'),
   documentCtrl = require('../../server/controllers/document'),
@@ -21,24 +23,37 @@ describe('Document', () => {
     var users = [testUsers.dotun, testUsers.walter];
     var usersForDocs = [testUsers.fakeUser_1, testUsers.fakeUser_2];
     mockgoose.reset(() => {
-      async.series([(callback) => {
-        async.times(2, (iter, next) => {
-          userCtrl.create(users[iter], (err, user) => {
-            next(err, user);
+      async.series([
+        (callback) => {
+          roleModel.count({}, function(err, count) {
+            if (count === 0) {
+              roleModel.create({
+                title: '_Public',
+              }, (err, role) => {
+                console.log(role)
+                callback(err, role);
+              });
+            }
           });
-        }, (err, users) => {
-          callback(err, users);
-        });
-      }, (callback) => {
-        async.times(2, (iter, next) => {
-          documentCtrl.create(documents[iter],
-            usersForDocs[iter], (err, doc) => {
-              next(err, doc);
+        }, (callback) => {
+          async.times(2, (iter, next) => {
+            userCtrl.create(users[iter], (err, user) => {
+              next(err, user);
             });
-        }, (err, docs) => {
-          callback(err, docs);
-        });
-      }], (err, results) => {
+          }, (err, users) => {
+            callback(err, users);
+          });
+        }, (callback) => {
+          async.times(2, (iter, next) => {
+            documentCtrl.create(documents[iter],
+              usersForDocs[iter], (err, doc) => {
+                next(err, doc);
+              });
+          }, (err, docs) => {
+            callback(err, docs);
+          });
+        }
+      ], (err, results) => {
         done();
       });
     });
@@ -109,8 +124,6 @@ describe('Document', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-        console.log(testUsers.walter)
-
       request.post('/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {

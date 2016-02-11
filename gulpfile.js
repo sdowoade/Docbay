@@ -118,7 +118,7 @@ gulp.task('tests:fend', (done) => {
 });
 
 /* Send coverage to codeclimate */
-gulp.task('codeclimate-reporter', ['test:fend', 'test:bend'], () => {
+gulp.task('codeclimate-reporter', ['test:fend'], () => {
   return gulp.src(['coverage/report-lcov/lcov.info'], {
       read: false
     })

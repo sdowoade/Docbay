@@ -130,9 +130,12 @@ describe('docCtrl tests', () => {
     scope.edit();
     expect(mdDialog.show).toHaveBeenCalled();
   });
-  it('scope.delete should show dialog', () => {
+
+  it('scope.delete should call Documents.delete', () => {
     spyOn(Documents, 'delete').and.callThrough();
+    spyOn(state, 'reload');
     scope.delete();
     expect(Documents.delete).toHaveBeenCalled();
+    expect(state.reload).toHaveBeenCalled();
   });
 });

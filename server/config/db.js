@@ -5,7 +5,15 @@
 'use strict';
 var mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
-  db = 'mongodb://localhost:27017/bad';
+  db = 'mongodb://localhost:27017/dms';
+
+var ENV = process.env.NODE_ENV || 'development';
+ if (ENV === 'development') {
+   db = 'mongodb://localhost:27017/dms';
+ } else {
+   db = 'mongodb://localhost:27017/testdms';
+   console.log("we are testing");
+ }
 
 mongoose.connect(db);
 autoIncrement.initialize(mongoose.connection);
