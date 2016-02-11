@@ -7,7 +7,7 @@ describe('Users Service Test', () => {
   var Users,
     Auth,
     httpBackend;
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     httpBackend = $injector.get('$httpBackend');
     Users = $injector.get('Users');
     httpBackend.when('GET', 'views/landing.html')

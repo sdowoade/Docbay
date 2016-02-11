@@ -9,7 +9,7 @@ describe('Users Service Test', () => {
     Auth,
     Roles,
     httpBackend;
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     httpBackend = $injector.get('$httpBackend');
     Roles = $injector.get('Roles');
     Auth = $injector.get('Auth');

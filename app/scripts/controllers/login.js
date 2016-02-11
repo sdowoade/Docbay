@@ -1,6 +1,6 @@
 'use strict';
-angular.module('docbay.controllers').controller('loginCtrl', (
-  $rootScope, $scope, $state, Users, Auth) => {
+angular.module('docbay.controllers').controller('loginCtrl', function(
+  $rootScope, $scope, $state, Users, Auth) {
 
   $scope.login = () => {
     Users.login($scope.user, (err, user) => {

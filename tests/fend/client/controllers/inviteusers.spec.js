@@ -32,7 +32,7 @@ describe('inviteUsersCtrl tests', () => {
     module('docbay');
   });
 
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');
@@ -100,7 +100,7 @@ describe('inviteUsersCtrl tests', () => {
   });
 
   it('scope.save should call assignRole', () => {
-    scope.selectedUsers=[1,2,3];
+    scope.selectedUsers = [1, 2, 3];
     spyOn(Users, 'assignRole').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
     scope.save();

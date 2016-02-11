@@ -5,7 +5,7 @@ describe('Auth Service Test', () => {
   });
 
   var Auth
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     Auth = $injector.get('Auth');
   }));
 

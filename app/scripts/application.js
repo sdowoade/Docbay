@@ -21,8 +21,8 @@ angular.module('docbay', ['ngResource', 'ngMaterial',
     'ui.router',
     'docbay.controllers', 'docbay.services'
   ])
-  .controller('defaultController', (
-    $rootScope, $scope, $state, $mdSidenav, Auth) => {
+  .controller('defaultController', function(
+    $rootScope, $scope, $state, $mdSidenav, Auth) {
     $scope.$on('updateHeader', (e) => {
       $scope.init();
     });
@@ -102,6 +102,7 @@ angular.module('docbay').config((
   if (Auth.isLoggedIn()) {
     Users.session((err, user) => {
       if (user) {
+        console.log(user);
         $rootScope.currentUser = Auth.getUser().data;
         $state.go('documents');
       } else {

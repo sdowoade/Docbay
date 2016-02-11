@@ -8,7 +8,7 @@ describe('Token Injector Service Test', () => {
   var TokenInjector,
     Auth,
     Token;
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     TokenInjector = $injector.get('TokenInjector');
     Auth = $injector.get('Auth');
   }));

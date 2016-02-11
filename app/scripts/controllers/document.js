@@ -1,7 +1,7 @@
 'use strict';
-angular.module('docbay.controllers').controller('docCtrl', ($rootScope,
+angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
   $scope, $stateParams,$state,
-  $mdDialog, $mdToast, Users, Roles, Documents) => {
+  $mdDialog, $mdToast, Users, Roles, Documents) {
 
   /* on init load role documents if @stateparams exist
    * otherwise loads users docs

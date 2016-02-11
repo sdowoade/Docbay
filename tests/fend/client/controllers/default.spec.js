@@ -34,7 +34,7 @@ describe('defaultController tests', () => {
     module('docbay');
   });
 
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');

@@ -1,7 +1,7 @@
 'use strict';
-angular.module('docbay.controllers').controller('roleMembersCtrl', (
+angular.module('docbay.controllers').controller('roleMembersCtrl', function(
   $rootScope, $scope,
-  $state, Users, Role, Roles, $mdDialog) => {
+  $state, Users, Role, Roles, $mdDialog) {
 
   /* 
    *Get users in Role on init

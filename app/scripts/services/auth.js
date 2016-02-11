@@ -1,6 +1,6 @@
 'use strict';
 angular.module('docbay.services')
-  .factory('Auth', ['$window', ($window) => {
+  .factory('Auth', ['$window', function($window) {
     return {
       isLoggedIn: () => {
         return $window.localStorage.getItem('token') ? true : false;

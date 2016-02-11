@@ -7,7 +7,7 @@ describe('Documents Service Test', () => {
   var Documents,
     $http,
     $resource;
-  beforeEach(inject(($injector) => {
+  beforeEach(inject(function($injector) {
     Documents = $injector.get('Documents');
     $resource = $injector.get('$resource');
     $http = $injector.get('$http');
