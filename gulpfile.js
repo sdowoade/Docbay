@@ -112,7 +112,7 @@ gulp.task('tests:fend', (done) => {
   return new karmaServer({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
-  },done).start();
+  }, done).start();
 });
 
 /* Send coverage to codeclimate */
@@ -139,6 +139,7 @@ gulp.task('build', ['jade', 'less', 'static-files',
 
 gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
-gulp.task('production', ['nodemon', 'build']);
-gulp.task('test', ['build','tests:fend', 'codeclimate-reporter']);
+gulp.task('production', ['nodemon', 'build']); 
+gulp.task('test', ['build', 'tests:fend', 'codeclimate-reporter']);
+gulp.task('test', ['tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
