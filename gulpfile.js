@@ -44,8 +44,7 @@ if (ENV === 'development') {
 
 gulp.task('clean', () => {
   return gulp.src(paths.public)
-    .pipe(clean({
-    }));
+    .pipe(clean({}));
 });
 
 /* Convert less to minified css */
@@ -110,10 +109,10 @@ gulp.task('nodemon', () => {
 });
 
 gulp.task('tests:fend', (done) => {
-  new karmaServer({
+  return new karmaServer({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
-  }, done).start();
+  },done).start();
 });
 
 /* Send coverage to codeclimate */
@@ -141,5 +140,5 @@ gulp.task('build', ['jade', 'less', 'static-files',
 gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']);
-gulp.task('test', ['tests:fend', 'codeclimate-reporter']);
+gulp.task('test', ['build','tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
