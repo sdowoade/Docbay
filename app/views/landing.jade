@@ -1,42 +1,43 @@
-div.landing-content(layout-align="center start" layout="column")
-	div.full-width(layout="column" layout-align="center center")
-		img(flex src="images/home2.png")
-	div.home-info(layout-gt-xs="row" layout-xs="column" layout-align="start center")
-		div.md-padding(flex=50 layout="column")  
-			span.md-display-3 Writing and sharing made easy.
-			span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
-		div.md-padding(flex=50 layout="column" layout-align="center end")
+div.landing-content(layout-align="center center" layout="column")
+	div(layout-gt-xs="row" layout-xs="column" layout-align="start center")
+		div.md-padding(layout="column" flex=70 flex-xs=100 layout-align="center center")
+			div.md-padding(flex layout="column" layout-align="center center")
+				img.img-responsive(src="images/home3.png")
+			div.md-padding(layout="column")  
+				span.md-display-3 Writing and sharing made easy.
+				span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
+		div.md-padding.md-whiteframe-1dp(flex=30 flex-xs=100 layout="column" layout-align="center center")
 			form(ng-submit="signup()" name="form")
-				div(layout-gt-xs="row" layout-xs="column")
+				div(layout-gt-xs="column" layout-xs="column")
 					md-input-container.md-block.push
 						label First name
-						input(ng-model="user.firstname" name="firstname" required)
-						div(ng-messages="form.firstname.$error")
-							div(ng-message="required") required.
+						input(ng-model="user.name.first" name="firstname" required)
+						div.error(ng-messages="form.firstname.$error")
+							div.error(ng-message="required") required.
 					md-input-container.md-block.push
 						label Last name
-						input(ng-model="user.lastname" name="lastname" required)
-						div(ng-messages="form.lastname.$error")
-							div(ng-message="required") required.
-				div(layout-gt-xs="row" layout-xs="column")
+						input(ng-model="user.name.last" name="lastname" required)
+						div.error(ng-messages="form.lastname.$error")
+							div.error(ng-message="required") required.
+				div(layout-gt-xs="column" layout-xs="column")
 					md-input-container.md-block.push
 						label Email
 						input(ng-model="user.email" name="email" type="email" required)
-						div(ng-messages="form.email.$error")
+						div.error(ng-messages="form.email.$error")
 							div(ng-message="required") required.
 							div(ng-message="email") Please provide a valid email address. 
 					md-input-container.md-block.push
 						label Password
 						input(ng-model="user.password" name="pass" type="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.{8,})/" required)
-						div(ng-messages="form.pass.$error")
-							div(ng-message="required") required.
-							div(ng-message="pattern") Please provide a valid password(must be at least 8 characters and contain both uppercase and lowercase letters and a number or special character).  
+						div.error(ng-messages="form.pass.$error")
+							div.error(ng-message="required") required.
+							div.error(ng-message="pattern") Please provide a valid password(must be at least 8 characters and contain both uppercase and lowercase letters and a number or special character).  
 				md-input-container.md-block.push
 					label Username
-					input(ng-model="user.username" name="username" ng-minlength="4" ng-maxlength="11")
-					div(ng-messages="form.username.$error")
-						div(ng-message="required") required.
-						div(ng-message="[ng-minlength, ng-maxlength") Username should be between 4 and 8 characters long.  
+					input(ng-model="user.username" name="username" ng-minlength="4" ng-maxlength="11" required)
+					div.error(ng-messages="form.username.$error")
+						div.error(ng-message="required") required.
+						div.error(ng-message="[ng-minlength, ng-maxlength") Username should be between 4 and 8 characters long.  
 				div(layout="column")       
 					md-button.home-button.md-raised.primary-button(type="submit") Sign up
 					md-button.home-button.white-border(ng-click="login()") or Login 

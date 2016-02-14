@@ -1,15 +1,17 @@
 md-dialog.full(aria-label="Editing" ng-init="init()")
 	form(ng-submit="save()" name="form")
-		md-toolbar.toolbar
+		div.docbar.md-padding(layout="row" layout-align="start end")
 			div.md-toolbar-tools
 				md-input-container.push
 					label Title
 					input(ng-model="doc.title" required)
 				span(flex)
-				md-button(ng-click="save()" ng-disabled="form.$invalid") Save
+				md-button(type="submit" ng-disabled="form.$invalid") Save
 				md-button(ng-click="close()") Close
 		md-dialog-content
 			div.md-dialog-content(flex)
-				md-input-container.md-whiteframe-z2.full(flex)
+				md-input-container
 					label
-					textarea(class="full" ng-model="doc.content" columns="1" md-maxlength="1500" rows="500")
+					div(text-angular ta-disabled="disabled" ng-model="doc.content")
+
+					

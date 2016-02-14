@@ -18,7 +18,7 @@ require('./controllers/editdocument');
 require('./controllers/document');
 
 angular.module('docbay', ['ngResource', 'ngMaterial',
-    'ui.router',
+    'ui.router', 'textAngular',
     'docbay.controllers', 'docbay.services'
   ])
   .controller('defaultController', function(
@@ -33,6 +33,18 @@ angular.module('docbay', ['ngResource', 'ngMaterial',
         $scope.name = $rootScope.currentUser.name.first +
           ' ' + $rootScope.currentUser.name.last;
       }
+    };
+
+    $scope.showRoles = () => {
+      $mdSidenav('roles').toggle();
+    };
+
+    $scope.showProfile = () => {
+      $mdSidenav('profile').toggle();
+    };
+
+    $scope.showPassword = () => {
+      $mdSidenav('changepassword').toggle();
     };
 
     $scope.logout = () => {
@@ -55,12 +67,11 @@ angular.module('docbay').config((
     templateUrl: 'views/landing.html',
     controller: 'userCtrl'
   }).state('documents', {
-    url: '/documents/',
+    url: '/documents',
     templateUrl: 'views/files.html',
-    controller: 'docCtrl',
-    authRequired: true
+    controller: 'docCtrl'
   }).state('404', {
-    url: '/404/',
+    url: '/404',
     templateUrl: 'views/404.html',
     controller: 'defaultController'
   }).state('roleDocuments', {
@@ -69,8 +80,7 @@ angular.module('docbay').config((
     controller: 'docCtrl',
     params: {
       role: null
-    },
-    authRequired: true
+    }
   }).state('login', {
     url: '/login',
     templateUrl: 'views/login.html',
@@ -82,29 +92,13 @@ angular.module('docbay').config((
   }).state('roles', {
     url: '/roles',
     templateUrl: 'views/roles.html',
-    controller: 'roleCtrl',
-    authRequired: true
+    controller: 'roleCtrl'
   });
 }).run(($rootScope, $state, Auth, Users) => {
-  $rootScope.$on('$stateChangeSuccess', checkAuth);
-
-  var checkAuth = (evt, toState) => {
-    evt.preventDefault();
-    if (Auth.isLoggedIn()) {
-      $state.go(toState);
-    } else if (!toState.authRequired) {
-      $state.go(toState);
-    } else {
-      $state.go('login');
-    }
-  };
-
   if (Auth.isLoggedIn()) {
     Users.session((err, user) => {
       if (user) {
-        console.log(user);
         $rootScope.currentUser = Auth.getUser().data;
-        $state.go('documents');
       } else {
         Auth.logout();
         $state.go('home');

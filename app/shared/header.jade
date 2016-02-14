@@ -1,4 +1,4 @@
-md-toolbar.toolbar(ng-controller="defaultController" ng-init="init()")
+md-toolbar.toolbar.content-padding(ng-controller="defaultController" ng-init="init()")
   div.md-toolbar-tools(layout-align="center center")
     h1.logo(ui-sref="home") Docbay
     span(flex)
@@ -17,8 +17,14 @@ md-toolbar.toolbar(ng-controller="defaultController" ng-init="init()")
           md-button(ui-sref="documents") 
             span(md-menu-align-target="") Documents
         md-menu-item
-          md-button(ui-sref="roles") 
+          md-button(ng-click="showRoles()") 
             span(md-menu-align-target="") Roles    
+        md-menu-item
+          md-button(ng-click="showProfile()") 
+            span(md-menu-align-target="") Profile   
+        md-menu-item
+          md-button(ng-click="showPassword()") 
+            span(md-menu-align-target="") Change Password   
         md-menu-item
           md-button(ng-click="logout()")
             span(md-menu-align-target="") Logout

@@ -76,6 +76,33 @@ describe('Role', () => {
         });
     });
 
+    it('should GET /roles/:id/documents', (done) => {
+      request.get('/api/roles/0/documents')
+        .set('x-access-token', testToken)
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.length).toBe(0);
+          done();
+        });
+    });
+
+    it('should not GET /roles/:id/documents', (done) => {
+      request.get('/api/roles/0/documents')
+        .end((err, res) => {
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
+
+    it('should GET /roles/:id/users', (done) => {
+      request.get('/api/roles/0/users')
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.length).toBe(2);
+          done();
+        });
+    });
+
     it('should POST /roles/', (done) => {
       request.post('/api/roles')
         .set('x-access-token', testToken)

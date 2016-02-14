@@ -1,9 +1,11 @@
 include ../shared/toolbar
+div(ng-controller="loginCtrl" ng-if="!currentUser")
+  include login
 div.doc-container(flex ng-if="currentUser" ng-init="init()")
   div.md-padding(layout="row")
     div.files-content(flex)
       p.md-title.color-white {{documentsTitle}}
-      md-grid-list(md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-gt-md="5" md-row-height-gt-xs="7:9" md-row-height-sm="7:9" md-gutter-xs="8px" md-gutter-gt-xs="24px")
+      md-grid-list(md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5" md-row-height-gt-xs="7:9" md-row-height-sm="7:9" md-gutter-xs="8px" md-gutter-gt-xs="24px")
         md-grid-tile(md-ink-ripple ng-if="canCreateNew")
           img.add-image(src="../images/addnewdoc.png", ng-click="new()")
         md-grid-tile(layout="column" md-ink-ripple ng-repeat="doc in documents")
@@ -17,3 +19,15 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
             span  
             i.fa.fa-trash(ng-click="delete(doc._id)")
               md-tooltip Delete
+      section.archive-pages
+        ul
+          li.first
+            a(href="#" title="first page") first page
+          li.previous
+            a(href="#" title="previous page") previous page
+          li
+            a(href="#" title="Pagina 2") 1
+          li.next
+            a(href="#" title="next page") next page
+          li.last
+            a(href="#" title="last page") last page

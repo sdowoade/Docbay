@@ -1,8 +1,8 @@
-div.controls(layout-align="center center")
+div.controls.content-padding(ng-controller="defaultController" layout-align="center center")
 	div(layout="row" layout-align="end center")
 		md-button(ui-sref="documents" aria-label="Documents") 
 			md-tooltip Files 
 			i.fa.fa-file
-		md-button(ui-sref="roles" aria-label="roles")
+		md-button(ng-click="showRoles()" aria-label="roles")
 			md-tooltip Roles
 			i.fa.fa-users

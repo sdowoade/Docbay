@@ -17,6 +17,12 @@ describe('Users Service Test', () => {
       .respond(200, [{
         res: 'res'
       }]);
+
+    httpBackend.when('GET', 'views/404.html')
+      .respond(200, [{
+        res: 'res'
+      }]);
+
     httpBackend.when('GET', 'views/files.html')
       .respond(200, [{
         res: 'res'

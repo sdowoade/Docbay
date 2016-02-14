@@ -8,6 +8,9 @@ describe('userCtrl tests', () => {
     Users = {
       save: (user, cb) => {
         cb();
+      },
+      update: (user, cb) => {
+        cb();
       }
     };
 
@@ -33,6 +36,20 @@ describe('userCtrl tests', () => {
     scope.signup();
     expect(Users.save).toHaveBeenCalled();
     expect(state.go).toHaveBeenCalled();
+  });
+
+  it('scope.signup should call Users.save', () => {
+    spyOn(Users, 'update').and.callThrough();
+    spyOn(mdToast, 'show').and.callThrough();
+    scope.update();
+    expect(Users.update).toHaveBeenCalled();
+    expect(mdToast.show).toHaveBeenCalled();
+  });
+
+  it('scope.init should set user model', () => {
+    scope.currentUser = 'user';
+    scope.init();
+    expect(scope.user).toEqual('user');
   });
 
   it('scope.login should change state', () => {
