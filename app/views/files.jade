@@ -19,7 +19,7 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
             span  
             i.fa.fa-trash(ng-click="delete(doc._id)")
               md-tooltip Delete
-      div.md-padding(layout="row" layout-margin layout-align="center center")
+      div.md-padding(layout="row" ng-if="pages>1" layout-margin layout-align="center center")
         section.archive-pages
           ul
             li.first
