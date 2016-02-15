@@ -12,22 +12,23 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
           md-card.tile
             div.md-padding(flex)
               h4.title-display {{doc.title | limitTo:10}}
-              h4.content-display {{doc.content | limitTo:20}}
+              h4.content-display(ng-bind-html="doc.content | limitTo:20") Content can't be displayed
           md-grid-tile-footer.grid-footer.md-padding
             i.fa.fa-pencil(ng-click="edit(doc)")
               md-tooltip Edit
             span  
             i.fa.fa-trash(ng-click="delete(doc._id)")
               md-tooltip Delete
-      section.archive-pages
-        ul
-          li.first
-            a(href="#" title="first page") first page
-          li.previous
-            a(href="#" title="previous page") previous page
-          li
-            a(href="#" title="Pagina 2") 1
-          li.next
-            a(href="#" title="next page") next page
-          li.last
-            a(href="#" title="last page") last page
+      div.md-padding(layout="row" layout-margin layout-align="center center")
+        section.archive-pages
+          ul
+            li.first
+              a(ng-click="getPage(1)" title="first page") first page
+            li.previous
+              a(ng-click="getPage(currentPage+1)" title="previous page") previous page
+            li(ng-repeat="i in range(1,pages)" ng-class="{'selected': currentPage==i}")
+              a(ng-click="getPage(i)" ) {{i}}
+            li.next
+              a(ng-click="getPage(currentPage+1)" title="next page") next page
+            li.last
+              a(ng-click="getPage(pages)" title="last page") last page

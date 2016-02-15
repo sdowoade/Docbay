@@ -10,8 +10,8 @@ describe('docCtrl tests', () => {
       save: (item, cb) => {
         item ? cb(item) : cb(false);
       },
-      update: (item, cb) => {
-        item ? cb(item) : cb(false);
+      update: (id, doc, cb) => {
+        id ? cb(id) : cb(false);
       },
       get: (id, cb) => {
         cb({
@@ -34,12 +34,12 @@ describe('docCtrl tests', () => {
           title: 'New role',
         };
       },
-      documents: (role, cb) => {
+      documents: (role, page, cb) => {
         role ? cb(null, role) : cb(true, null);
       }
     },
     Users = {
-      documents: (user, cb) => {
+      documents: (user, page, cb) => {
         user ? cb(null, user) : cb(null, false);
       }
     };
@@ -66,12 +66,31 @@ describe('docCtrl tests', () => {
     });
   }));
 
-  it('should init the controller and get role documents', () => {
+  it('should init documents', () => {
+    inject(function($injector) {
+      var $controller = $injector.get('$controller');
+      scope = $injector.get('$rootScope');
+      controller = $controller('docCtrl', {
+        $scope: scope,
+        Documents: Documents,
+        Roles: Roles,
+        Users: Users
+      });
+    });
+
+    spyOn(scope, 'getPage').and.callThrough();
+    scope.init();
+    expect(scope.getPage).toHaveBeenCalled();
+  });
+
+  it('should get role documents', () => {
     inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
       stateParams = {
-        id: true
+        id: true,
+        count: 1,
+        docs: 'docs'
       };
       controller = $controller('docCtrl', {
         $scope: scope,
@@ -85,20 +104,23 @@ describe('docCtrl tests', () => {
     spyOn(Roles, 'get').and.callThrough();
     spyOn(Roles, 'documents').and.callThrough();
     spyOn(Users, 'documents').and.callThrough();
-    scope.init();
+    scope.getPage(1);
 
     stateParams = {
-      id: true
+      id: true,
+      count: 1,
+      docs: 'docs'
     };
 
+    expect(scope.currentPage).toBe(1);
     expect(Roles.get).toHaveBeenCalled();
     expect(scope.role.title).toEqual('New role');
     expect(scope.canCreateNew).toBe(false);
     expect(Roles.documents).toHaveBeenCalled();
-    expect(scope.documents).toEqual(stateParams);
+    expect(scope.documents).toEqual('docs');
   });
 
-  it('should init the controller and get user documents', function() {
+  it('should get user documents', function() {
     inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
@@ -111,12 +133,21 @@ describe('docCtrl tests', () => {
     });
 
     spyOn(Users, 'documents').and.callThrough();
-    scope.currentUser = 'user';
-    scope.init();
+    scope.currentUser = {
+      docs: 'user',
+      count: 1
+    };
+    scope.getPage(1);
+    expect(scope.currentPage).toBe(1);
     expect(Users.documents).toHaveBeenCalled();
     expect(scope.documentsTitle).toEqual('My files');
     expect(scope.canCreateNew).toBe(true);
     expect(scope.documents).toEqual('user');
+  });
+
+  it('scope.range should return array', () => {
+    var arr=scope.range(1,4);
+    expect(arr.length).toBe(4);
   });
 
   it('scope.new should show dialog', () => {

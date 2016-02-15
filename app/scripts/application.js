@@ -101,6 +101,7 @@ angular.module('docbay').config((
         $rootScope.currentUser = Auth.getUser().data;
       } else {
         Auth.logout();
+        delete $rootScope.currentUser;
         $state.go('home');
       }
     });

@@ -16,7 +16,9 @@ angular.module('docbay.controllers').controller('userCtrl', function(
   };
 
   $scope.update = () => {
-    Users.update($scope.user, () => {
+    Users.update({
+      id: $scope.user._id
+    }, $scope.user, () => {
       $mdToast.show(
         $mdToast.simple()
         .textContent('Profile updated!')

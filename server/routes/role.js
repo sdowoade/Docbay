@@ -33,7 +33,7 @@ module.exports = (router) => {
   /*get documents belonging to a role*/
   router.get('/roles/:id/documents', authCtrl.authorise, (req, res) => {
     documentCtrl.getAllByRole(req.params.id, req.decoded._doc,
-      req.query.limit, (err, docs) => {
+      req.query.limit, req.query.skip, (err, docs) => {
         err ? res.status(err.status).send(err) : res.status(200).json(docs);
       });
   });

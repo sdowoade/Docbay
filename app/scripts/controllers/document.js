@@ -1,12 +1,17 @@
 'use strict';
 angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
-  $scope, $stateParams,$state,
+  $scope, $stateParams, $state,
   $mdDialog, $mdToast, Users, Roles, Documents) {
 
   /* on init load role documents if @stateparams exist
    * otherwise loads users docs
    */
   $scope.init = () => {
+    $scope.getPage(1);
+  };
+
+  $scope.getPage = (page) => {
+    $scope.currentPage = page;
     if ($stateParams.id) {
       $scope.role = Roles.get({
         id: $stateParams.id
@@ -15,22 +20,29 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
       });
 
       $scope.canCreateNew = false;
-      Roles.documents($stateParams, (err, docs) => {
+      Roles.documents($stateParams, page, (err, docs) => {
         if (docs) {
-          $scope.documents = docs;
+          $scope.pages = Math.ceil(docs.count / 50);
+          $scope.documents = docs.docs;
         }
       });
     } else {
       $scope.canCreateNew = true;
       $scope.documentsTitle = 'My files';
 
-      Users.documents($rootScope.currentUser, (err, docs) => {
+      Users.documents($rootScope.currentUser, page, (err, docs) => {
         if (docs) {
-          $scope.documents = docs;
+          $scope.pages = 7//Math.ceil(docs.count / 50);
+          $scope.documents = docs.docs;
         }
       });
-
     }
+  };
+
+  $scope.range = (start, end) => {
+    var input = [];
+    for (var i = start; i <= end; i++) input.push(i);
+    return input;
   };
 
   $scope.new = (ev) => {

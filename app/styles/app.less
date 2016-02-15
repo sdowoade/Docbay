@@ -8,6 +8,16 @@ body {
   font-size: 1.3em;
 }
 
+a:hover {
+  text-decoration: none;
+  color: @white !important;
+}
+
+a:focus {
+  text-decoration: none;
+  color: @white !important;
+}
+
 @media only screen and (min-width: 600px) {
   body {
     text-transform: none;
@@ -148,11 +158,6 @@ md-toolbar.toolbar {
   color: @white;
 }
 
-a:hover {
-  text-decoration: none;
-  color: @white;
-}
-
 .md-button.primary-button {
   color: @white;
   background: @tetiary;
@@ -172,8 +177,9 @@ a:hover {
 }
 
 .doc-container {
-  height: 100%;
   background: @secondary;
+  height: 100%;
+  overflow: scroll;
   opacity: 0.9;
 }
 
@@ -207,7 +213,10 @@ md-card.tile {
 }
 
 .content-display {
-  font-size: 1%;
+  font-size: 100%;
+  line-height:100%;
+  overflow:hidden;
+  word-arap:suppress;
 }
 
 md-grid-tile-footer.footer {
@@ -340,10 +349,7 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
 
 .archive-pages li.selected {
   color: white;
-  padding: 5px;
-  width: 18px;
-  line-height: 20px;
-  background: rgb(53, 121, 214);
+  background: @primary;
   background: -moz-radial-gradient(center, ellipse cover, rgba(53, 121, 214, 1) 0%, rgba(53, 121, 214, 1) 91%, rgba(27, 85, 157, 1) 100%);
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(53, 121, 214, 1)), color-stop(91%, rgba(53, 121, 214, 1)), color-stop(100%, rgba(27, 85, 157, 1)));
   background: -webkit-radial-gradient(center, ellipse cover, rgba(53, 121, 214, 1) 0%, rgba(53, 121, 214, 1) 91%, rgba(27, 85, 157, 1) 100%);
@@ -378,7 +384,7 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
   display: block;
   padding: 5px;
   float: left;
-  width: 18px;
+  width: 20px;
   text-aling: center;
 }
 
@@ -411,12 +417,6 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(214, 214, 214, 1) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(214, 214, 214, 1)));
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(214, 214, 214, 1) 100%);
-  background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(214, 214, 214, 1) 100%);
-  background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(214, 214, 214, 1) 100%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(214, 214, 214, 1) 100%);
 }
 
 .archive-pages .first a,
@@ -447,7 +447,7 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
 
 .archive-pages .first a:before,
 .archive-pages .previous a:before {
-  content: '« '
+  content: "« "
 }
 
 .archive-pages .first a:hover,
@@ -460,21 +460,25 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
 }
 
 .archive-pages .first a {
-  text-indent: +6px;
-  letter-spacing: 10px;
+  text-indent: 0;
+  letter-spacing: 0;
+  width: 100px;
 }
 
 .archive-pages .previous a {
-  text-indent: +7px;
-  letter-spacing: 10px;
+  text-indent: 0;
+  letter-spacing: 0;
+  width: 100px;
 }
 
 .archive-pages .next a {
-  text-indent: -159px;
-  letter-spacing: 10px;
+  text-indent: 0;
+  letter-spacing: 0;
+  width: 100px;
 }
 
 .archive-pages .last a {
-  text-indent: -154px;
-  letter-spacing: 10px;
+  text-indent: 0;
+  letter-spacing: 0;
+  width: 100px;
 }

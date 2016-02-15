@@ -91,7 +91,7 @@ var DocumentCtrl = class {
   }
 
   /*Query document model to fetch all documents by role.*/
-  getAllByRole(role, user, limit, cb) {
+  getAllByRole(role, user, skip, limit, cb) {
     limit = limit || 50;
     userModel.findById(user._id).exec((err, user) => {
       if (user.role.indexOf(role) === -1) {
@@ -105,17 +105,29 @@ var DocumentCtrl = class {
         documentModel.find({
           role: role
         }, (err, docs) => {
-          err ? cb({
-            'status': 500,
-            'actual': err
-          }) : cb(null, docs);
-        }).limit(limit);
+          documentModel.count({
+            role: role
+          }, (countErr, count) => {
+            err ? cb({
+              'status': 500,
+              'actual': err
+            }) : cb(null, {
+              docs: docs,
+              count: count
+            });
+          });
+        }).skip(skip).limit(limit);
       }
     });
   }
 
   /*Query document model to fetch all documents by user.*/
-  getAllByUser(id, user, limit, cb) {
+  getAllByUser(id, user, limit, skip, cb) {
+    if (skip) {
+      skip = (skip - 1) * 50;
+    } else {
+      skip = 0;
+    }
     limit = limit || 50;
     if (user._id != id) {
       cb({
@@ -128,11 +140,18 @@ var DocumentCtrl = class {
       documentModel.find({
         ownerId: id
       }, (err, docs) => {
-        err ? cb({
-          'status': 500,
-          'actual': err
-        }) : cb(null, docs);
-      }).limit(limit);
+        documentModel.count({
+          ownerId: id
+        }, (countErr, count) => {
+          err ? cb({
+            'status': 500,
+            'actual': err
+          }) : cb(null, {
+            docs: docs,
+            count: count
+          });
+        });
+      }).skip(skip).limit(limit);
     }
   }
 

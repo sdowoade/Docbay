@@ -96,7 +96,7 @@ describe('Users Service Test', () => {
           });
         Roles.documents({
           id: 'id'
-        }, cb);
+        }, 1, cb);
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');

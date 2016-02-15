@@ -9,7 +9,7 @@ describe('userCtrl tests', () => {
       save: (user, cb) => {
         cb();
       },
-      update: (user, cb) => {
+      update: (id, user, cb) => {
         cb();
       }
     };
@@ -38,7 +38,11 @@ describe('userCtrl tests', () => {
     expect(state.go).toHaveBeenCalled();
   });
 
-  it('scope.signup should call Users.save', () => {
+  it('scope.update should call Users.update', () => {
+    scope.user = {
+      _id: 1,
+      user: 'user'
+    };
     spyOn(Users, 'update').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
     scope.update();

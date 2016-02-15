@@ -197,7 +197,7 @@ describe('Users Service Test', () => {
           });
         Users.documents({
           id: 'id'
-        }, cb);
+        }, 1, cb);
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');

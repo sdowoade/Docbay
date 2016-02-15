@@ -10,8 +10,8 @@ md-dialog.full(aria-label="New Document" ng-init="init()")
 				md-button(ng-click="close()") Close
 		md-dialog-content
 			div.md-dialog-content(flex)
-				label
 				md-input-container
+					label
 					div(text-angular ta-disabled="disabled" ng-model="doc.content")
 				div(layout="row" layout-align="end center")
 					p.color-bluish Share with: 

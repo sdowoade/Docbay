@@ -27,8 +27,8 @@ angular.module('docbay.services')
       });
     };
 
-    resource.documents = (user, cb) => {
-      $http.get('/api/users/' + user._id + '/documents').success((res) => {
+    resource.documents = (user, skip, cb) => {
+      $http.get('/api/users/' + user._id + '/documents?skip=' + skip).success((res) => {
         cb(null, res);
       }).error((err) => {
         cb(err);
