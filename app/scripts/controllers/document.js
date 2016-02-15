@@ -32,7 +32,7 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
 
       Users.documents($rootScope.currentUser, page, (err, docs) => {
         if (docs) {
-          $scope.pages = 7//Math.ceil(docs.count / 50);
+          $scope.pages = Math.ceil(docs.count / 50);
           $scope.documents = docs.docs;
         }
       });
