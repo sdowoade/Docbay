@@ -2,38 +2,48 @@
 module.exports = {
   dotun: {
     username: 'dowoade',
-    firstname: 'Dotun',
-    lastname: 'Owoade',
+    name: {
+      first: 'Dotun',
+      last: 'Owoade'
+    },
     email: 'd@c.com',
     password: 'pass'
   },
 
   apiuser: {
     username: 'shelly',
-    firstname: 'Sheldon',
-    lastname: 'cooper',
+    name: {
+      first: 'Sheldon',
+      last: 'Cooper'
+    },
     email: 'big@bang.com',
     password: 'pass'
   },
 
   walter: {
     username: 'breakingbad',
-    firstname: 'Walter',
-    lastname: 'White',
+    name: {
+      first: 'Walter',
+      last: 'White'
+    },
     email: 'ww@bad.com',
     password: 'pass'
   },
 
   noFirstname: {
     username: 'breakingbad',
-    lastname: 'Walter',
+    name: {
+      last: 'Walter'
+    },
     email: 'ww@bad.com',
     password: 'pass'
   },
 
   noLastname: {
     username: 'breakingbad',
-    firstname: 'Walter',
+    name: {
+      first: 'Walter'
+    },
     email: 'ww@bad.com',
     password: 'pass'
   },

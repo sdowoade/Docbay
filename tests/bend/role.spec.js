@@ -23,6 +23,7 @@ describe('Role', () => {
         next(err, user);
       });
     }, (err, users) => {
+      console.log(err);
       done();
     });
   });
@@ -72,6 +73,33 @@ describe('Role', () => {
           expect(res.body[0]).toEqual(jasmine.objectContaining({
             'title': '_Public'
           }));
+          done();
+        });
+    });
+
+    it('should GET /roles/:id/documents', (done) => {
+      request.get('/api/roles/0/documents')
+        .set('x-access-token', testToken)
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.docs.length).toBe(0);
+          done();
+        });
+    });
+
+    it('should not GET /roles/:id/documents', (done) => {
+      request.get('/api/roles/0/documents')
+        .end((err, res) => {
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
+
+    it('should GET /roles/:id/users', (done) => {
+      request.get('/api/roles/0/users')
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.length).toBe(2);
           done();
         });
     });

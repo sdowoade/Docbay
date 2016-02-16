@@ -1,11 +1,14 @@
 doctype html
 html(lang="en" ng-app="docbay")
-  head
-    include shared/head
-  body
-    main
-      include shared/header	
-      md-content.main-content(ui-view)
-    footer
-      div.footer(layout="row" layout-align="center end")
-        p(style="text-align:center") Owoade Dotun 
+	head
+		include shared/head
+	body
+		main.wrapper
+			include shared/header
+			include views/roles
+			include views/profile
+			include views/changepassword
+			md-content.main-content(ui-view)
+	footer.footer
+		div.footer(layout="row" layout-align="center end")
+			p(style="text-align:center") Owoade Dotun 

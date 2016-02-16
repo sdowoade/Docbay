@@ -12,7 +12,7 @@ angular.module('docbay.controllers').controller('editDocCtrl', function(
   $scope.save = () => {
     Documents.update({
       id: $scope.doc._id
-    }, () => {
+    }, $scope.doc, (r) => {
       Document = $scope.doc;
       $mdToast.show(
         $mdToast.simple()

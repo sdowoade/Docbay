@@ -1,12 +1,12 @@
 div.landing-content(layout-align="center start" layout="column")
-  div.md-padding(flex layout="column")  
+  div.md-padding(flex layout="column" layout-align="center center")  
     span.md-display-4 Writing and sharing made easy.
     span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
   div.full-width(layout="column" layout-align="center center")
     img(flex src="images/home2.png")
-  div(layout="column")       
-    md-button.home-button.md-raised.primary-button(type="submit") Get started
-  div.md-padding(flex=100 layout="column" layout-align="center center")
+  div.full-width.md-padding(layout="column" layout-align="center center")       
+    md-button.md-raised.primary-button(type="submit") Get started
+  div.full-width.md-padding(layout="column" layout-align="center center")
     form(ng-submit="signup()" name="form")
       div(layout-gt-xs="row" layout-xs="column")
         md-input-container.md-block.push

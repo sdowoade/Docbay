@@ -23,6 +23,10 @@ module.exports = function(config) {
       'public/lib/angular-mocks/angular-mocks.js',
       'public/lib/angular-material/angular-material.min.js',
       'public/lib/angular-resource/angular-resource.min.js',
+      'public/lib/rangy/rangy-core.js',
+      'public/lib/rangy/rangy-selectionsaverestore.js',
+      'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+      'public/lib/textAngular/dist/textAngular.min.js',
       'public/js/application.js',
       'tests/fend/**/*.spec.js'
     ],
@@ -42,7 +46,7 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress', 'junit', 'growl',
     // 'coverage', 'spec', 'failed'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['coverage', 'progress'],
+    reporters: ['coverage', 'progress', 'coveralls'],
 
 
     // web server port

@@ -11,8 +11,8 @@ angular.module('docbay.services')
       stripTrailingSlashes: false
     });
 
-    resource.documents = (role, cb) => {
-      $http.get('/api/roles/' + role.id + '/documents').success((res) => {
+    resource.documents = (role, skip, cb) => {
+      $http.get('/api/roles/' + role.id + '/documents?skip=' + skip).success((res) => {
         cb(null, res);
       }).error(function(err) {
         cb(err);

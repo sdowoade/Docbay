@@ -9,8 +9,8 @@ describe('editDocCtrl tests', () => {
     mdToast,
     state,
     Documents = {
-      update: (doc, cb) => {
-        cb(doc);
+      update: (id, doc, cb) => {
+        cb(id);
       }
     };
 

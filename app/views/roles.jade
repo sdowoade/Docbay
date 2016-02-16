@@ -1,34 +1,36 @@
-include ../shared/toolbar
-div.role-container.md-padding(ng-init="init()")
-  div(flex layout="column")
-    div(layout-align="center center" layout="column")
-      h1.md-display-4 Sharing a document?
-      span.small View roles you are currently sharing documents with or create a new role to securely share your documents.
-      form(ng-submit="save()" layout="column")
-        md-input-container.pop
-          label 
-          input(ng-model="role.title" required)
-        md-button.md-padding.md-raised.primary-button(type="submit") Create new role
-      md-content.roles-display  
-        md-list.md-padding(layout-margin)
-          md-list-item(ng-repeat="role in roles")    
-            div(layout="row" layout-xs="column" layout-align="center center")
-              i.fa.fa-users.fa-style.color-greenish
-              span.role-display(flex ui-sref="roleDocuments({id:role._id,role:role.title})") {{role.title}}
-              div
-                md-menu(md-offset="0 -7")
-                  md-button(aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)")
-                    i.fa.fa-ellipsis-v.fa-style.color-greenish
-                  md-menu-content(width="2")
-                    md-menu-item
-                      md-button(ng-click="close()") 
-                        span(md-menu-align-target="") _________
-                    md-menu-item
-                      md-button(ng-click="invite(role)")
-                        span(md-menu-align-target="") Invite users
-                    md-menu-item
-                      md-button(ng-click="members(role)")
-                        span(md-menu-align-target="") See Members
-            md-divider(ng-if="!$last")
-
-              
+md-sidenav(class="md-sidenav-right md-whiteframe-z2" md-component-id="roles")
+	div(ng-controller="loginCtrl" ng-if="!currentUser")
+		include login
+	div.role-container(ng-controller="roleCtrl" ng-if="currentUser" ng-init="init()")
+		md-toolbar.toolbar
+			h1.md-toolbar-tools Roles
+		div.md-padding(flex layout="column")
+			div(layout-align="center center" layout="column")
+				p.md-title Sharing a document?
+				span.md-sub-title View roles you are currently sharing documents with or create a new role to securely share your documents.
+				form.full(ng-submit="save()" layout="column")
+					md-input-container.pop
+						label Role title
+						input(ng-model="role.title" required)
+					md-button.md-padding.md-raised.primary-button(type="submit") Create new role
+				md-content.roles-display  
+					md-list.md-padding(layout-margin)
+						md-list-item(ng-repeat="role in roles")    
+							div(layout="row" layout-xs="column" layout-align="center center")
+								i.fa.fa-users.fa-style.color-greenish
+								span.role-display(flex ui-sref="roleDocuments({id:role._id,role:role.title})") {{role.title}}
+								div
+									md-menu(md-offset="0 -7")
+										md-button(aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)")
+											i.fa.fa-ellipsis-v.fa-style.color-greenish
+										md-menu-content(width="2")
+											md-menu-item
+												md-button(ng-click="close()") 
+													span(md-menu-align-target="") _________
+											md-menu-item
+												md-button(ng-click="invite(role)")
+													span(md-menu-align-target="") Invite users
+											md-menu-item
+												md-button(ng-click="members(role)")
+													span(md-menu-align-target="") See Members
+							md-divider(ng-if="!$last")

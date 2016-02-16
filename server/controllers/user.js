@@ -7,13 +7,11 @@ var userModel = require('../models/user'),
 var UserCtrl = class {
   /*Creates user with default public role.*/
   create(newUser, cb) {
+
     userModel.create({
       username: newUser.username,
       role: [0],
-      name: {
-        first: newUser.firstname,
-        last: newUser.lastname,
-      },
+      name: newUser.name,
       email: newUser.email,
       password: bcrypt.hashSync(newUser.password),
     }, (err, user) => {
@@ -46,7 +44,8 @@ var UserCtrl = class {
         user.username = newUser.username || user.username;
         user.name = newUser.name || user.name;
         user.email = newUser.email || user.email;
-        user.password = bcrypt.hashSync(newUser.password) || user.password;
+        user.password = newUser.password ?
+          bcrypt.hashSync(newUser.password) : user.password;
         user.save((err, user) => {
           err ? cb({
             'status': 409,
@@ -90,8 +89,10 @@ var UserCtrl = class {
   }
 
   /*Query users model to get all users in a role.*/
-  getAllInRole(id,cb) {
-    userModel.find({role:id}).exec((err, users) => {
+  getAllInRole(id, cb) {
+    userModel.find({
+      role: id
+    }).exec((err, users) => {
       err ? cb({
         'status': 500,
         'actual': err

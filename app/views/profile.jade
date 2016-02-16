@@ -1,0 +1,36 @@
+md-sidenav(class="md-sidenav-right md-whiteframe-z2" md-component-id="profile")
+	div(ng-controller="loginCtrl" ng-if="!currentUser")
+		include login
+	div.role-container(ng-controller="userCtrl" ng-if="currentUser" ng-init="init()")
+		md-toolbar.toolbar
+			h1.md-toolbar-tools User Profile
+		div.md-padding(layout="column" layout-align="center center" flex)
+			form.md-padding(name="form" ng-submit="update()")
+				div(layout-gt-xs="row" layout-xs="column")
+					md-input-container.md-raised.pop
+						label First name
+						input(ng-model="user.name.first" name="firstname" required)
+						div(ng-messages="form.firstname.$error")
+							div(ng-message="required") required.
+					md-input-container.md-block.pop
+						label Last name
+						input(ng-model="user.name.last" name="lastname" required)
+						div(ng-messages="form.lastname.$error")
+							div(ng-message="required") required.
+				div(layout-gt-xs="row" layout-xs="column")
+					md-input-container.md-block.pop
+						label Email
+						input(ng-model="user.email" name="email" type="email" required)
+						div(ng-messages="form.email.$error")
+							div(ng-message="required") required.
+							div(ng-message="email") Please provide a valid email address.	
+				md-input-container.md-block.pop
+					label Username
+					input(ng-model="user.username" ng-minlength="4" ng-maxlength="11" required)
+					div(ng-messages="form.username.$error")
+						div(ng-message="required") required.
+						div(ng-message="[ng-minlength, ng-maxlength") Username should be between 4 and 8 characters long.
+				div(layout="column" layout-align="center center")
+					md-button.md-raised.home-button.primary-button(type="submit") Update
+				
+				

@@ -1,17 +1,17 @@
 div.login-container
 	div.md-padding(layout="column" layout-align="center center" flex)
-		form.md-padding.black-border.box(name="form" ng-submit="signup()")
+		form.md-padding.black-border.md-whiteframe-3dp.box(name="form" ng-submit="signup()")
 			div.md-toolbar-tools(layout="row" layout-align="center center" flex)
 				h2.md-display-3 Sign up
 			div(layout-gt-xs="row" layout-xs="column")
 				md-input-container.md-raised.pop
 					label First name
-					input(ng-model="user.firstname" name="firstname" required)
+					input(ng-model="user.name.first" name="firstname" required)
 					div(ng-messages="form.firstname.$error")
 						div(ng-message="required") required.
 				md-input-container.md-block.pop
 					label Last name
-					input(ng-model="user.lastname" name="lastname" required)
+					input(ng-model="user.name.last" name="lastname" required)
 					div(ng-messages="form.lastname.$error")
 						div(ng-message="required") required.
 			div(layout-gt-xs="row" layout-xs="column")
@@ -29,10 +29,11 @@ div.login-container
 						div(ng-message="pattern") Please provide a valid password(must be at least 8 characters and contain both uppercase and lowercase letters and a number or special character).	
 			md-input-container.md-block.pop
 				label Username
-				input(ng-model="user.username" ng-minlength="4" ng-maxlength="11")
+				input(ng-model="user.username" ng-minlength="4" ng-maxlength="11" required)
 				div(ng-messages="form.username.$error")
 					div(ng-message="required") required.
 					div(ng-message="[ng-minlength, ng-maxlength") Username should be between 4 and 8 characters long.
-			md-button.md-raised.home-button.primary-button(ng-click="signup()") Signup
+			div(layout="column" layout-align="center center")
+				md-button.md-raised.home-button.primary-button(ng-click="signup()") Signup
 			
 			

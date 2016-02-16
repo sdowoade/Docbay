@@ -22,6 +22,14 @@ describe('defaultController tests', () => {
     },
     controller,
     mdDialog,
+    nav,
+    mdSidenav = (direction) => {
+      return {
+        toggle: function() {
+          nav = direction;
+        }
+      }
+    },
     mdToast,
     state,
     Documents = {
@@ -42,6 +50,7 @@ describe('defaultController tests', () => {
     state = $injector.get('$state');
     controller = $controller('defaultController', {
       $scope: scope,
+      $mdSidenav: mdSidenav,
       Auth: Auth
     });
   }));
@@ -57,6 +66,21 @@ describe('defaultController tests', () => {
       }
     });
     expect(scope.name).toEqual('first last');
+  });
+
+  it('should show profile nav', () => {
+    scope.showProfile();
+    expect(nav).toEqual('profile');
+  });
+
+  it('should show roles nav', () => {
+    scope.showRoles();
+    expect(nav).toEqual('roles');
+  });
+
+  it('should show profile nav', () => {
+    scope.showPassword();
+    expect(nav).toEqual('changepassword');
   });
 
   it('scope.logout should logout user', () => {

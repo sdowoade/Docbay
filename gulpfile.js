@@ -108,22 +108,11 @@ gulp.task('nodemon', () => {
     });
 });
 
-gulp.task('tests:fend', ['build'], (done) => {
+gulp.task('test', ['build'], (done) => {
   return new karmaServer({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
   }, done()).start();
-});
-
-/* Send coverage to codeclimate */
-gulp.task('codeclimate-reporter', ['tests:fend'], () => {
-  return gulp.src(['coverage/report-lcov/lcov.info'], {
-      read: false
-    })
-    .pipe(reporter({
-      token: process.env.CODECLIMATE_REPO_TOKEN,
-      verbose: true
-    }));
 });
 
 /* Watch for changes */
@@ -140,5 +129,4 @@ gulp.task('build', ['jade', 'less', 'static-files',
 gulp.task('heroku:production', ['build']);
 gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']);
-gulp.task('test', ['build', 'tests:fend', 'codeclimate-reporter']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
