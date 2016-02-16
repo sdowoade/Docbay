@@ -1,7 +1,9 @@
 md-sidenav(class="md-sidenav-right md-whiteframe-z2" md-component-id="profile")
 	div(ng-controller="loginCtrl" ng-if="!currentUser")
 		include login
-	div.login-container(ng-controller="userCtrl" ng-init="init()")
+	div.role-container(ng-controller="userCtrl" ng-if="currentUser" ng-init="init()")
+		md-toolbar.toolbar
+			h1.md-toolbar-tools User Profile
 		div.md-padding(layout="column" layout-align="center center" flex)
 			form.md-padding(name="form" ng-submit="update()")
 				div(layout-gt-xs="row" layout-xs="column")

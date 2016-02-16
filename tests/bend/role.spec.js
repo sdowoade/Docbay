@@ -23,6 +23,7 @@ describe('Role', () => {
         next(err, user);
       });
     }, (err, users) => {
+      console.log(err);
       done();
     });
   });
@@ -81,7 +82,7 @@ describe('Role', () => {
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.length).toBe(0);
+          expect(res.body.docs.length).toBe(0);
           done();
         });
     });

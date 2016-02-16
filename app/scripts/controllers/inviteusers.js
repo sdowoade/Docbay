@@ -25,7 +25,8 @@ angular.module('docbay.controllers').controller('inviteUserCtrl', function(
    */
   $scope.querySearch = (query) => {
     var results = query ?
-      $scope.loadUsers().filter($scope.createFilterFor(query)) : [];
+      $scope.users.filter($scope.createFilterFor(query)) : [];
+    console.log(results);  
     return results;
   };
 
@@ -40,20 +41,6 @@ angular.module('docbay.controllers').controller('inviteUserCtrl', function(
         (user.username.indexOf(lowercaseQuery) === 0) ||
         (user.email.indexOf(lowercaseQuery) === 0);
     };
-  };
-
-  /**
-   * load all users
-   */
-  $scope.loadUsers = () => {
-    $scope.users = Users.query();
-    return $scope.users.map((user) => {
-      user.name.first = user.name.first.toLowerCase();
-      user.name.last = user.name.last.toLowerCase();
-      user.email = user.email.toLowerCase();
-      user.username = user.username.toLowerCase();
-      return user;
-    });
   };
 
   $scope.init = () => {

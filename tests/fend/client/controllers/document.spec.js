@@ -146,7 +146,7 @@ describe('docCtrl tests', () => {
   });
 
   it('scope.range should return array', () => {
-    var arr=scope.range(1,4);
+    var arr = scope.range(1, 4);
     expect(arr.length).toBe(4);
   });
 

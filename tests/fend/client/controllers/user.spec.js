@@ -5,6 +5,33 @@ describe('userCtrl tests', () => {
     mdDialog,
     mdToast,
     state,
+    Auth = {
+      isLoggedIn: () => {
+        return true;
+      },
+      getUser: () => {
+        return {
+          name: 'name',
+          data: {
+            name: {
+              first: 'first',
+              last: 'last'
+            }
+          }
+        };
+      },
+      setUser: (user) => {
+        return {
+          name: 'name',
+          data: {
+            name: {
+              first: user.last,
+              last: user.first
+            }
+          }
+        };
+      }
+    },
     Users = {
       save: (user, cb) => {
         cb();
@@ -26,7 +53,8 @@ describe('userCtrl tests', () => {
     state = $injector.get('$state');
     controller = $controller('userCtrl', {
       $scope: scope,
-      Users: Users
+      Users: Users,
+      Auth: Auth
     });
   }));
 
@@ -41,12 +69,28 @@ describe('userCtrl tests', () => {
   it('scope.update should call Users.update', () => {
     scope.user = {
       _id: 1,
-      user: 'user'
+      user: 'user',
+      first: 'Von',
+      last: 'Doom'
     };
     spyOn(Users, 'update').and.callThrough();
+    spyOn(scope, '$broadcast').and.callThrough();
+    spyOn(Auth, 'getUser').and.callThrough();
+    spyOn(Auth, 'setUser').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
     scope.update();
     expect(Users.update).toHaveBeenCalled();
+    expect(scope.$broadcast).toHaveBeenCalled();
+    expect(Auth.getUser).toHaveBeenCalled();
+    expect(Auth.setUser).toHaveBeenCalled();
+    expect(scope.userData).toBeDefined();
+    expect(scope.userData.data).toEqual({
+      _id: 1,
+      user: 'user',
+      first: 'Von',
+      last: 'Doom'
+    });
+    expect(scope.currentUser).toEqual(scope.user);
     expect(mdToast.show).toHaveBeenCalled();
   });
 

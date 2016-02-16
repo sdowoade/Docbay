@@ -76,10 +76,16 @@ describe('inviteUsersCtrl tests', () => {
   });
 
   it('querySearch should... query users', () => {
-    spyOn(scope, 'loadUsers').and.callThrough();
+    scope.users = [{
+      name: {
+        first: 'first',
+        last: 'last'
+      },
+      email: 'email',
+      username: 'username'
+    }];
     spyOn(scope, 'createFilterFor').and.callThrough();
     scope.querySearch('query');
-    expect(scope.loadUsers).toHaveBeenCalled();
     expect(scope.createFilterFor).toHaveBeenCalled();
   });
 
@@ -90,13 +96,6 @@ describe('inviteUsersCtrl tests', () => {
     expect(filter).toBeDefined();
     expect(typeof filter).toBe('function');
     expect(angular.lowercase).toHaveBeenCalled();
-  });
-
-  it('loadUsers should return map function', () => {
-    spyOn(Users, 'query').and.callThrough();
-    var value = scope.loadUsers();
-    expect(value).toBeDefined();
-    expect(typeof value).toBe('object');
   });
 
   it('scope.save should call assignRole', () => {

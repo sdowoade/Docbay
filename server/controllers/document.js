@@ -91,7 +91,12 @@ var DocumentCtrl = class {
   }
 
   /*Query document model to fetch all documents by role.*/
-  getAllByRole(role, user, skip, limit, cb) {
+  getAllByRole(role, user, limit, skip, cb) {
+    if (skip) {
+      skip = (skip - 1) * 50;
+    } else {
+      skip = 0;
+    }
     limit = limit || 50;
     userModel.findById(user._id).exec((err, user) => {
       if (user.role.indexOf(role) === -1) {
