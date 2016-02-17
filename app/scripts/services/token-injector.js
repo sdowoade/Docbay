@@ -8,13 +8,6 @@ angular.module('docbay.services')
           config.headers['x-access-token'] = user.token;
         }
         return config;
-      },
-
-      responseError: (response) => {
-        if (response.status == 401) {
-          Auth.logout();
-          return $q.reject(response);
-        }
       }
     };
   }]);

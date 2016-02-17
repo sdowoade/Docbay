@@ -38,6 +38,7 @@ describe('Users Service Test', () => {
         expect(Roles.update).toHaveBeenCalled();
         expect(typeof Roles.update).toBe('function');
       });
+
       it('save should be a function', () => {
         spyOn(Roles, 'save').and.returnValue(0);
         Roles.save();
@@ -45,6 +46,7 @@ describe('Users Service Test', () => {
         expect(Roles.save).toHaveBeenCalled();
         expect(typeof Roles.save).toBe('function');
       });
+
       it('query should be a function', () => {
         spyOn(Roles, 'query').and.returnValue(0);
         Roles.query();
@@ -52,6 +54,7 @@ describe('Users Service Test', () => {
         expect(Roles.query).toHaveBeenCalled();
         expect(typeof Roles.query).toBe('function');
       });
+
       it('get should be a function', () => {
         spyOn(Roles, 'get').and.returnValue(0);
         Roles.get();
@@ -59,6 +62,7 @@ describe('Users Service Test', () => {
         expect(Roles.get).toHaveBeenCalled();
         expect(typeof Roles.get).toBe('function');
       });
+
       it('delete should be a function', () => {
         spyOn(Roles, 'delete').and.returnValue(0);
         Roles.delete();
@@ -66,6 +70,7 @@ describe('Users Service Test', () => {
         expect(Roles.delete).toHaveBeenCalled();
         expect(typeof Roles.delete).toBe('function');
       });
+
       it('remove should be a function', () => {
         spyOn(Roles, 'remove').and.returnValue(0);
         Roles.remove();
@@ -74,10 +79,12 @@ describe('Users Service Test', () => {
         expect(typeof Roles.remove).toBe('function');
       });
     });
+
     describe('Roles.documents unit test', () => {
       it('documents should be a function', () => {
         expect(Roles.documents).toBeDefined();
       });
+
       it('should test documents function', () => {
         var error, response;
         var cb = (err, res) => {
@@ -89,23 +96,55 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.whenGET(/\/api\/roles\/(.+)\/documents/,
             undefined, undefined, ['id'])
           .respond(200, {
             res: 'res'
           });
+
         Roles.documents({
           id: 'id'
         }, 1, cb);
+
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
       });
+
+      it('should test documents function fail', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+
+        httpBackend.whenGET(/\/api\/roles\/(.+)\/documents/,
+            undefined, undefined, ['id'])
+          .respond(500, {
+            err: 'err'
+          });
+
+        Roles.documents({
+          id: 'id'
+        }, 1, cb);
+
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
+      });
     });
+
     describe('Roles.users unit test', () => {
       it('users should be a function', () => {
         expect(Roles.documents).toBeDefined();
       });
+
       it('should test users function', () => {
         var error, response;
         var cb = (err, res) => {
@@ -117,17 +156,47 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.whenGET(/\/api\/roles\/(.+)\/users/,
             undefined, undefined, ['id'])
           .respond(200, {
             res: 'res'
           });
+
         Roles.users({
           id: 'id'
         }, cb);
+
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
+      });
+
+      it('should test users function fail', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+
+        httpBackend.whenGET(/\/api\/roles\/(.+)\/users/,
+            undefined, undefined, ['id'])
+          .respond(500, {
+            err: 'err'
+          });
+
+        Roles.users({
+          id: 'id'
+        }, cb);
+
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
       });
     });
   });

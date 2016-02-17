@@ -28,7 +28,7 @@ describe('defaultController tests', () => {
         toggle: function() {
           nav = direction;
         }
-      }
+      };
     },
     mdToast,
     state,

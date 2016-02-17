@@ -24,14 +24,5 @@ describe('Token Injector Service Test', () => {
       };
       expect(typeof TokenInjector.request(config)).toBe('object');
     });
-
-    it('responseError should be a function', () => {
-      expect(TokenInjector.responseError).toBeDefined();
-      expect(typeof TokenInjector.responseError).toBe('function');
-      var response = {
-        status: 401
-      };
-      expect(typeof TokenInjector.responseError(response)).toBe('object');
-    });
   });
 });

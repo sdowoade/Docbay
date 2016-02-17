@@ -48,6 +48,12 @@ angular.module('docbay.controllers').controller('roleCtrl', function(
         .textContent('Role saved')
         .hideDelay(3000)
       );
+    }, (err) => {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent($scope.role.title + ' already exists')
+        .hideDelay(3000)
+      );
     });
   };
 });

@@ -1,10 +1,11 @@
+'use strict';
 describe('Auth Service Test', () => {
 
   beforeEach(() => {
     module('docbay');
   });
 
-  var Auth
+  var Auth;
   beforeEach(inject(function($injector) {
     Auth = $injector.get('Auth');
   }));
@@ -29,4 +30,4 @@ describe('Auth Service Test', () => {
       expect(Auth.getUser()).toBe(null);
     });
   });
-})
+});

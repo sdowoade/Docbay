@@ -123,7 +123,6 @@ describe('Users Service Test', () => {
           password: 'data'
         }, cb);
         httpBackend.flush();
-        expect(error.err).toBeDefined();
         expect(error.err).toBe('err');
       });
     });
@@ -169,7 +168,6 @@ describe('Users Service Test', () => {
         });
         Users.session(cb);
         httpBackend.flush();
-        expect(error.err).toBeDefined();
         expect(error.err).toBe('err');
       });
     });
@@ -201,6 +199,30 @@ describe('Users Service Test', () => {
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
+      });
+
+      it('should test documents function fail', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+        httpBackend.whenGET(/\/api\/users\/(.+)\/documents/,
+            undefined, undefined, ['id'])
+          .respond(500, {
+            err: 'err'
+          });
+        Users.documents({
+          id: 'id'
+        }, 1, cb);
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
       });
     });
 
@@ -234,6 +256,33 @@ describe('Users Service Test', () => {
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
+      });
+
+      it('should test success of assignRole function', () => {
+        var error, response;
+        var cb = (err, res) => {
+          if (err) {
+            error = err;
+            response = null;
+          } else {
+            error = null;
+            response = res;
+          }
+        };
+
+        httpBackend.whenPOST(/\/api\/users\/(.+)\/roles/,
+            undefined, undefined, ['id'])
+          .respond(500, {
+            err: 'err'
+          });
+
+        Users.assignRole({
+          id: 'id'
+        }, 'role', cb);
+
+        httpBackend.flush();
+        expect(error.err).toBeDefined();
+        expect(error.err).toBe('err');
       });
     });
   });

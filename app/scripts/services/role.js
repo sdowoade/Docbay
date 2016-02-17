@@ -12,11 +12,12 @@ angular.module('docbay.services')
     });
 
     resource.documents = (role, skip, cb) => {
-      $http.get('/api/roles/' + role.id + '/documents?skip=' + skip).success((res) => {
-        cb(null, res);
-      }).error(function(err) {
-        cb(err);
-      });
+      $http.get('/api/roles/' + role.id + '/documents?skip=' + skip)
+        .success((res) => {
+          cb(null, res);
+        }).error(function(err) {
+          cb(err);
+        });
     };
 
     resource.users = (role, cb) => {

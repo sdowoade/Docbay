@@ -74,6 +74,10 @@ angular.module('docbay').config((
     url: '/404',
     templateUrl: 'views/404.html',
     controller: 'defaultController'
+  }).state('500', {
+    url: '/500',
+    templateUrl: 'views/500.html',
+    controller: 'defaultController'
   }).state('roleDocuments', {
     url: '/roles/{id}/documents',
     templateUrl: 'views/files.html',

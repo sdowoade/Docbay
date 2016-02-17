@@ -1,10 +1,7 @@
 'use strict';
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine');
-var reporters = require('jasmine-reporters');
 var less = require('gulp-less');
 var jade = require('gulp-jade');
 var imagemin = require('gulp-imagemin');
@@ -16,7 +13,6 @@ var minifyCSS = require('gulp-cssnano');
 var bower = require('gulp-bower');
 var browserify = require('browserify');
 var karmaServer = require('karma').Server;
-var reporter = require('gulp-codeclimate-reporter');
 var source = require('vinyl-source-stream');
 var clean = require('gulp-rimraf');
 var paths = {
