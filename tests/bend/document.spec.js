@@ -25,7 +25,7 @@ describe('Document', () => {
     mockgoose.reset(() => {
       async.series([
         (callback) => {
-          roleModel.count({}, function(err, count) {
+          roleModel.count({}, (err, count) => {
             if (count === 0) {
               roleModel.create({
                 title: '_Public',
