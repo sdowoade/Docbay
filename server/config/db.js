@@ -9,8 +9,9 @@ var mongoose = require('mongoose'),
 
 var ENV = process.env.NODE_ENV || 'development';
 if (ENV === 'development') {
+  require('dotenv').load();
   db = process.env.DATABASE_URL;
-} else {
+} else if (ENV === 'testing') {
   db = 'mongodb://localhost:27017/testdms';
 }
 
