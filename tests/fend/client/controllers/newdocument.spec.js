@@ -48,8 +48,10 @@ describe('newDocCtrl tests', () => {
 
   it('scope.save should show Documents.save', () => {
     spyOn(Documents, 'save').and.callThrough();
+    spyOn(scope, 'close');
     scope.save();
     expect(Documents.save).toHaveBeenCalled();
+    expect(scope.close).toHaveBeenCalled();
   });
 
   it('scope.delete should show dialog', () => {

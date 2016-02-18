@@ -22,39 +22,37 @@ describe('Document', () => {
     var documents = [testDocuments.docy, testDocuments.docz];
     var users = [testUsers.dotun, testUsers.walter];
     var usersForDocs = [testUsers.fakeUser_1, testUsers.fakeUser_2];
-    mockgoose.reset(() => {
-      async.series([
-        (callback) => {
-          roleModel.count({}, (err, count) => {
-            if (count === 0) {
-              roleModel.create({
-                title: '_Public',
-              }, (err, role) => {
-                callback(err, role);
-              });
-            }
-          });
-        }, (callback) => {
-          async.times(2, (iter, next) => {
-            userCtrl.create(users[iter], (err, user) => {
-              next(err, user);
+    async.series([
+      (callback) => {
+        roleModel.count({}, (err, count) => {
+          if (count === 0) {
+            roleModel.create({
+              title: '_Public',
+            }, (err, role) => {
+              callback(err, role);
             });
-          }, (err, users) => {
-            callback(err, users);
+          }
+        });
+      }, (callback) => {
+        async.times(2, (iter, next) => {
+          userCtrl.create(users[iter], (err, user) => {
+            next(err, user);
           });
-        }, (callback) => {
-          async.times(2, (iter, next) => {
-            documentCtrl.create(documents[iter],
-              usersForDocs[iter], (err, doc) => {
-                next(err, doc);
-              });
-          }, (err, docs) => {
-            callback(err, docs);
-          });
-        }
-      ], (err, results) => {
-        done();
-      });
+        }, (err, users) => {
+          callback(err, users);
+        });
+      }, (callback) => {
+        async.times(2, (iter, next) => {
+          documentCtrl.create(documents[iter],
+            usersForDocs[iter], (err, doc) => {
+              next(err, doc);
+            });
+        }, (err, docs) => {
+          callback(err, docs);
+        });
+      }
+    ], (err, results) => {
+      done();
     });
   });
 

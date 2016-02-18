@@ -15,11 +15,8 @@ var mongoose = require('../../server/config/db'),
 mockgoose(mongoose);
 
 describe('User', () => {
-  beforeAll((done) => {
+  beforeAll(() => {
     console.log('Running user test suite');
-    mockgoose.reset(() => {
-      done();
-    });
   });
 
   afterAll((done) => {
@@ -125,7 +122,7 @@ describe('User', () => {
     });
 
     it('should GET /users/id', (done) => {
-      request.get('/api/users/1')
+      request.get('/api/users/2')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'username': 'dowoade'

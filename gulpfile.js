@@ -1,7 +1,6 @@
 'use strict';
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var jasmine = require('gulp-jasmine');
 var less = require('gulp-less');
 var jade = require('gulp-jade');
 var imagemin = require('gulp-imagemin');
