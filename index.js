@@ -33,8 +33,8 @@ userRoute(router);
 documentRoute(router);
 roleRoute(router);
 
-app.use(function(req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+app.use((req, res) => {
+  return res.sendFile(__dirname + '/public/index.html');
 });
 
 app.listen(3000);
