@@ -23,7 +23,6 @@ describe('Role', () => {
         next(err, user);
       });
     }, (err, users) => {
-      console.log(err);
       done();
     });
   });

@@ -12,13 +12,23 @@ angular.module('docbay.controllers').controller('userCtrl', function(
   $scope.signup = () => {
     Users.save($scope.user, () => {
       $state.go('login');
+    }, (err) => {
+      if (err.status == 409) {
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('User already exists')
+          .hideDelay(3000)
+        );
+      } else {
+        $state.go('500');
+      }
     });
   };
 
-  /*8 
+  /*
    *Update user and reset @rootScope.currentUser
    */
-  $scope.update = (r) => {
+  $scope.update = () => {
     Users.update({
       id: $scope.user._id
     }, $scope.user, () => {
@@ -32,6 +42,16 @@ angular.module('docbay.controllers').controller('userCtrl', function(
         .textContent('Profile updated!')
         .hideDelay(3000)
       );
+    }, (err) => {
+      if (err.status == 409) {
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('User already exists')
+          .hideDelay(3000)
+        );
+      } else {
+        $state.go('500');
+      }
     });
   };
 

@@ -6,10 +6,11 @@ describe('docCtrl tests', () => {
     mdToast,
     state,
     Roles = {
-      save: (role, cb) => {
-        cb(role);
+      save: (role, cb, err) => {
+        role.title==='role' ? cb(role) : err();
       }
     },
+
     Users = {
       get: (user, cb) => {
         return {
@@ -17,6 +18,7 @@ describe('docCtrl tests', () => {
         };
       }
     };
+
   beforeEach(() => {
     module('docbay');
   });
@@ -68,6 +70,19 @@ describe('docCtrl tests', () => {
     scope.save();
     expect(scope.role.title).toBe(null);
     expect(scope.roles[0]).toEqual(scope.role);
+    expect(mdToast.show).toHaveBeenCalled();
+  });
+
+  it('scope.save should call Roles.save with error', () => {
+    spyOn(Roles, 'save').and.callThrough();
+    spyOn(mdToast, 'show').and.callThrough();
+    scope.role = {
+      title: 'roleless'
+    };
+    scope.roles = [];
+    scope.save();
+    expect(scope.role.title).not.toBe(null);
+    expect(scope.roles.length).toEqual(0);
     expect(mdToast.show).toHaveBeenCalled();
   });
 });

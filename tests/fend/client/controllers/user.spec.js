@@ -2,6 +2,8 @@
 describe('userCtrl tests', () => {
   var scope,
     controller,
+    statusError409 = { status: 409 },
+    statusError500 = { status: 500 },
     mdDialog,
     mdToast,
     state,
@@ -9,6 +11,7 @@ describe('userCtrl tests', () => {
       isLoggedIn: () => {
         return true;
       },
+
       getUser: () => {
         return {
           name: 'name',
@@ -20,6 +23,7 @@ describe('userCtrl tests', () => {
           }
         };
       },
+
       setUser: (user) => {
         return {
           name: 'name',
@@ -32,12 +36,26 @@ describe('userCtrl tests', () => {
         };
       }
     },
+
     Users = {
-      save: (user, cb) => {
-        cb();
+      save: (user, cb, err) => {
+        if (user === 1) {
+          cb();
+        } else if (user === 2) {
+          err(statusError409);
+        } else {
+          err(statusError500);
+        }
       },
-      update: (id, user, cb) => {
-        cb();
+
+      update: (id, user, cb, err) => {
+        if (user === 1) {
+          err(statusError500);
+        } else if (user === 2) {
+          err(statusError409);
+        } else {
+          cb();
+        }
       }
     };
 
@@ -59,11 +77,30 @@ describe('userCtrl tests', () => {
   }));
 
   it('scope.signup should call Users.save', () => {
+    scope.user = 1;
     spyOn(Users, 'save').and.callThrough();
     spyOn(state, 'go').and.callThrough();
     scope.signup();
     expect(Users.save).toHaveBeenCalled();
     expect(state.go).toHaveBeenCalled();
+  });
+
+  it('scope.signup should call Users.save with error 409', () => {
+    scope.user = 2;
+    spyOn(Users, 'save').and.callThrough();
+    spyOn(mdToast, 'show').and.callThrough();
+    scope.signup();
+    expect(Users.save).toHaveBeenCalled();
+    expect(mdToast.show).toHaveBeenCalled();
+  });
+
+  it('scope.signup should call Users.save with error 500', () => {
+    scope.user = null;
+    spyOn(Users, 'save').and.callThrough();
+    spyOn(state, 'go').and.callThrough();
+    scope.signup();
+    expect(Users.save).toHaveBeenCalled();
+    expect(state.go).toHaveBeenCalledWith('500');
   });
 
   it('scope.update should call Users.update', () => {
@@ -92,6 +129,24 @@ describe('userCtrl tests', () => {
     });
     expect(scope.currentUser).toEqual(scope.user);
     expect(mdToast.show).toHaveBeenCalled();
+  });
+
+  it('scope.signup should call Users.update with error 409', () => {
+    scope.user = 2;
+    spyOn(Users, 'update').and.callThrough();
+    spyOn(mdToast, 'show').and.callThrough();
+    scope.update();
+    expect(Users.update).toHaveBeenCalled();
+    expect(mdToast.show).toHaveBeenCalled();
+  });
+
+  it('scope.signup should call Users.update with error 500', () => {
+    scope.user = 1;
+    spyOn(Users, 'update').and.callThrough();
+    spyOn(state, 'go').and.callThrough();
+    scope.update();
+    expect(Users.update).toHaveBeenCalled();
+    expect(state.go).toHaveBeenCalledWith('500');
   });
 
   it('scope.init should set user model', () => {

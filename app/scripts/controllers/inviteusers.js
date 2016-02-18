@@ -26,7 +26,6 @@ angular.module('docbay.controllers').controller('inviteUserCtrl', function(
   $scope.querySearch = (query) => {
     var results = query ?
       $scope.users.filter($scope.createFilterFor(query)) : [];
-    console.log(results);  
     return results;
   };
 
