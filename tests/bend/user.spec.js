@@ -122,7 +122,7 @@ describe('User', () => {
     });
 
     it('should GET /users/id', (done) => {
-      request.get('/api/users/2')
+      request.get('/api/users/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
             'username': 'dowoade'
