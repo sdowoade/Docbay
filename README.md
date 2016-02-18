@@ -52,4 +52,8 @@ $ mongodb
 ...
 $ npm test
 ```
+
+## HOSTING
+The application is hosted <a href='https://docbay.herokuapp.com/'> here</a>
+
 Enjoy!
