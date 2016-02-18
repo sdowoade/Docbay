@@ -1,11 +1,8 @@
-# Docbay
+# DOCBAY
 
-Docbay Document Management System
+**Docbay is the secure solution that lets you easily write and share documents with people you trust.**
 
-
-## Description
-
-Docbay manages documents, users and user roles. The system allows users to create documents and define which roles can access it.
+The system manages documents, users and user roles. Each document defines access rights; the document defines which roles can access it. Also, each document specifies the date it was published. Users are categorized by roles. Each user must have a role defined for them.
 
 ## Installation
 Open up your Terminal and clone this repo or download it to your machine:

@@ -30,9 +30,9 @@ describe('docCtrl tests', () => {
     },
     Roles = {
       get: (id, cb) => {
-        return {
+        cb({
           title: 'New role',
-        };
+        });
       },
       documents: (role, page, cb) => {
         role ? cb(null, role) : cb(true, null);
@@ -117,6 +117,7 @@ describe('docCtrl tests', () => {
     expect(scope.role.title).toEqual('New role');
     expect(scope.canCreateNew).toBe(false);
     expect(Roles.documents).toHaveBeenCalled();
+    expect(scope.documentsTitle).toEqual(scope.role.title);
     expect(scope.documents).toEqual('docs');
   });
 

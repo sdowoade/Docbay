@@ -13,9 +13,9 @@ describe('newDocCtrl tests', () => {
     },
     Users = {
       get: (user, cb) => {
-        return {
+        cb({
           role: [1, 2, 3]
-        };
+        });
       }
     };
   beforeEach(() => {
@@ -43,6 +43,7 @@ describe('newDocCtrl tests', () => {
     scope.init();
     expect(scope.user).toBeDefined();
     expect(Users.get).toHaveBeenCalled();
+    expect(scope.roles).toEqual(scope.user.role);
   });
 
   it('scope.save should show Documents.save', () => {
