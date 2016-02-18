@@ -1,1 +1,1 @@
-web: node run launch 
+web: npm run launch 
