@@ -5,14 +5,14 @@
 'use strict';
 var mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
-  db = 'mongodb://localhost:27017/dms';
+  db = process.env.DATABASE_URL;
 
 var ENV = process.env.NODE_ENV || 'development';
- if (ENV === 'development') {
-   db = 'mongodb://localhost:27017/dms';
- } else {
-   db = 'mongodb://localhost:27017/testdms';
- }
+if (ENV === 'development') {
+  db = process.env.DATABASE_URL;
+} else {
+  db = 'mongodb://localhost:27017/testdms';
+}
 
 mongoose.connect(db);
 autoIncrement.initialize(mongoose.connection);
