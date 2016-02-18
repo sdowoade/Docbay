@@ -4,10 +4,12 @@ angular.module('docbay.controllers').controller('newDocCtrl', function(
   $state, $mdDialog, $mdToast, Users, Documents) {
 
   $scope.init = () => {
-    $scope.user = Users.get({
+    Users.get({
       id: $rootScope.currentUser._id
+    }, (user) => {
+      $scope.user = user;
+      $scope.roles = $scope.user.role;
     });
-    $scope.roles = $scope.user.role;
   };
 
   $scope.save = () => {

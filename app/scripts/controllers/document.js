@@ -13,11 +13,12 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
   $scope.getPage = (page) => {
     $scope.currentPage = page;
     if ($stateParams.id) {
-      $scope.role = Roles.get({
+      Roles.get({
         id: $stateParams.id
+      }, (role) => {
+        $scope.role = role;
+        $scope.documentsTitle = $scope.role.title;
       });
-      
-      $scope.documentsTitle = $scope.role.title;
 
       $scope.canCreateNew = false;
       Roles.documents($stateParams, page, (err, docs) => {

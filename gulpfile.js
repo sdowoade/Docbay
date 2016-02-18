@@ -10,7 +10,6 @@ var nodemon = require('gulp-nodemon');
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
 var minifyCSS = require('gulp-cssnano');
-var codecov = require('gulp-codecov');
 var bower = require('gulp-bower');
 var browserify = require('browserify');
 var karmaServer = require('karma').Server;
@@ -105,16 +104,11 @@ gulp.task('nodemon', () => {
     });
 });
 
-gulp.task('test:fend', ['build'], (done) => {
+gulp.task('test', ['build'], (done) => {
   return new karmaServer({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
   }, done()).start();
-});
-
-gulp.task('codecov', () => {
-  return gulp.src('./coverage/lcov.info')
-    .pipe(codecov());
 });
 
 /* Watch for changes */
@@ -129,6 +123,5 @@ gulp.task('build', ['jade', 'less', 'static-files',
 ]);
 
 gulp.task('heroku:production', ['build']);
-gulp.task('test', ['test:fend','codecov']);
 gulp.task('production', ['nodemon', 'build']);
 gulp.task('default', ['nodemon', 'watch', 'build']);

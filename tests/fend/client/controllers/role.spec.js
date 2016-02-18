@@ -7,15 +7,15 @@ describe('docCtrl tests', () => {
     state,
     Roles = {
       save: (role, cb, err) => {
-        role.title==='role' ? cb(role) : err();
+        role.title === 'role' ? cb(role) : err();
       }
     },
 
     Users = {
       get: (user, cb) => {
-        return {
+        cb({
           role: [1, 2, 3]
-        };
+        });
       }
     };
 

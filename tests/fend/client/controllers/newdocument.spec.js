@@ -13,9 +13,9 @@ describe('newDocCtrl tests', () => {
     },
     Users = {
       get: (user, cb) => {
-        return {
+        cb({
           role: [1, 2, 3]
-        };
+        });
       }
     };
   beforeEach(() => {

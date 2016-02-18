@@ -30,9 +30,9 @@ describe('docCtrl tests', () => {
     },
     Roles = {
       get: (id, cb) => {
-        return {
+        cb({
           title: 'New role',
-        };
+        });
       },
       documents: (role, page, cb) => {
         role ? cb(null, role) : cb(true, null);
