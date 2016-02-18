@@ -7,15 +7,15 @@ describe('docCtrl tests', () => {
     state,
     Roles = {
       save: (role, cb, err) => {
-        role.title==='role' ? cb(role) : err();
+        role.title === 'role' ? cb(role) : err();
       }
     },
 
     Users = {
       get: (user, cb) => {
-        return {
+        cb({
           role: [1, 2, 3]
-        };
+        });
       }
     };
 
@@ -46,6 +46,7 @@ describe('docCtrl tests', () => {
     scope.init();
     expect(scope.user).toBeDefined();
     expect(Users.get).toHaveBeenCalled();
+    expect(scope.roles).toEqual(scope.user.role);
   });
 
   it('scope.members should show dialog', () => {

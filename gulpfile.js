@@ -123,6 +123,5 @@ gulp.task('build', ['jade', 'less', 'static-files',
 ]);
 
 gulp.task('heroku:production', ['build']);
-gulp.task('heroku:staging', ['build']);
 gulp.task('production', ['nodemon', 'build']);
 gulp.task('default', ['nodemon', 'watch', 'build']);

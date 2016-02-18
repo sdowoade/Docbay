@@ -1,16 +1,35 @@
 'use strict';
 describe('Token Injector Service Test', () => {
+  var TokenInjector,
+    Auth = {
+      getUser: () => {
+        return {
+          token: 'token',
+          name: 'name',
+          data: {
+            name: {
+              first: 'first',
+              last: 'last'
+            }
+          }
+        };
+      },
+
+      isLoggedIn: () => {
+        return true;
+      },
+    },
+
+    Token;
 
   beforeEach(() => {
-    module('docbay');
+    module('docbay', function($provide) {
+      $provide.value('Auth', Auth);
+    });
   });
 
-  var TokenInjector,
-    Auth,
-    Token;
   beforeEach(inject(function($injector) {
     TokenInjector = $injector.get('TokenInjector');
-    Auth = $injector.get('Auth');
   }));
 
   describe('Token Injector unit test', () => {

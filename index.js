@@ -33,6 +33,10 @@ userRoute(router);
 documentRoute(router);
 roleRoute(router);
 
+app.use((req, res) => {
+  return res.sendFile(__dirname + '/public/index.html');
+});
+
 app.listen(3000);
 console.log('Listening at http://localhost:' + 3000);
 module.exports = app;
