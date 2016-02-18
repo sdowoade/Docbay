@@ -58,7 +58,7 @@ angular.module('docbay', ['ngResource', 'ngMaterial',
   });
 
 angular.module('docbay').config((
-  $stateProvider, $httpProvider, $urlRouterProvider) => {
+  $stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
   $httpProvider.interceptors.push('TokenInjector');
   $urlRouterProvider.otherwise('404');
 
@@ -98,6 +98,9 @@ angular.module('docbay').config((
     templateUrl: 'views/roles.html',
     controller: 'roleCtrl'
   });
+
+  $locationProvider.html5Mode(true);
+
 }).run(($rootScope, $state, Auth, Users) => {
   if (Auth.isLoggedIn()) {
     Users.session((err, user) => {
