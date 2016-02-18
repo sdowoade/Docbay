@@ -46,6 +46,7 @@ describe('docCtrl tests', () => {
     scope.init();
     expect(scope.user).toBeDefined();
     expect(Users.get).toHaveBeenCalled();
+    expect(scope.roles).toEqual(scope.user.role);
   });
 
   it('scope.members should show dialog', () => {

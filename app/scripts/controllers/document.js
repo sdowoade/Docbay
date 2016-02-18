@@ -15,9 +15,9 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
     if ($stateParams.id) {
       $scope.role = Roles.get({
         id: $stateParams.id
-      }, () => {
-        $scope.documentsTitle = $scope.role.title;
       });
+      
+      $scope.documentsTitle = $scope.role.title;
 
       $scope.canCreateNew = false;
       Roles.documents($stateParams, page, (err, docs) => {

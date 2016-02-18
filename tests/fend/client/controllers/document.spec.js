@@ -117,6 +117,7 @@ describe('docCtrl tests', () => {
     expect(scope.role.title).toEqual('New role');
     expect(scope.canCreateNew).toBe(false);
     expect(Roles.documents).toHaveBeenCalled();
+    expect(scope.documentsTitle).toEqual(scope.role.title);
     expect(scope.documents).toEqual('docs');
   });
 

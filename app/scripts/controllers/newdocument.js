@@ -6,9 +6,8 @@ angular.module('docbay.controllers').controller('newDocCtrl', function(
   $scope.init = () => {
     $scope.user = Users.get({
       id: $rootScope.currentUser._id
-    }, () => {
-      $scope.roles = $scope.user.role;
     });
+    $scope.roles = $scope.user.role;
   };
 
   $scope.save = () => {
