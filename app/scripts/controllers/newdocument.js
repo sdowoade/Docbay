@@ -19,6 +19,7 @@ angular.module('docbay.controllers').controller('newDocCtrl', function(
         .textContent('Document Saved!')
         .hideDelay(3000)
       );
+      $scope.close();
     });
   };
 

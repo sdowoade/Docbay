@@ -15,11 +15,8 @@ var mongoose = require('../../server/config/db'),
 mockgoose(mongoose);
 
 describe('User', () => {
-  beforeAll((done) => {
+  beforeAll(() => {
     console.log('Running user test suite');
-    mockgoose.reset(() => {
-      done();
-    });
   });
 
   afterAll((done) => {

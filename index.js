@@ -11,6 +11,7 @@ var roleRoute = require('./server/routes/role');
 app.use(parser.urlencoded({
   extended: true
 }));
+
 app.use(parser.json());
 
 app.set('views', path.join(__dirname, 'server/views'));
@@ -18,14 +19,12 @@ app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, './public')));
 
-
-
 var router = express.Router();
 app.use('/api', router);
 
 router.get('/', (req, res) => {
   res.status(200).json({
-    'welcome': 'Welcome to the DMS'
+    'welcome': 'Welcome to the DMS API'
   });
 });
 
