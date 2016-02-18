@@ -36,6 +36,7 @@ app.use((req, res) => {
   return res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(3000);
-console.log('Listening at http://localhost:' + process.env.PORT || 3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
+console.log('Listening at http://localhost:' + port);
 module.exports = app;
