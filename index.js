@@ -33,7 +33,7 @@ documentRoute(router);
 roleRoute(router);
 
 app.use((req, res) => {
-  return res.sendFile(__dirname + '/public/index.html');
+  return res.sendFile(__dirname + './public/index.html');
 });
 
 var port = process.env.PORT || 3000;

@@ -7,7 +7,7 @@
     "pretest": "node seeders/tests/role.js",
     "test": "jasmine tests/bend/role.spec.js && jasmine tests/bend/document.spec.js && jasmine tests/bend/user.spec.js && gulp test",
     "postinstall": "node seeders/role.js",
-    "launch": "node index.js"
+    "launch": "gulp build && node index.js"
   },
   "repository": {
     "type": "git",
