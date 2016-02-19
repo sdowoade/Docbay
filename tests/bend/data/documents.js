@@ -6,6 +6,12 @@ module.exports = {
     role: [1],
   },
 
+  docdx: {
+    title: 'Doc x change',
+    content: 'some content for changed x',
+    role: [1],
+  },
+
   docy: {
     title: 'Doc y',
     content: 'some content for x',

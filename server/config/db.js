@@ -5,15 +5,7 @@
 'use strict';
 var mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
-  db = process.env.DATABASE_URL;
-
-var ENV = process.env.NODE_ENV || 'development';
-if (ENV === 'development') {
-  require('dotenv').load();
-  db = process.env.DATABASE_URL;
-} else if (ENV === 'testing') {
-  db = 'mongodb://localhost:27017/testdms';
-}
+  db = 'mongodb://localhost:27017/tsting45'; //process.env.DATABASE_URL;
 
 mongoose.connect(db);
 autoIncrement.initialize(mongoose.connection);

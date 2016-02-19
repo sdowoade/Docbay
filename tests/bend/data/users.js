@@ -10,6 +10,16 @@ module.exports = {
     password: 'pass'
   },
 
+  dotunImposter: {
+    username: 'dow',
+    name: {
+      first: 'Dot',
+      last: 'ade'
+    },
+    email: 'd@d.com',
+    password: 'pass'
+  },
+
   apiuser: {
     username: 'shelly',
     name: {
@@ -54,6 +64,6 @@ module.exports = {
   },
 
   fakeUser_2: {
-    _id: 2,
+    _id: 3,
   }
 };

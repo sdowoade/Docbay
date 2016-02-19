@@ -33,14 +33,6 @@ var UserCtrl = class {
       });
     } else {
       userModel.findById(id).exec((err, user) => {
-        if (err) {
-          cb({
-            'status': 404,
-            'actual': {
-              'message': 'User not found'
-            }
-          });
-        }
         user.username = newUser.username || user.username;
         user.name = newUser.name || user.name;
         user.email = newUser.email || user.email;
