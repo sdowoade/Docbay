@@ -7,7 +7,6 @@ describe('Document management system', () => {
 
   afterAll((done) => {
     mockgoose.reset(() => {
-      console.log('after reset');
       done();
     });
   });

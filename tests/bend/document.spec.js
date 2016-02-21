@@ -220,7 +220,7 @@ describe('Document', () => {
         });
     });
 
-    it('should not DELETE /documents/', (done) => {
+    it('should not DELETE /documents/id', (done) => {
       request.delete(path + '/api/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
@@ -229,7 +229,7 @@ describe('Document', () => {
         });
     });
 
-    it('should DELETE /documents/', (done) => {
+    it('should DELETE /documents/id', (done) => {
       request.delete(path + '/api/documents/2')
         .set('x-access-token', testToken)
         .end((err, res) => {
