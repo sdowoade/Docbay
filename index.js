@@ -17,7 +17,7 @@ app.use(parser.json());
 app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'jade');
 
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 var router = express.Router();
 app.use('/api', router);
@@ -33,7 +33,7 @@ documentRoute(router);
 roleRoute(router);
 
 app.use((req, res) => {
-  return res.sendFile(__dirname + './public/index.html');
+  return res.sendFile(__dirname + '/public/index.html');
 });
 
 var port = process.env.PORT || 3000;
