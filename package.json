@@ -4,8 +4,9 @@
   "description": "Manages documents, users and user roles",
   "main": "document-manager.js",
   "scripts": {
-    "pretest": "node seeders/tests/role.js",
-    "test": "jasmine tests/bend/role.spec.js && jasmine tests/bend/document.spec.js && jasmine tests/bend/user.spec.js && gulp test",
+    "pretest": "node seeders/role.js",
+    "test": "node index.js & istanbul cover jasmine tests/bend/dms.spec.js && mv -f coverage bend_coverage && gulp test",
+    "codecov": "cat ./bend_coverage/lcov.info | codecov -t $CODECOV_TOKEN",
     "postinstall": "node seeders/role.js",
     "launch": "gulp build && node index.js"
   },
@@ -60,6 +61,8 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
-    "supertest": "^1.1.0"
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.2",
+    "superagent": "^1.7.2"
   }
 }

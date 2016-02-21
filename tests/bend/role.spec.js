@@ -1,36 +1,21 @@
 /*Role Spec: contains tests for role controllers and routes.*/
 'use strict';
 process.env.NODE_ENV = 'testing';
-var mongoose = require('../../server/config/db'),
-  moment = require('moment'),
-  mockgoose = require('mockgoose'),
+var moment = require('moment'),
   userCtrl = require('../../server/controllers/user'),
   roleCtrl = require('../../server/controllers/role'),
+  roleModel = require('../../server/models/role'),
   testUsers = require('./data/users'),
   testRoles = require('./data/roles'),
-  app = require('../../index'),
-  request = require('supertest')(app),
+  path = 'http://localhost:3000',
+  request = require('superagent'),
   async = require('async');
 
-mockgoose(mongoose);
 
 describe('Role', () => {
   beforeAll((done) => {
     console.log('Running role test suite');
-    var users = [testUsers.dotun, testUsers.walter];
-    async.times(2, (iter, next) => {
-      userCtrl.create(users[iter], (err, user) => {
-        next(err, user);
-      });
-    }, (err, users) => {
-      done();
-    });
-  });
-
-  afterAll((done) => {
-    mockgoose.reset(() => {
-      done();
-    });
+    done();
   });
 
   it('should ensure new role is unique', (done) => {
@@ -53,10 +38,30 @@ describe('Role', () => {
     });
   });
 
+  it('should get a role', (done) => {
+    spyOn(roleModel, 'findById').and.callThrough();
+    roleCtrl.get(0, (err, role) => {
+      expect(role).toBeDefined();
+      expect(err).toBeNull();
+      expect(roleModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should not get a role', (done) => {
+    spyOn(roleModel, 'findById').and.callThrough();
+    roleCtrl.get(99, (err, role) => {
+      expect(role).not.toBeDefined();
+      expect(err).not.toBeNull();
+      expect(roleModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/api/users/login')
+      request.post(path + '/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -65,29 +70,29 @@ describe('Role', () => {
     });
 
     it('should GET /roles/', (done) => {
-      request.get('/api/roles')
+      request.get(path + '/api/roles')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(2);
           expect(res.body[0]).toEqual(jasmine.objectContaining({
-            'title': '_Public'
+            'title': 'Public'
           }));
           done();
         });
     });
 
     it('should GET /roles/:id/documents', (done) => {
-      request.get('/api/roles/0/documents')
+      request.get(path + '/api/roles/0/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.docs.length).toBe(0);
+          expect(res.body.docs.length).toBe(2);
           done();
         });
     });
 
     it('should not GET /roles/:id/documents', (done) => {
-      request.get('/api/roles/0/documents')
+      request.get(path + '/api/roles/0/documents')
         .end((err, res) => {
           expect(res.status).toBe(401);
           done();
@@ -95,16 +100,32 @@ describe('Role', () => {
     });
 
     it('should GET /roles/:id/users', (done) => {
-      request.get('/api/roles/0/users')
+      request.get(path + '/api/roles/0/users')
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.length).toBe(2);
+          expect(res.body.length).toBe(3);
+          done();
+        });
+    });
+
+    it('should GET /roles/:id', (done) => {
+      request.get(path + '/api/roles/0')
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+
+    it('should not GET /roles/:id', (done) => {
+      request.get(path + '/api/roles/99')
+        .end((err, res) => {
+          expect(res.status).toBe(404);
           done();
         });
     });
 
     it('should POST /roles/', (done) => {
-      request.post('/api/roles')
+      request.post(path + '/api/roles')
         .set('x-access-token', testToken)
         .send(testRoles.sample_role_2)
         .end((err, res) => {
@@ -114,7 +135,7 @@ describe('Role', () => {
     });
 
     it('should not POST /roles/', (done) => {
-      request.post('/api/roles')
+      request.post(path + '/api/roles')
         .send(testRoles.sample_role_2)
         .end((err, res) => {
           expect(res.status).toBe(401);

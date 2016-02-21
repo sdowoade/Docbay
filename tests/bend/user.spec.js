@@ -1,28 +1,20 @@
 /*User Spec: contains tests for user controllers and routes.*/
 'use strict';
 process.env.NODE_ENV = 'testing';
-var mongoose = require('../../server/config/db'),
-  moment = require('moment'),
+var moment = require('moment'),
   mockgoose = require('mockgoose'),
   userCtrl = require('../../server/controllers/user'),
+  userModel = require('../../server/models/user'),
   roleCtrl = require('../../server/controllers/role'),
   documentCtrl = require('../../server/controllers/document'),
   testUsers = require('./data/users'),
-  app = require('../../index'),
-  request = require('supertest')(app),
+  request = require('superagent'),
+  path = 'http://localhost:3000',
   async = require('async');
-
-mockgoose(mongoose);
 
 describe('User', () => {
   beforeAll(() => {
     console.log('Running user test suite');
-  });
-
-  afterAll((done) => {
-    mockgoose.reset(() => {
-      done();
-    });
   });
 
   it('should ensure new user is unique', (done) => {
@@ -73,6 +65,33 @@ describe('User', () => {
     });
   });
 
+  it('should ensure only user can update self', (done) => {
+    userCtrl.update(2, testUsers.dotun, testUsers.fakeUser_1, (err, user) => {
+      expect(err).not.toBeNull();
+      expect(user).not.toBeDefined();
+      expect(err.actual.message).toEqual('Access Denied');
+      expect(err.status).toEqual(403);
+      done();
+    });
+  });
+
+  it('should update user', (done) => {
+    spyOn(userModel, 'findById').and.callThrough();
+    userCtrl.update(1, testUsers.dotunImposter,
+      testUsers.fakeUser_1, (err, user) => {
+        expect(err).toBeNull();
+        expect(user).toBeDefined();
+        expect(userModel.findById).toHaveBeenCalled();
+        expect(user.username).toEqual('dow');
+        expect(user.name).toBeDefined();
+        expect(user.name.first).toBe('Dot');
+        expect(user.name.last).toBe('ade');
+        expect(user.email).toEqual('d@d.com');
+        expect(user.password).toBeDefined();
+        done();
+      });
+  });
+
   it('should get all users', (done) => {
     userCtrl.getAll((err, users) => {
       expect(users).toBeDefined();
@@ -81,10 +100,39 @@ describe('User', () => {
     });
   });
 
+  it('should get a user', (done) => {
+    spyOn(userModel, 'findById').and.callThrough();
+    userCtrl.get(1, (err, user) => {
+      expect(user).toBeDefined();
+      expect(err).toBeNull();
+      expect(userModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should fail to get a user', (done) => {
+    spyOn(userModel, 'findById').and.callThrough();
+    userCtrl.get(19, (err, user) => {
+      expect(err).not.toBeNull();
+      expect(userModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should gets users in role', (done) => {
+    spyOn(userModel, 'find').and.callThrough();
+    userCtrl.getAllInRole(0, (err, users) => {
+      expect(err).toBeNull();
+      expect(userModel.find).toHaveBeenCalled();
+      users.forEach((x) => expect(x.role.indexOf(0)).not.toBe(-1));
+      done();
+    });
+  });
+
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/api/users/login')
+      request.post(path + '/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -93,7 +141,7 @@ describe('User', () => {
     });
 
     it('should /', (done) => {
-      request.get('/api/')
+      request.get(path + '/api/')
         .end((err, res) => {
           expect(res.status).toBe(200);
           done();
@@ -101,19 +149,19 @@ describe('User', () => {
     });
 
     it('should GET /users/', (done) => {
-      request.get('/api/users')
+      request.get(path + '/api/users')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(2);
           expect(res.body[0]).toEqual(jasmine.objectContaining({
-            'username': 'dowoade'
+            'username': 'dow'
           }));
           done();
         });
     });
 
     it('should POST /users/', (done) => {
-      request.post('/api/users')
+      request.post(path + '/api/users')
         .send(testUsers.apiuser)
         .end((err, res) => {
           expect(res.status).toBe(201);
@@ -122,10 +170,10 @@ describe('User', () => {
     });
 
     it('should GET /users/id', (done) => {
-      request.get('/api/users/1')
+      request.get(path + '/api/users/1')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
-            'username': 'dowoade'
+            'username': 'dow'
           }));
           expect(res.status).toBe(200);
           done();
@@ -133,7 +181,7 @@ describe('User', () => {
     });
 
     it('should not GET /users/id', (done) => {
-      request.get('/api/users/20')
+      request.get(path + '/api/users/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
           done();
@@ -141,7 +189,7 @@ describe('User', () => {
     });
 
     it('should PUT /users/id', (done) => {
-      request.put('/api/users/3')
+      request.put(path + '/api/users/3')
         .set('x-access-token', testToken)
         .send(testUsers.walter)
         .end((err, res) => {
@@ -151,7 +199,7 @@ describe('User', () => {
     });
 
     it('should not PUT /users/id', (done) => {
-      request.put('/api/users/4')
+      request.put(path + '/api/users/4')
         .set('x-access-token', testToken)
         .send(testUsers.apiuser)
         .end((err, res) => {
@@ -161,19 +209,10 @@ describe('User', () => {
     });
 
     it('should not DELETE /users/id', (done) => {
-      request.delete('/api/users/4')
+      request.delete(path + '/api/users/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(403);
-          done();
-        });
-    });
-
-    it('should DELETE /users/id', (done) => {
-      request.delete('/api/users/3')
-        .set('x-access-token', testToken)
-        .end((err, res) => {
-          expect(res.status).toBe(200);
           done();
         });
     });

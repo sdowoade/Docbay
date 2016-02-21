@@ -1,20 +1,18 @@
 /*Document Spec: contains tests for document controllers and routes.*/
 'use strict';
 process.env.NODE_ENV = 'testing';
-var mongoose = require('../../server/config/db'),
-  moment = require('moment'),
-  mockgoose = require('mockgoose'),
+var moment = require('moment'),
   roleModel = require('../../server/models/role'),
   userCtrl = require('../../server/controllers/user'),
   roleCtrl = require('../../server/controllers/role'),
   documentCtrl = require('../../server/controllers/document'),
+  documentModel = require('../../server/models/document'),
   testUsers = require('./data/users'),
   testDocuments = require('./data/documents'),
-  app = require('../../index'),
-  request = require('supertest')(app),
+  path = 'http://localhost:3000',
+  request = require('superagent'),
   async = require('async');
 
-mockgoose(mongoose);
 
 describe('Document', () => {
   beforeAll((done) => {
@@ -22,26 +20,9 @@ describe('Document', () => {
     var documents = [testDocuments.docy, testDocuments.docz];
     var users = [testUsers.dotun, testUsers.walter];
     var usersForDocs = [testUsers.fakeUser_1, testUsers.fakeUser_2];
+
     async.series([
       (callback) => {
-        roleModel.count({}, (err, count) => {
-          if (count === 0) {
-            roleModel.create({
-              title: '_Public',
-            }, (err, role) => {
-              callback(err, role);
-            });
-          }
-        });
-      }, (callback) => {
-        async.times(2, (iter, next) => {
-          userCtrl.create(users[iter], (err, user) => {
-            next(err, user);
-          });
-        }, (err, users) => {
-          callback(err, users);
-        });
-      }, (callback) => {
         async.times(2, (iter, next) => {
           documentCtrl.create(documents[iter],
             usersForDocs[iter], (err, doc) => {
@@ -52,12 +33,6 @@ describe('Document', () => {
         });
       }
     ], (err, results) => {
-      done();
-    });
-  });
-
-  afterAll((done) => {
-    mockgoose.reset(() => {
       done();
     });
   });
@@ -96,6 +71,52 @@ describe('Document', () => {
     });
   });
 
+  it('should update document', (done) => {
+    spyOn(documentModel, 'findById').and.callThrough();
+    documentCtrl.update(3, testDocuments.docdx,
+      testUsers.fakeUser_1, (err, doc) => {
+        expect(err).toBeNull();
+        expect(doc).toBeDefined();
+        expect(documentModel.findById).toHaveBeenCalled();
+        expect(doc.title).toEqual('Doc x change');
+        expect(doc.content).toBeDefined();
+        expect(doc.role).toBeDefined();
+        done();
+      });
+  });
+
+  it('should get a document', (done) => {
+    spyOn(documentModel, 'findById').and.callThrough();
+    documentCtrl.get(1, (err, doc) => {
+      expect(doc).toBeDefined();
+      expect(err).toBeNull();
+      expect(documentModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should not delete a document', (done) => {
+    spyOn(documentModel, 'findById').and.callThrough();
+    documentCtrl.delete(99, testUsers.fakeUser_1, (err, doc) => {
+      expect(doc).not.toBeDefined();
+      expect(err).not.toBeNull();
+      expect(err.status).toBe(404);
+      expect(documentModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should not delete a document', (done) => {
+    spyOn(documentModel, 'findById').and.callThrough();
+    documentCtrl.delete(1, testUsers.fakeUser_2, (err, doc) => {
+      expect(doc).not.toBeDefined();
+      expect(err).not.toBeNull();
+      expect(err.status).toBe(403);
+      expect(documentModel.findById).toHaveBeenCalled();
+      done();
+    });
+  });
+
   it('should search document by date', (done) => {
     documentCtrl.getAllByDate(moment().format(), 1, (err, docs) => {
       expect(moment(docs[0].dateCreated).startOf('Day').format())
@@ -121,7 +142,7 @@ describe('Document', () => {
   describe('Endpoints', () => {
     var testToken;
     beforeAll((done) => {
-      request.post('/api/users/login')
+      request.post(path + '/api/users/login')
         .send(testUsers.walter)
         .end((err, res) => {
           testToken = res.body.token;
@@ -130,7 +151,7 @@ describe('Document', () => {
     });
 
     it('should GET /documents/', (done) => {
-      request.get('/api/documents')
+      request.get(path + '/api/documents')
         .end((err, res) => {
           expect(res.status).toBe(200);
           expect(res.body.length).toBe(3);
@@ -142,7 +163,7 @@ describe('Document', () => {
     });
 
     it('should POST /documents/', (done) => {
-      request.post('/api/documents')
+      request.post(path + '/api/documents')
         .set('x-access-token', testToken)
         .send(testDocuments.apidoc)
         .end((err, res) => {
@@ -152,7 +173,7 @@ describe('Document', () => {
     });
 
     it('should not POST /documents/', (done) => {
-      request.post('/api/documents')
+      request.post(path + '/api/documents')
         .send(testDocuments.apidoc)
         .end((err, res) => {
           expect(res.status).toBe(401);
@@ -161,10 +182,10 @@ describe('Document', () => {
     });
 
     it('should GET /documents/id', (done) => {
-      request.get('/api/documents/1')
+      request.get(path + '/api/documents/2')
         .end((err, res) => {
           expect(res.body).toEqual(jasmine.objectContaining({
-            'title': 'Doc y'
+            'title': 'Doc z'
           }));
           expect(res.status).toBe(200);
           done();
@@ -172,7 +193,7 @@ describe('Document', () => {
     });
 
     it('should not GET /documents/id', (done) => {
-      request.get('/api/documents/20')
+      request.get(path + '/api/documents/20')
         .end((err, res) => {
           expect(res.status).toBe(404);
           done();
@@ -180,7 +201,7 @@ describe('Document', () => {
     });
 
     it('should PUT /documents/id', (done) => {
-      request.put('/api/documents/2')
+      request.put(path + '/api/documents/2')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -190,7 +211,7 @@ describe('Document', () => {
     });
 
     it('should not PUT /documents/id', (done) => {
-      request.put('/api/documents/3')
+      request.put(path + '/api/documents/3')
         .set('x-access-token', testToken)
         .send(testDocuments.docz)
         .end((err, res) => {
@@ -199,8 +220,8 @@ describe('Document', () => {
         });
     });
 
-    it('should not DELETE /documents/', (done) => {
-      request.delete('/api/documents/1')
+    it('should not DELETE /documents/id', (done) => {
+      request.delete(path + '/api/documents/1')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(403);
@@ -208,8 +229,8 @@ describe('Document', () => {
         });
     });
 
-    it('should DELETE /documents/', (done) => {
-      request.delete('/api/documents/2')
+    it('should DELETE /documents/id', (done) => {
+      request.delete(path + '/api/documents/2')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
@@ -218,7 +239,7 @@ describe('Document', () => {
     });
 
     it('should not GET /users/id/documents', (done) => {
-      request.get('/api/users/3/documents')
+      request.get(path + '/api/users/1/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(403);
@@ -227,7 +248,7 @@ describe('Document', () => {
     });
 
     it('should GET /users/id/documents', (done) => {
-      request.get('/api/users/2/documents')
+      request.get(path + '/api/users/3/documents')
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
