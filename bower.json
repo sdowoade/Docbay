@@ -13,6 +13,7 @@
     "angular-ui-router": "latest",
     "textAngular": "latest",
     "rangy": "latest",
-    "bootstrap-css-only": "latest"
+    "bootstrap-css-only": "latest",
+    "angular-loading-bar": "latest"
   }
 }

@@ -73,8 +73,9 @@ a:focus {
   .landing-content {
     background: @primary;
     color: @white;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    height:auto;
+    overflow: scroll;
     padding: 0 8% 0 8%;
   }
 }
@@ -121,6 +122,10 @@ md-toolbar.toolbar {
 .home-info {
   width: 100%;
   padding: 3%;
+}
+
+.ctaform{
+  background:rgba(0,0,0,0.3);
 }
 
 .home-button {
@@ -182,13 +187,15 @@ md-toolbar.toolbar {
 
 .doc-container {
   background: @secondary;
-  height: 100%;
+  min-height: 100%;
+  height: auto;
   overflow: scroll;
   opacity: 0.9;
 }
 
 .role-container {
-  height: 100%;
+  min-height: 100%;
+  height: auto;
   color: @primary;
   font-size: 0.9em;
 }
@@ -210,7 +217,7 @@ md-card.tile {
 }
 
 .title-display {
-  margin-top: 0px;
+  margin-top: 0;
   border-bottom: 1px solid #666;
   padding-bottom: 7px;
   margin-bottom: 10px
@@ -319,7 +326,9 @@ md-input-container.pop:not(.md-input-invalid).md-input-focused .md-input {
 }
 
 .error {
-  color: red;
+  padding: 0;
+  margin: 0;
+  color: #fff;
   background: @white;
 }
 
