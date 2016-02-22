@@ -27,6 +27,7 @@ module.exports = function(config) {
       'public/lib/rangy/rangy-selectionsaverestore.js',
       'public/lib/textAngular/dist/textAngular-sanitize.min.js',
       'public/lib/textAngular/dist/textAngular.min.js',
+      'public/lib/angular-loading-bar/build/loading-bar.js',
       'public/js/application.js',
       'tests/fend/**/*.spec.js'
     ],
