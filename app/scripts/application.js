@@ -18,7 +18,7 @@ require('./controllers/editdocument');
 require('./controllers/document');
 
 angular.module('docbay', ['ngResource', 'ngMaterial',
-    'ngRoute', 'ui.router', 'textAngular',
+    'ngRoute', 'ui.router', 'textAngular', 'angular-loading-bar',
     'docbay.controllers', 'docbay.services'
   ])
   .controller('defaultController', function(
