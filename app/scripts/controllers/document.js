@@ -23,8 +23,8 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
       $scope.canCreateNew = false;
       Roles.documents($stateParams, page, (err, docs) => {
         if (docs) {
-          $scope.pages = Math.ceil(docs.count / 50);
-          $scope.documents = docs.docs;
+          $scope.nextIsEnabled = docs.length > 50;
+          $scope.documents = docs;
         }
       });
     } else {
@@ -33,23 +33,20 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
 
       Users.documents($rootScope.currentUser, page, (err, docs) => {
         if (docs) {
-          $scope.pages = Math.ceil(docs.count / 50);
-          $scope.documents = docs.docs;
+          $scope.nextIsEnabled = docs.length > 50;
+          $scope.documents = docs;
         }
       });
     }
   };
 
-  $scope.range = (start, end) => {
-    var input = [];
-    for (var i = start; i <= end; i++) input.push(i);
-    return input;
-  };
-
-  $scope.new = (ev) => {
+  $scope.create = (ev) => {
     $mdDialog.show({
       controller: 'newDocCtrl',
       templateUrl: 'views/newdoc.html',
+      locals: {
+        DocumentsState: $scope.documents
+      },
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
@@ -71,7 +68,7 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
     });
   };
 
-  $scope.delete = (id) => {
+  $scope.remove = (id, index) => {
     Documents.delete({
       id: id
     }, () => {
@@ -80,7 +77,7 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
         .textContent('Document Deleted!')
         .hideDelay(3000)
       );
-      $state.reload();
+      $scope.documents.splice(index, 1);
     });
   };
 });

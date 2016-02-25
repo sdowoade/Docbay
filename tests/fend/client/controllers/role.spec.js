@@ -5,6 +5,7 @@ describe('docCtrl tests', () => {
     mdDialog,
     mdToast,
     state,
+
     Roles = {
       save: (role, cb, err) => {
         role.title === 'role' ? cb(role) : err();
@@ -29,6 +30,7 @@ describe('docCtrl tests', () => {
     mdDialog = $injector.get('$mdDialog');
     mdToast = $injector.get('$mdToast');
     state = $injector.get('$state');
+
     controller = $controller('roleCtrl', {
       $scope: scope,
       $mdToast: mdToast,
@@ -42,6 +44,7 @@ describe('docCtrl tests', () => {
     scope.currentUser = {
       _id: 'id'
     };
+
     spyOn(Users, 'get').and.callThrough();
     scope.init();
     expect(scope.user).toBeDefined();
@@ -65,9 +68,11 @@ describe('docCtrl tests', () => {
     spyOn(Roles, 'save').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
     scope.roles = [];
+
     scope.role = {
       title: 'role'
     };
+
     scope.save();
     expect(scope.role.title).toBe(null);
     expect(scope.roles[0]).toEqual(scope.role);
@@ -77,9 +82,11 @@ describe('docCtrl tests', () => {
   it('scope.save should call Roles.save with error', () => {
     spyOn(Roles, 'save').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
+
     scope.role = {
       title: 'roleless'
     };
+    
     scope.roles = [];
     scope.save();
     expect(scope.role.title).not.toBe(null);

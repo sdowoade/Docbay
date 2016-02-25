@@ -4,12 +4,14 @@ describe('loginCtrl tests', () => {
     Document = {
       _id: 'doc'
     },
+
     controller,
     Auth = {
       setUser: (user) => {
         return user;
       }
     },
+
     state,
     Users = {
       login: (user, cb) => {
@@ -25,6 +27,7 @@ describe('loginCtrl tests', () => {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     state = $injector.get('$state');
+    
     controller = $controller('loginCtrl', {
       $scope: scope,
       $state: state,
@@ -50,7 +53,6 @@ describe('loginCtrl tests', () => {
   it('should set status message', () => {
     scope.user = null;
     scope.login();
-    expect(scope.status).toBe('Incorrect username or password');
+    expect(scope.statusMsg).toBe('Incorrect username or password');
   });
-
 });

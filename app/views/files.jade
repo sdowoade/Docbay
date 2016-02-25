@@ -7,7 +7,7 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
       p.md-title.color-white {{documentsTitle}}
       md-grid-list(md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5" md-row-height-gt-xs="7:9" md-row-height-sm="7:9" md-gutter-xs="8px" md-gutter-gt-xs="24px")
         md-grid-tile(md-ink-ripple ng-if="canCreateNew")
-          img.add-image(src="../images/addnewdoc.png", ng-click="new()")
+          img.add-image(src="../images/addnewdoc.png", ng-click="create()")
         md-grid-tile(layout="column" md-ink-ripple ng-repeat="doc in documents")
           md-card.tile(ng-click="edit(doc)")
             div.md-padding(flex)
@@ -17,18 +17,13 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
             i.fa.fa-pencil(ng-click="edit(doc)")
               md-tooltip Edit
             span  
-            i.fa.fa-trash(ng-click="delete(doc._id)")
+            i.fa.fa-trash(ng-click="remove(doc._id,$index)")
               md-tooltip Delete
-      div.md-padding(layout="row" ng-if="pages>1" layout-margin layout-align="center center")
+      div.md-padding(layout="row" ng-if="nextIsEnabled || currentPage>1" layout-margin layout-align="center center")
         section.archive-pages
           ul
-            li.first
-              a(ng-click="getPage(1)" title="first page") first page
             li.previous
-              a(ng-click="getPage(currentPage+1)" title="previous page") previous page
-            li(ng-repeat="i in range(1,pages)" ng-class="{'selected': currentPage==i}")
-              a(ng-click="getPage(i)" ) {{i}}
+              a(ng-show="currentPage>1" ng-click="getPage(currentPage-1)" title="previous page") previous page
             li.next
-              a(ng-click="getPage(currentPage+1)" title="next page") next page
-            li.last
-              a(ng-click="getPage(pages)" title="last page") last page
+              a(ng-show="nextIsEnabled" ng-click="getPage(currentPage+1)" title="next page") next page
+   

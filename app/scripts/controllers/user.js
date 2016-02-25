@@ -11,7 +11,14 @@ angular.module('docbay.controllers').controller('userCtrl', function(
 
   $scope.signup = () => {
     Users.save($scope.user, () => {
-      $state.go('login');
+      Users.login($scope.user, (err, user) => {
+        Auth.setUser(user);
+        $rootScope.currentUser = user.data;
+        $rootScope.$broadcast('updateHeader');
+        $state.go('documents', null, {
+          reload: true
+        });
+      });
     }, (err) => {
       if (err.status == 409) {
         $mdToast.show(

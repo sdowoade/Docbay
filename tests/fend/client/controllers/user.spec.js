@@ -39,13 +39,17 @@ describe('userCtrl tests', () => {
 
     Users = {
       save: (user, cb, err) => {
-        if (user === 1) {
+        if (user.data === 1) {
           cb();
-        } else if (user === 2) {
+        } else if (user.data === 2) {
           err(statusError409);
         } else {
           err(statusError500);
         }
+      },
+
+      login: (user, cb) => {
+        cb(null,user);
       },
 
       update: (id, user, cb, err) => {
@@ -69,6 +73,7 @@ describe('userCtrl tests', () => {
     mdDialog = $injector.get('$mdDialog');
     mdToast = $injector.get('$mdToast');
     state = $injector.get('$state');
+
     controller = $controller('userCtrl', {
       $scope: scope,
       Users: Users,
@@ -77,16 +82,23 @@ describe('userCtrl tests', () => {
   }));
 
   it('scope.signup should call Users.save', () => {
-    scope.user = 1;
+    scope.user = { data: 1, first: 'first', last: 'last' };
+    spyOn(Auth, 'setUser').and.callThrough();
+    spyOn(scope, '$broadcast').and.callThrough();
     spyOn(Users, 'save').and.callThrough();
+    spyOn(Users, 'login').and.callThrough();
     spyOn(state, 'go').and.callThrough();
     scope.signup();
     expect(Users.save).toHaveBeenCalled();
+    expect(Users.login).toHaveBeenCalled();
+    expect(Auth.setUser).toHaveBeenCalled();
+    expect(scope.currentUser).toBe(1);
+    expect(scope.$broadcast).toHaveBeenCalled();
     expect(state.go).toHaveBeenCalled();
   });
 
   it('scope.signup should call Users.save with error 409', () => {
-    scope.user = 2;
+    scope.user = { data: 2 };
     spyOn(Users, 'save').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
     scope.signup();
@@ -95,7 +107,7 @@ describe('userCtrl tests', () => {
   });
 
   it('scope.signup should call Users.save with error 500', () => {
-    scope.user = null;
+    scope.user = { data: null };
     spyOn(Users, 'save').and.callThrough();
     spyOn(state, 'go').and.callThrough();
     scope.signup();
@@ -110,6 +122,7 @@ describe('userCtrl tests', () => {
       first: 'Von',
       last: 'Doom'
     };
+
     spyOn(Users, 'update').and.callThrough();
     spyOn(scope, '$broadcast').and.callThrough();
     spyOn(Auth, 'getUser').and.callThrough();
@@ -121,17 +134,19 @@ describe('userCtrl tests', () => {
     expect(Auth.getUser).toHaveBeenCalled();
     expect(Auth.setUser).toHaveBeenCalled();
     expect(scope.userData).toBeDefined();
+    
     expect(scope.userData.data).toEqual({
       _id: 1,
       user: 'user',
       first: 'Von',
       last: 'Doom'
     });
+
     expect(scope.currentUser).toEqual(scope.user);
     expect(mdToast.show).toHaveBeenCalled();
   });
 
-  it('scope.signup should call Users.update with error 409', () => {
+  it('scope.update should call Users.update with error 409', () => {
     scope.user = 2;
     spyOn(Users, 'update').and.callThrough();
     spyOn(mdToast, 'show').and.callThrough();
@@ -140,7 +155,7 @@ describe('userCtrl tests', () => {
     expect(mdToast.show).toHaveBeenCalled();
   });
 
-  it('scope.signup should call Users.update with error 500', () => {
+  it('scope.update should call Users.update with error 500', () => {
     scope.user = 1;
     spyOn(Users, 'update').and.callThrough();
     spyOn(state, 'go').and.callThrough();

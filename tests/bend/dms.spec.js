@@ -14,5 +14,4 @@ describe('Document management system', () => {
   require('./user.spec.js');
   require('./document.spec.js');
   require('./role.spec.js');
-
 });

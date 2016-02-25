@@ -86,7 +86,7 @@ describe('Role', () => {
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.docs.length).toBe(2);
+          expect(res.body.length).toBe(2);
           done();
         });
     });

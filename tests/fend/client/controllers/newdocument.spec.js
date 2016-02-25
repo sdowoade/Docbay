@@ -6,11 +6,13 @@ describe('newDocCtrl tests', () => {
     mdDialog,
     mdToast,
     state,
+    
     Documents = {
       save: (doc, cb) => {
         cb(doc);
       }
     },
+
     Users = {
       get: (user, cb) => {
         cb({
@@ -18,6 +20,7 @@ describe('newDocCtrl tests', () => {
         });
       }
     };
+
   beforeEach(() => {
     module('docbay');
   });
@@ -31,7 +34,8 @@ describe('newDocCtrl tests', () => {
     controller = $controller('newDocCtrl', {
       $scope: scope,
       Documents: Documents,
-      Users: Users
+      Users: Users,
+      DocumentsState: []
     });
   }));
 
@@ -59,6 +63,5 @@ describe('newDocCtrl tests', () => {
     spyOn(state, 'reload');
     scope.close();
     expect(mdDialog.cancel).toHaveBeenCalled();
-    expect(state.reload).toHaveBeenCalled();
   });
 });

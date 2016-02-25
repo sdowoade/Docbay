@@ -110,17 +110,10 @@ var DocumentCtrl = class {
         documentModel.find({
           role: role
         }, (err, docs) => {
-          documentModel.count({
-            role: role
-          }, (countErr, count) => {
-            err ? cb({
-              'status': 500,
-              'actual': err
-            }) : cb(null, {
-              docs: docs,
-              count: count
-            });
-          });
+          err ? cb({
+            'status': 500,
+            'actual': err
+          }) : cb(null, docs);
         }).skip(skip).limit(limit);
       }
     });
@@ -145,17 +138,10 @@ var DocumentCtrl = class {
       documentModel.find({
         ownerId: id
       }, (err, docs) => {
-        documentModel.count({
-          ownerId: id
-        }, (countErr, count) => {
-          err ? cb({
-            'status': 500,
-            'actual': err
-          }) : cb(null, {
-            docs: docs,
-            count: count
-          });
-        });
+        err ? cb({
+          'status': 500,
+          'actual': err
+        }) : cb(null, docs);
       }).skip(skip).limit(limit);
     }
   }
