@@ -34,6 +34,12 @@ $ npm install -g jasmine
 $ jasmine init
 ```
 
+#### Environmental variables
+Create a .env and place it in the project root directory with the following key/value pairs
+
+| DATABASE_URL | 'mongodb://host:port/databasename' |
+|--------------|------------------------------------|
+
 ## Usage
 
 From the command line run the commands below,

@@ -127,14 +127,14 @@ describe('Document', () => {
 
   it('should search document by user', (done) => {
     documentCtrl.getAllByUser(1, testUsers.fakeUser_1, 1, 0, (err, docs) => {
-      docs.docs.forEach((x) => expect(x.ownerId).toBe(1));
+      docs.forEach((x) => expect(x.ownerId).toBe(1));
       done();
     });
   });
 
   it('should search document by role', (done) => {
     documentCtrl.getAllByRole(0, testUsers.fakeUser_1, 1, 0, (err, docs) => {
-      docs.docs.forEach((x) => expect(x.role).toContain(0));
+      docs.forEach((x) => expect(x.role).toContain(0));
       done();
     });
   });
@@ -252,7 +252,7 @@ describe('Document', () => {
         .set('x-access-token', testToken)
         .end((err, res) => {
           expect(res.status).toBe(200);
-          expect(res.body.docs.length).toBe(1);
+          expect(res.body.length).toBe(1);
           done();
         });
     });

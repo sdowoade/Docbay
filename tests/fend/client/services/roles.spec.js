@@ -9,6 +9,7 @@ describe('Users Service Test', () => {
     Auth,
     Roles,
     httpBackend;
+    
   beforeEach(inject(function($injector) {
     httpBackend = $injector.get('$httpBackend');
     Roles = $injector.get('Roles');
@@ -31,52 +32,60 @@ describe('Users Service Test', () => {
 
   describe('Roles unit tests', () => {
     describe('Roles resource unit tests', () => {
-      it('update should be a function', () => {
-        spyOn(Roles, 'update').and.returnValue(0);
-        Roles.update();
-        expect(Roles.update).toBeDefined();
-        expect(Roles.update).toHaveBeenCalled();
-        expect(typeof Roles.update).toBe('function');
-      });
-
       it('save should be a function', () => {
-        spyOn(Roles, 'save').and.returnValue(0);
-        Roles.save();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.whenPOST(/\/api\/roles/)
+          .respond(200, {
+            res: 'res'
+          });
+
+        Roles.save({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Roles.save).toBeDefined();
-        expect(Roles.save).toHaveBeenCalled();
         expect(typeof Roles.save).toBe('function');
+        expect(response.res).toBe('res');
       });
 
       it('query should be a function', () => {
-        spyOn(Roles, 'query').and.returnValue(0);
-        Roles.query();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.when('GET', '/api/roles/').respond(200, ['res']);
+
+        Roles.query(cb);
+        httpBackend.flush();
         expect(Roles.query).toBeDefined();
-        expect(Roles.query).toHaveBeenCalled();
         expect(typeof Roles.query).toBe('function');
+        expect(response).toBeDefined();
       });
 
       it('get should be a function', () => {
-        spyOn(Roles, 'get').and.returnValue(0);
-        Roles.get();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.when('GET', '/api/roles/').respond(200, {
+          res: 'res'
+        });
+
+        httpBackend.whenGET(/\/api\/roles\/(.+)/,
+            undefined, undefined, ['id'])
+          .respond(200, {
+            res: 'res'
+          });
+
+        Roles.get({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Roles.get).toBeDefined();
-        expect(Roles.get).toHaveBeenCalled();
         expect(typeof Roles.get).toBe('function');
-      });
-
-      it('delete should be a function', () => {
-        spyOn(Roles, 'delete').and.returnValue(0);
-        Roles.delete();
-        expect(Roles.delete).toBeDefined();
-        expect(Roles.delete).toHaveBeenCalled();
-        expect(typeof Roles.delete).toBe('function');
-      });
-
-      it('remove should be a function', () => {
-        spyOn(Roles, 'remove').and.returnValue(0);
-        Roles.remove();
-        expect(Roles.remove).toBeDefined();
-        expect(Roles.remove).toHaveBeenCalled();
-        expect(typeof Roles.remove).toBe('function');
+        expect(response.res).toBe('res');
       });
     });
 

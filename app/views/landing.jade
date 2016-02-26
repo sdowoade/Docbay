@@ -7,35 +7,35 @@ div.landing-content(layout-align="center center" layout="column")
 				span.md-display-3 Writing and sharing made easy.
 				span.small Docbay is the secure solution that lets you easily write and share documents with people you trust.
 		div.md-padding.md-whiteframe-1dp.ctaform(flex=30 flex-xs=100 layout="column" layout-align="center center")
-			form(ng-submit="signup()" name="form")
+			form.full-width(ng-submit="signup()" name="form")
 				div(layout-gt-xs="column" layout-xs="column")
 					md-input-container.md-block.push
 						label First name
 						input(ng-model="user.name.first" name="firstname" required)
-						div.error(ng-messages="form.firstname.$error")
+						div.error(ng-messages="form.firstname.$error" ng-show="form.firstname.$touched && form.firstname.$invalid")
 							div.error(ng-message="required") required.
 					md-input-container.md-block.push
 						label Last name
 						input(ng-model="user.name.last" name="lastname" required)
-						div.error(ng-messages="form.lastname.$error")
+						div.error(ng-messages="form.lastname.$error" ng-show="form.lastname.$touched && form.lastname.$invalid")
 							div.error(ng-message="required") required.
 				div(layout-gt-xs="column" layout-xs="column")
 					md-input-container.md-block.push
 						label Email
 						input(ng-model="user.email" name="email" type="email" required)
-						div.error(ng-messages="form.email.$error")
+						div.error(ng-messages="form.email.$error" ng-show="form.email.$touched && form.email.$invalid")
 							div(ng-message="required") required.
 							div(ng-message="email") Please provide a valid email address. 
 					md-input-container.md-block.push
 						label Password
 						input(ng-model="user.password" name="pass" type="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.{8,})/" required)
-						div.error(ng-messages="form.pass.$error")
+						div.error(ng-messages="form.pass.$error" ng-show="form.pass.$touched && form.pass.$invalid")
 							div.error(ng-message="required") required.
 							div.error(ng-message="pattern") Please provide a valid password(must be at least 8 characters and contain both uppercase and lowercase letters and a number or special character).  
 				md-input-container.md-block.push
 					label Username
 					input(ng-model="user.username" name="username" ng-minlength="4" ng-maxlength="11" required)
-					div.error(ng-messages="form.username.$error")
+					div.error(ng-messages="form.username.$error" ng-show="form.username.$touched && form.username.$invalid")
 						div.error(ng-message="required") required.
 						div.error(ng-message="[ng-minlength, ng-maxlength") Username should be between 4 and 8 characters long.  
 				div(layout="column")       
