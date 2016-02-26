@@ -4,18 +4,22 @@ describe('inviteUsersCtrl tests', () => {
     Role = {
       _id: 'role'
     },
+
     controller,
     mdDialog,
     mdToast,
+
     Roles = {
       users: (users, cb) => {
         users ? cb(null, users) : cb(true, null);
       }
     },
+
     Users = {
       assignRole: (user, role, cb) => {
         cb(null, role);
       },
+
       query: () => {
         return [{
           name: {
@@ -37,6 +41,7 @@ describe('inviteUsersCtrl tests', () => {
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');
     mdToast = $injector.get('$mdToast');
+
     controller = $controller('inviteUserCtrl', {
       $scope: scope,
       Users: Users,
@@ -48,6 +53,7 @@ describe('inviteUsersCtrl tests', () => {
     spyOn(Users, 'query').and.callThrough();
     scope.init();
     expect(Users.query).toHaveBeenCalled();
+
     expect(scope.users).toEqual([{
       name: {
         first: 'first',
@@ -62,6 +68,7 @@ describe('inviteUsersCtrl tests', () => {
     var chip = scope.transformChip({
       chip: 'i am chip'
     });
+
     expect(chip).toEqual({
       chip: 'i am chip'
     });
@@ -69,6 +76,7 @@ describe('inviteUsersCtrl tests', () => {
 
   it('transformChip should create chip', () => {
     var chip = scope.transformChip('chip');
+
     expect(chip).toEqual({
       name: 'chip',
       type: 'new'
@@ -84,6 +92,7 @@ describe('inviteUsersCtrl tests', () => {
       email: 'email',
       username: 'username'
     }];
+    
     spyOn(scope, 'createFilterFor').and.callThrough();
     scope.querySearch('query');
     expect(scope.createFilterFor).toHaveBeenCalled();

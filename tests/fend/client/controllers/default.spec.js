@@ -5,6 +5,7 @@ describe('defaultController tests', () => {
       isLoggedIn: () => {
         return true;
       },
+
       getUser: () => {
         return {
           name: 'name',
@@ -20,9 +21,11 @@ describe('defaultController tests', () => {
         return true;
       }
     },
+
     controller,
     mdDialog,
     nav,
+
     mdSidenav = (direction) => {
       return {
         toggle: function() {
@@ -30,8 +33,10 @@ describe('defaultController tests', () => {
         }
       };
     },
+
     mdToast,
     state,
+
     Documents = {
       update: (doc, cb) => {
         cb(doc);
@@ -48,6 +53,7 @@ describe('defaultController tests', () => {
     mdDialog = $injector.get('$mdDialog');
     mdToast = $injector.get('$mdToast');
     state = $injector.get('$state');
+
     controller = $controller('defaultController', {
       $scope: scope,
       $mdSidenav: mdSidenav,
@@ -59,12 +65,14 @@ describe('defaultController tests', () => {
     spyOn(Auth, 'isLoggedIn').and.callThrough();
     spyOn(Auth, 'getUser').and.callThrough();
     scope.init();
+
     expect(scope.currentUser).toEqual({
       name: {
         first: 'first',
         last: 'last'
       }
     });
+    
     expect(scope.name).toEqual('first last');
   });
 

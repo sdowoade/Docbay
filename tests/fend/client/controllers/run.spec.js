@@ -61,6 +61,7 @@ describe('example', function() {
           return place;
         }
       },
+
       Auth = {
         isLoggedIn: () => {
           return true;
@@ -116,6 +117,7 @@ describe('example', function() {
           return place;
         }
       },
+      
       Auth = {
         isLoggedIn: () => {
           return false;

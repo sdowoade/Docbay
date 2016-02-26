@@ -24,6 +24,5 @@ angular.module('docbay.controllers').controller('editDocCtrl', function(
 
   $scope.close = () => {
     $mdDialog.cancel();
-    $state.reload();
   };
 });

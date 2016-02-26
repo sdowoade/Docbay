@@ -12,7 +12,7 @@ angular.module('docbay.controllers').controller('loginCtrl', function(
           reload: true
         });
       } else {
-        $scope.status = 'Incorrect username or password';
+        $scope.statusMsg = 'Incorrect username or password';
       }
     });
   };

@@ -4,14 +4,15 @@ describe('roleMembersCtrl tests', () => {
     Role = {
       _id: 'role'
     },
+
     controller,
     mdDialog,
+    
     Roles = {
       users: function(users, cb) {
         users ? cb(null, users) : cb(true, null);
       }
     };
-
 
   beforeEach(() => {
     module('docbay');
@@ -21,6 +22,7 @@ describe('roleMembersCtrl tests', () => {
     var $controller = $injector.get('$controller');
     scope = $injector.get('$rootScope');
     mdDialog = $injector.get('$mdDialog');
+
     controller = $controller('roleMembersCtrl', {
       $scope: scope,
       Roles: Roles,

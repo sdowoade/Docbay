@@ -14,6 +14,7 @@ angular.module('docbay.controllers').controller('inviteUserCtrl', function(
     if (angular.isObject(chip)) {
       return chip;
     }
+
     return {
       name: chip,
       type: 'new'
@@ -34,6 +35,7 @@ angular.module('docbay.controllers').controller('inviteUserCtrl', function(
    */
   $scope.createFilterFor = (query) => {
     var lowercaseQuery = angular.lowercase(query);
+    
     return function filterFn(user) {
       return (user.name.first.indexOf(lowercaseQuery) === 0) ||
         (user.name.last.indexOf(lowercaseQuery) === 0) ||

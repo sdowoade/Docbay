@@ -1,13 +1,16 @@
 'use strict';
 describe('editDocCtrl tests', () => {
   var scope,
+
     Document = {
       _id: 'doc'
     },
+
     controller,
     mdDialog,
     mdToast,
     state,
+
     Documents = {
       update: (id, doc, cb) => {
         cb(id);
@@ -24,6 +27,7 @@ describe('editDocCtrl tests', () => {
     mdDialog = $injector.get('$mdDialog');
     mdToast = $injector.get('$mdToast');
     state = $injector.get('$state');
+    
     controller = $controller('editDocCtrl', {
       $scope: scope,
       Documents: Documents,
@@ -50,6 +54,5 @@ describe('editDocCtrl tests', () => {
     spyOn(state, 'reload');
     scope.close();
     expect(mdDialog.cancel).toHaveBeenCalled();
-    expect(state.reload).toHaveBeenCalled();
   });
 });

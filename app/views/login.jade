@@ -1,6 +1,6 @@
 div.login-container
 	div.md-padding(layout="column" layout-align="center center" flex)
-		form.md-padding.md-whiteframe-1dp.box
+		form.md-padding.md-whiteframe-1dp.box(ng-submit="login()")
 			div.md-toolbar-tools(layout="row" layout-align="start center" flex)
 				h2.md-display-3 Login
 			div.md-padding(layout="column" layout-align="center center")
@@ -14,7 +14,7 @@ div.login-container
 					md-icon
 						i.fa.fa-key.fa-style.color-blackish
 					input(type="password" ng-model="user.password")
-				md-button.md-raised.home-button.primary-button(ng-click="login()") Login
+				md-button.md-raised.home-button.primary-button(type="submit") Login
 				div(layout="row" layout-align="center center")
-					p.error {{status}}	
+					p.errorStatus {{statusMsg}}
 			

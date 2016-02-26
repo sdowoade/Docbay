@@ -6,21 +6,32 @@ describe('docCtrl tests', () => {
     mdDialog,
     mdToast,
     state,
+
+    sce = {
+      trustAsHtml: (value) => {
+        return 1;
+      }
+    },
+
     Documents = {
       save: (item, cb) => {
         item ? cb(item) : cb(false);
       },
+
       update: (id, doc, cb) => {
         id ? cb(id) : cb(false);
       },
+
       get: (id, cb) => {
         cb({
           title: 'New doc',
         });
       },
+
       delete: (id, cb) => {
         cb();
       },
+
       query: () => {
         return [{
           message: 'I am groot',
@@ -28,6 +39,7 @@ describe('docCtrl tests', () => {
         }];
       }
     },
+
     Roles = {
       get: (id, cb) => {
         cb({
@@ -38,11 +50,13 @@ describe('docCtrl tests', () => {
         role ? cb(null, role) : cb(true, null);
       }
     },
+
     Users = {
       documents: (user, page, cb) => {
         user ? cb(null, user) : cb(null, false);
       }
     };
+
   beforeEach(() => {
     module('docbay');
   });
@@ -57,9 +71,11 @@ describe('docCtrl tests', () => {
     stateParams = {
       id: true
     };
+
     controller = $controller('docCtrl', {
       $scope: scope,
       $stateParams: stateParams,
+      $sce: sce,
       Documents: Documents,
       Roles: Roles,
       Users: Users
@@ -70,6 +86,7 @@ describe('docCtrl tests', () => {
     inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
+
       controller = $controller('docCtrl', {
         $scope: scope,
         Documents: Documents,
@@ -87,11 +104,13 @@ describe('docCtrl tests', () => {
     inject(function($injector) {
       var $controller = $injector.get('$controller');
       scope = $injector.get('$rootScope');
+
       stateParams = {
         id: true,
         count: 1,
         docs: 'docs'
       };
+
       controller = $controller('docCtrl', {
         $scope: scope,
         $stateParams: stateParams,
@@ -118,7 +137,8 @@ describe('docCtrl tests', () => {
     expect(scope.canCreateNew).toBe(false);
     expect(Roles.documents).toHaveBeenCalled();
     expect(scope.documentsTitle).toEqual(scope.role.title);
-    expect(scope.documents).toEqual('docs');
+    expect(scope.documents).toEqual(stateParams);
+    expect(scope.nextIsEnabled).toBeDefined();
   });
 
   it('should get user documents', function() {
@@ -134,27 +154,31 @@ describe('docCtrl tests', () => {
     });
 
     spyOn(Users, 'documents').and.callThrough();
+
     scope.currentUser = {
       docs: 'user',
       count: 1
     };
+
     scope.getPage(1);
     expect(scope.currentPage).toBe(1);
     expect(Users.documents).toHaveBeenCalled();
     expect(scope.documentsTitle).toEqual('My files');
     expect(scope.canCreateNew).toBe(true);
-    expect(scope.documents).toEqual('user');
+    expect(scope.documents).toEqual(scope.currentUser);
+    expect(scope.nextIsEnabled).toBeDefined();
   });
 
-  it('scope.range should return array', () => {
-    var arr = scope.range(1, 4);
-    expect(arr.length).toBe(4);
-  });
-
-  it('scope.new should show dialog', () => {
+  it('scope.create should show dialog', () => {
     spyOn(mdDialog, 'show');
-    scope.new();
+    scope.create();
     expect(mdDialog.show).toHaveBeenCalled();
+  });
+
+  it('scope.skipValidation should call trustAsHtml', () => {
+    spyOn(sce, 'trustAsHtml');
+    scope.skipValidation();
+    expect(sce.trustAsHtml).toHaveBeenCalled();
   });
 
   it('scope.edit should show dialog', () => {
@@ -163,11 +187,10 @@ describe('docCtrl tests', () => {
     expect(mdDialog.show).toHaveBeenCalled();
   });
 
-  it('scope.delete should call Documents.delete', () => {
+  it('scope.remove should call Documents.delete', () => {
+    scope.documents = [1, 2, 3];
     spyOn(Documents, 'delete').and.callThrough();
-    spyOn(state, 'reload');
-    scope.delete();
+    scope.remove();
     expect(Documents.delete).toHaveBeenCalled();
-    expect(state.reload).toHaveBeenCalled();
   });
 });

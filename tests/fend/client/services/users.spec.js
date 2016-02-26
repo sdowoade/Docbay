@@ -7,6 +7,7 @@ describe('Users Service Test', () => {
   var Users,
     Auth,
     httpBackend;
+    
   beforeEach(inject(function($injector) {
     httpBackend = $injector.get('$httpBackend');
     Users = $injector.get('Users');
@@ -29,51 +30,116 @@ describe('Users Service Test', () => {
   describe('Users unit tests', () => {
     describe('Users resource unit tests', () => {
       it('update should be a function', () => {
-        spyOn(Users, 'update').and.returnValue(0);
-        Users.update();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.whenPUT(/\/api\/users\/(.+)/,
+            undefined, undefined, ['id'])
+          .respond(200, {
+            res: 'res'
+          });
+
+        Users.update({ id: 1 }, cb, cb);
+        httpBackend.flush();
         expect(Users.update).toBeDefined();
-        expect(Users.update).toHaveBeenCalled();
         expect(typeof Users.update).toBe('function');
+        expect(response.res).toBe('res');
       });
 
       it('save should be a function', () => {
-        spyOn(Users, 'save').and.returnValue(0);
-        Users.save();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.whenPOST(/\/api\/users\//)
+          .respond(200, {
+            res: 'res'
+          });
+
+        Users.save({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Users.save).toBeDefined();
-        expect(Users.save).toHaveBeenCalled();
         expect(typeof Users.save).toBe('function');
+        expect(response.res).toBe('res');
       });
 
       it('query should be a function', () => {
-        spyOn(Users, 'query').and.returnValue(0);
-        Users.query();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.when('GET', '/api/users/').respond(200, ['res']);
+
+        Users.query(cb);
+        httpBackend.flush();
         expect(Users.query).toBeDefined();
-        expect(Users.query).toHaveBeenCalled();
         expect(typeof Users.query).toBe('function');
+        expect(response).toBeDefined();
       });
 
       it('get should be a function', () => {
-        spyOn(Users, 'get').and.returnValue(0);
-        Users.get();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.when('GET', '/api/users/').respond(200, {
+          res: 'res'
+        });
+
+        httpBackend.whenGET(/\/api\/users\/(.+)/,
+            undefined, undefined, ['id'])
+          .respond(200, {
+            res: 'res'
+          });
+
+        Users.get({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Users.get).toBeDefined();
-        expect(Users.get).toHaveBeenCalled();
         expect(typeof Users.get).toBe('function');
+        expect(response.res).toBe('res');
       });
 
       it('delete should be a function', () => {
-        spyOn(Users, 'delete').and.returnValue(0);
-        Users.delete();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.whenDELETE(/\/api\/users\/(.+)/,
+            undefined, undefined, ['id'])
+          .respond(200, {
+            res: 'res'
+          });
+
+        Users.delete({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Users.delete).toBeDefined();
-        expect(Users.delete).toHaveBeenCalled();
         expect(typeof Users.delete).toBe('function');
+        expect(response.res).toBe('res');
       });
 
       it('remove should be a function', () => {
-        spyOn(Users, 'remove').and.returnValue(0);
-        Users.remove();
+        var response;
+        var cb = (res) => {
+          response = res;
+        };
+
+        httpBackend.whenDELETE(/\/api\/users\/(.+)/,
+            undefined, undefined, ['id'])
+          .respond(200, {
+            res: 'res'
+          });
+
+        Users.remove({ id: 1 }, cb);
+        httpBackend.flush();
         expect(Users.remove).toBeDefined();
-        expect(Users.remove).toHaveBeenCalled();
         expect(typeof Users.remove).toBe('function');
+        expect(response.res).toBe('res');
       });
     });
 
@@ -93,12 +159,15 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.when('POST', '/api/users/login').respond(200, {
           res: 'res'
         });
+
         Users.login({
           data: 'data'
         }, cb);
+
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
@@ -115,13 +184,16 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.when('POST', '/api/users/login').respond(401, {
           err: 'err'
         });
+
         Users.login({
           username: 'data',
           password: 'data'
         }, cb);
+
         httpBackend.flush();
         expect(error.err).toBe('err');
       });
@@ -143,9 +215,11 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.when('GET', '/api/users/session').respond(200, {
           res: 'res'
         });
+
         Users.session(cb);
         httpBackend.flush();
         expect(response.res).toBeDefined();
@@ -163,9 +237,11 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.when('GET', '/api/users/session').respond(401, {
           err: 'err'
         });
+
         Users.session(cb);
         httpBackend.flush();
         expect(error.err).toBe('err');
@@ -188,14 +264,17 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.whenGET(/\/api\/users\/(.+)\/documents/,
             undefined, undefined, ['id'])
           .respond(200, {
             res: 'res'
           });
+
         Users.documents({
           id: 'id'
         }, 1, cb);
+
         httpBackend.flush();
         expect(response.res).toBeDefined();
         expect(response.res).toBe('res');
@@ -212,14 +291,17 @@ describe('Users Service Test', () => {
             response = res;
           }
         };
+
         httpBackend.whenGET(/\/api\/users\/(.+)\/documents/,
             undefined, undefined, ['id'])
           .respond(500, {
             err: 'err'
           });
+
         Users.documents({
           id: 'id'
         }, 1, cb);
+
         httpBackend.flush();
         expect(error.err).toBeDefined();
         expect(error.err).toBe('err');
