@@ -7,6 +7,12 @@ describe('docCtrl tests', () => {
     mdToast,
     state,
 
+    sce = {
+      trustAsHtml: (value) => {
+        return 1;
+      }
+    },
+
     Documents = {
       save: (item, cb) => {
         item ? cb(item) : cb(false);
@@ -69,6 +75,7 @@ describe('docCtrl tests', () => {
     controller = $controller('docCtrl', {
       $scope: scope,
       $stateParams: stateParams,
+      $sce: sce,
       Documents: Documents,
       Roles: Roles,
       Users: Users
@@ -166,6 +173,12 @@ describe('docCtrl tests', () => {
     spyOn(mdDialog, 'show');
     scope.create();
     expect(mdDialog.show).toHaveBeenCalled();
+  });
+
+  it('scope.skipValidation should call trustAsHtml', () => {
+    spyOn(sce, 'trustAsHtml');
+    scope.skipValidation();
+    expect(sce.trustAsHtml).toHaveBeenCalled();
   });
 
   it('scope.edit should show dialog', () => {

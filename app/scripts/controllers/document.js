@@ -1,6 +1,6 @@
 'use strict';
 angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
-  $scope, $stateParams, $state,
+  $scope, $stateParams, $state, $sce,
   $mdDialog, $mdToast, Users, Roles, Documents) {
 
   /* on init load role documents if @stateparams exist
@@ -52,6 +52,10 @@ angular.module('docbay.controllers').controller('docCtrl', function($rootScope,
       clickOutsideToClose: true,
       fullscreen: true
     });
+  };
+
+  $scope.skipValidation = (value) => {
+    return $sce.trustAsHtml(value);
   };
 
   $scope.edit = (doc, ev) => {

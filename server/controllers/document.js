@@ -55,7 +55,7 @@ var DocumentCtrl = class {
 
   /*Query document model to fetch all documents.*/
   getAll(limit, cb) {
-    limit = limit || 50;
+    limit = limit || 51;
     documentModel.find({}, (err, docs) => {
       err ? cb({
         'status': 500,
@@ -76,7 +76,7 @@ var DocumentCtrl = class {
 
   /*Query document model to fetch all documents by date.*/
   getAllByDate(date, limit, cb) {
-    limit = limit || 50;
+    limit = limit || 51;
     documentModel.find({
       dateCreated: {
         '$gte': moment(date).startOf('Day'),
@@ -97,7 +97,7 @@ var DocumentCtrl = class {
     } else {
       skip = 0;
     }
-    limit = limit || 50;
+    limit = limit || 51;
     userModel.findById(user._id).exec((err, user) => {
       if (user.role.indexOf(role) === -1) {
         cb({
@@ -126,7 +126,7 @@ var DocumentCtrl = class {
     } else {
       skip = 0;
     }
-    limit = limit || 50;
+    limit = limit || 51;
     if (user._id != id) {
       cb({
         'status': 403,

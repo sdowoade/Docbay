@@ -8,11 +8,11 @@ div.doc-container(flex ng-if="currentUser" ng-init="init()")
       md-grid-list(md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5" md-row-height-gt-xs="7:9" md-row-height-sm="7:9" md-gutter-xs="8px" md-gutter-gt-xs="24px")
         md-grid-tile(md-ink-ripple ng-if="canCreateNew")
           img.add-image(src="../images/addnewdoc.png", ng-click="create()")
-        md-grid-tile(layout="column" md-ink-ripple ng-repeat="doc in documents")
+        md-grid-tile(layout="column" md-ink-ripple ng-repeat="doc in documents | limitTo:50")
           md-card.tile(ng-click="edit(doc)")
             div.md-padding(flex)
-              h4.title-display {{doc.title | limitTo:10}}
-              h4.content-display(ng-bind-html="doc.content | limitTo:20") Content can't be displayed.
+              h4.title-display {{doc.title | limitTo:10}}...
+              h4.content-display(ng-bind-html="skipValidation(doc.content.slice(0,20))") Content can't be displayed.
           md-grid-tile-footer.grid-footer.md-padding
             i.fa.fa-pencil(ng-click="edit(doc)")
               md-tooltip Edit

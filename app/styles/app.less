@@ -108,6 +108,7 @@ md-toolbar.toolbar {
 }
 
 .docbar {
+  display: block;
   background: @primary;
   color: @white;
   height: 100px;
@@ -220,14 +221,14 @@ md-card.tile {
   margin-top: 0;
   border-bottom: 1px solid #666;
   padding-bottom: 7px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .content-display {
   font-size: 100%;
-  line-height:100%;
-  overflow:hidden;
-  word-arap:suppress;
+  line-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 md-grid-tile-footer.footer {
