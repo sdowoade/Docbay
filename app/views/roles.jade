@@ -14,9 +14,9 @@ md-sidenav(class="md-sidenav-right md-whiteframe-z2" md-component-id="roles")
 						input(ng-model="role.title" required)
 					md-button.md-padding.md-raised.primary-button(type="submit") Create new role
 				md-content.roles-display  
-					md-list.md-padding(layout-margin)
-						md-list-item(ng-repeat="role in roles")    
-							div(layout="row" layout-xs="column" layout-align="center center")
+					md-list.md-padding(flex layout-margin)
+						md-list-item(flex ng-repeat="role in roles")    
+							div(layout="row" layout-align="center center")
 								i.fa.fa-users.fa-style.color-greenish
 								span.role-display(flex ui-sref="roleDocuments({id:role._id,role:role.title})") {{role.title}}
 								div
