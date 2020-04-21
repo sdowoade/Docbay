@@ -54,7 +54,7 @@
     "kerberos": "0.0.17",
     "mockgoose": "^5.1.0",
     "moment": "^2.11.0",
-    "mongoose": "^4.3.4",
+    "mongoose": "^5.7.5",
     "mongoose-auto-increment": "^5.0.1",
     "vinyl-source-stream": "^1.1.0"
   },
