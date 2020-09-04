@@ -51,7 +51,7 @@
     "karma-coverage": "^0.5.3",
     "karma-coveralls": "^2.1.0",
     "karma-jasmine": "^0.3.6",
-    "kerberos": "0.0.17",
+    "kerberos": "1.0.0",
     "mockgoose": "^5.1.0",
     "moment": "^2.11.0",
     "mongoose": "^4.3.4",
