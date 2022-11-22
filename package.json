@@ -46,7 +46,7 @@
     "jasmine": "^2.4.1",
     "jshint": "^2.9.1",
     "jsonwebtoken": "^5.5.4",
-    "karma": "^0.13.19",
+    "karma": "^6.4.1",
     "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^0.5.3",
     "karma-coveralls": "^2.1.0",
